@@ -36,6 +36,8 @@ export default function App (props) {
   ]
   
   // this way equal to componentDidMount()
+
+  //next comment
   useEffect(() => {  
     setIsHideSpinner(true);
     // this way equal to componentWillMount()

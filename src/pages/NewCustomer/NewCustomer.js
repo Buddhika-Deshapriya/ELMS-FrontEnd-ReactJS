@@ -44,20 +44,51 @@ export default function NewCustomer(props) {
 
     const classes = useStyles();
     const [state, setState] = React.useState({
-       
+
     });
     const [titles, setTitles] = useState([]);
-    const [genders, setGender] = useState([]);
+    const [genders, setGenders] = useState([]);
+    const [marialStatus, setMarialStatus] = useState([]);
+    const [membershipType, setMembershipType] = useState([]);
+    const [familyType, setFamilyType] = useState([]);
+    const [status, setStatus] = useState([]);
 
-    const handleChange = (event) => {
-        const name = event.target.name;
-        // setState({
-        //     [name]: event.target.value,
-        // });
+
+    //Setup initial State
+    const initCustomer = {
+        membership_no: null,
+        first_name: null,
+        middle_name: null,
+        last_name: null,
+        dob: null,
+        nic: null,
+        address: null,
+        telephone: null,
+        mobile: null,
+        email: null,
+        familyIncome: null,
+        total_members: null,
+        income: null,
+        passport: null
+
+    }
+
+    const onChange = (e) => {
+        e.persist();
+        setNewCustomer({ ...newCustomer, [e.target.name]: e.target.value });
+    };
+
+    //Get Common Status
+    const fetchCustomerStatus = async () => {
+        axios.get(`${baseUrl}/commonstatus/list`)
+            .then(response => {
+                console.log('response', response);
+                setStatus(response.data);
+            })
     };
 
     //Get customer Title
-    const fetchCustometTitle = async () => {
+    const fetchCustomerTitle = async () => {
         axios.get(`${baseUrl}/title/list/`)
             .then(response => {
                 console.log('response', response);
@@ -65,186 +96,170 @@ export default function NewCustomer(props) {
             })
     };
 
-     //Get customer Title
-     const fetchCustometGender = async () => {
+    //Get customer Title
+    const fetchCustomerGender = async () => {
         axios.get(`${baseUrl}/gender/list/`)
             .then(response => {
                 console.log('response', response);
-                setTitles(response.data);
+                setGenders(response.data);
             })
+    };
+
+    //Get marial status
+    const fetchCustomerMarialStatus = async () => {
+        axios.get(`${baseUrl}/marriedstatus/list/`)
+            .then(response => {
+                console.log('response', response);
+                setMarialStatus(response.data);
+            })
+    };
+
+    //Get membership type
+    const fetchCustomerMembershipType = async () => {
+        axios.get(`${baseUrl}/membershiptype/list/`)
+            .then(response => {
+                console.log('response', response);
+                setMembershipType(response.data);
+            })
+    };
+
+    //Get family type
+    const fetchCustomerFamilyType = async () => {
+        axios.get(`${baseUrl}/familytype/list/`)
+            .then(response => {
+                console.log('response', response);
+                setFamilyType(response.data);
+            })
+    };
+    const [newCustomer, setNewCustomer] = useState(initCustomer);
+    const resetData = () => {
+        setNewCustomer(initCustomer)
+    }
+
+    //Error Handling
+    const initErrors = {
+        membership_no: '',
+        first_name: '',
+        middle_name: '',
+        dob: '',
+        nic: '',
+        address: '',
+        telephone: '',
+        mobile: '',
+        email: '',
+        familyIncome: '',
+        total_members: '',
+        income: '',
+        passport: '',
+        marriedStatus: '',
+        membershipType: '',
+        title: '',
+        gender: '',
+        customerStatus: ''
+    }
+    const [errors, setErrors] = useState(initErrors);
+    const resetError = () => {
+        setErrors(initErrors)
+    }
+
+    const SubmitNewCustomer = (e) => {
+        e.preventDefault();
+        const data = {
+
+            membership_no: {
+                id: newCustomer.membership_no,
+            },
+            nic: {
+                id: newCustomer.nic,
+            },
+            title: {
+                id: newCustomer.title,
+            },
+            gender: {
+                id: newCustomer.gender,
+            },
+            marriedStatus: {
+                id: newCustomer.marriedStatus,
+            },
+            memebershipType: {
+                id: newCustomer.membershipType,
+            },
+            familyType: {
+                id: newCustomer.familyType,
+            },
+
+            first_name: newCustomer.first_name,
+            middle_name: newCustomer.middle_name,
+            last_name: newCustomer.last_name,
+            dob: newCustomer.dob,
+            email: newCustomer.email,
+            address: newCustomer.address,
+            telephone: newCustomer.telephone,
+            mobile: newCustomer.mobile,
+            passport: newCustomer.passport,
+            income: newCustomer.income,
+            familyIncome: newCustomer.familyIncome,
+            total_members: newCustomer.total_members,
+
+            status: {
+                id: newCustomer.status,
+            }
+
+        };
+        console.log('data', data);
+        axios.post(`${baseUrl}/customer/add`, data)
+            .then(function (response) {
+                //console.log(response)
+                utils.showSuccess("New Customer Saved Successfully.");
+            })
+            .catch(_errors => {
+                //console.log('_errors',_errors);
+                if (_errors.response) {
+                    //console.log('Test');
+                    const _sErrors = _errors.response.data.errors;
+                    const _error = _errors.response.data.error;
+                    if (_sErrors !== undefined) {
+                        let errorsObj = {}
+                        _sErrors.forEach(error => {
+                            const { defaultMessage, field } = error
+                            errorsObj[field] = defaultMessage;
+                        })
+                        setErrors({ ...errors, ...errorsObj });
+                    }
+                    else {
+                        utils.showError(_error)
+                    }
+
+                }
+            });
     };
 
 
     //This is same as componentdidmount()
     useEffect(() => {
-        fetchCustometTitle();
-        fetchCustometGender();
+        fetchCustomerTitle();
+        fetchCustomerGender();
+        fetchCustomerMarialStatus();
+        fetchCustomerMembershipType();
+        fetchCustomerFamilyType();
+        fetchCustomerStatus();
     }, []);
 
     return (
         <AppTemplate>
             <div className="new-customer">
                 <form className={classes.root} noValidate autoComplete="off">
-                    <Paper variant="outlined" >
-                        <div>
-                        <FormControl className={classes.formControl}  variant="outlined" >
-                    <InputLabel shrink htmlFor="age-native-label-placeholder">
-                    
-                    </InputLabel>
-                    <Select
-                      name="title"
-                      //value={newLoan.status}
-                      displayEmpty
-                      className={classes.selectEmpty}
-                      inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                      <MenuItem value="" disabled>
-                        Placeholder
-                      </MenuItem>
-                      {
-                        titles.map((eachRow, index) => {
-                          return (
-                            <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
-                          );
-                        })
-                      }
-                    </Select>
-                    <FormHelperText>Some important text</FormHelperText>
-                  </FormControl>
-                           
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel htmlFor="outlined-age-native-simple">Gender</InputLabel>
-                                <Select
-                                    native
-                                    
-                                    label="Gender"
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'outlined-age-native-simple',
-                                    }}
-                                >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Ten</option>
-                                    <option value={20}>Twenty</option>
-                                    <option value={30}>Thirty</option>
-                                </Select>
-                                <FormHelperText>This is a helper text</FormHelperText>
-                            </FormControl>
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel htmlFor="outlined-age-native-simple">Marial Status</InputLabel>
-                                <Select
-                                    native
-                                   
-                                    label="Marial Status"
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'outlined-age-native-simple',
-                                    }}
-                                >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Ten</option>
-                                    <option value={20}>Twenty</option>
-                                    <option value={30}>Thirty</option>
-                                </Select>
-                                <FormHelperText>This is a helper text</FormHelperText>
-                            </FormControl>
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel htmlFor="outlined-age-native-simple">Membership Type</InputLabel>
-                                <Select
-                                    native
-                                    value={state.age}
-                                    onChange={handleChange}
-                                    label="Membership Type"
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'outlined-age-native-simple',
-                                    }}
-                                >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Ten</option>
-                                    <option value={20}>Twenty</option>
-                                    <option value={30}>Thirty</option>
-                                </Select>
-                                <FormHelperText>This is a helper text</FormHelperText>
-                            </FormControl>
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel htmlFor="outlined-age-native-simple">Family Type</InputLabel>
-                                <Select
-                                    native
-                                    value={state.age}
-                                    onChange={handleChange}
-                                    label="Family Type"
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'outlined-age-native-simple',
-                                    }}
-                                >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Ten</option>
-                                    <option value={20}>Twenty</option>
-                                    <option value={30}>Thirty</option>
-                                </Select>
-                                <FormHelperText>This is a helper text</FormHelperText>
-                            </FormControl>
-                        </div>
-                    </Paper>
-                    <br />
                     <Grid container spacing={1}>
-                        <Grid item xs={7}>
+                        <Grid item xs={12}>
                             <Paper variant="outlined" >
                                 <TextField
-                                    id="outlined-helperText"
-                                    label="First Name"
+                                    id="outlined-number"
+                                    label="Membership No"
+                                    type="number"
                                     helperText="Some important text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    id="outlined-helperText"
-                                    label="Middle Name"
-                                    helperText="Some important text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    id="outlined-helperText"
-                                    label="Last Name"
-                                    helperText="Some important text"
-                                    variant="outlined"
-                                />
-
-                                <TextField
-                                    id="outlined-helperText"
-                                    label="Birth Date"
-                                    helperText="Some important text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    id="outlined-helperText"
-                                    label="Email Address"
-                                    helperText="Some important text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    id="outlined-multiline-static"
-                                    label="Address"
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                />
-
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={5}>
-                            <Paper variant="outlined" >
-                                <TextField
-                                    id="outlined-helperText"
-                                    label="Telephone Number"
-                                    helperText="Some important text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    id="outlined-helperText"
-                                    label="Mobile Number"
-                                    helperText="Some important text"
+                                    // InputLabelProps={{
+                                    //     shrink: true,
+                                    // }}
                                     variant="outlined"
                                 />
                                 <TextField
@@ -253,15 +268,279 @@ export default function NewCustomer(props) {
                                     helperText="Some important text"
                                     variant="outlined"
                                 />
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    <br />
 
+                    <Paper variant="outlined" >
+                        <div>
+                            <FormControl className={classes.formControl} variant="outlined" >
+                                <InputLabel id="demo-simple-select-filled-label">Title </InputLabel>
+
+                                <Select
+                                    name="title"
+                                    //value={newLoan.status}
+                                    displayEmpty
+                                    className={classes.selectEmpty}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    label="Title"
+                                >
+                                    <MenuItem value="" disabled>
+
+                                    </MenuItem>
+                                    {
+                                        titles.map((eachRow, index) => {
+                                            return (
+                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                            );
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.formControl} variant="outlined" >
+                                <InputLabel id="demo-simple-select-filled-label">Gender</InputLabel>
+
+                                <Select
+                                    name="Gender"
+                                    //value={newCustomer.status}
+                                    displayEmpty
+                                    className={classes.selectEmpty}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    label="Gender"
+                                >
+                                    <MenuItem value="" disabled>
+
+                                    </MenuItem>
+                                    {
+                                        genders.map((eachRow, index) => {
+                                            return (
+                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                            );
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.formControl} variant="outlined" >
+                                <InputLabel id="demo-simple-select-filled-label">Marial Status </InputLabel>
+
+                                <Select
+                                    name="marialStatus"
+                                    //value={newCustomer.status}
+                                    displayEmpty
+                                    className={classes.selectEmpty}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    label="Marial Status"
+                                >
+                                    <MenuItem value="" disabled>
+
+                                    </MenuItem>
+                                    {
+                                        marialStatus.map((eachRow, index) => {
+                                            return (
+                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                            );
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.formControl} variant="outlined" >
+                                <InputLabel id="demo-simple-select-filled-label">Membership Type</InputLabel>
+
+                                <Select
+                                    name="membershipType"
+                                    //value={newCustomer.status}
+                                    displayEmpty
+                                    className={classes.selectEmpty}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    label="Membership Type"
+                                >
+                                    <MenuItem value="" disabled>
+
+                                    </MenuItem>
+                                    {
+                                        membershipType.map((eachRow, index) => {
+                                            return (
+                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                            );
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.formControl} variant="outlined" >
+                                <InputLabel id="demo-simple-select-filled-label">Family Type</InputLabel>
+
+                                <Select
+                                    name="familyType"
+                                    //value={newCustomer.status}
+                                    displayEmpty
+                                    className={classes.selectEmpty}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    label="Family Type"
+                                >
+                                    <MenuItem value="" disabled>
+
+                                    </MenuItem>
+                                    {
+                                        familyType.map((eachRow, index) => {
+                                            return (
+                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                            );
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </div>
+                    </Paper>
+                    <br />
+                    <Grid container spacing={1}>
+                        <Grid item xs={7}>
+                            <Paper variant="outlined" >
                                 <TextField
+                                    name="first_name"
+                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
-                                    label="Passport Number"
-                                    helperText="Some important text"
+                                    label="First Name"
+                                    placeholder="Enter First Name"
                                     variant="outlined"
+                                    helperText={errors.first_name}
+                                    error={errors.first_name ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+                                <TextField
+                                    name="middle_name"
+                                    //value={newLoan.maxAmount}
+                                    id="outlined-helperText"
+                                    label="Middle Name"
+                                    placeholder="Enter Middle Name"
+                                    variant="outlined"
+                                    helperText={errors.middle_name}
+                                    error={errors.middle_name ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+                               <TextField
+                                    name="last_name"
+                                    //value={newLoan.maxAmount}
+                                    id="outlined-helperText"
+                                    label="Last Name"
+                                    placeholder="Enter Last Name"
+                                    variant="outlined"
+                                    helperText={errors.last_name}
+                                    error={errors.last_name ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+                                <TextField
+                                    name="dob"
+                                    //value={newLoan.maxAmount}
+                                    id="outlined-helperText"
+                                    label="Date of Birth"
+                                    placeholder="Enter Birthday"
+                                    variant="outlined"
+                                    helperText={errors.dob}
+                                    error={errors.dob ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+                                <TextField
+                                    name="email"
+                                    //value={newLoan.maxAmount}
+                                    id="outlined-helperText"
+                                    label="Email Address"
+                                    placeholder="Enter Email"
+                                    variant="outlined"
+                                    helperText={errors.email}
+                                    error={errors.email ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+                                <TextField
+                                    name="address"
+                                    //value={newLoan.description}
+                                    id="outlined-multiline-static"
+                                    label="Address"
+                                    placeholder="Enter Address"
+                                    helperText={errors.address}
+                                    error={errors.address ? 'error' : ''}
+                                    multiline
+                                    rows={4}
+                                    fullWidth
+                                    variant="outlined"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
                                 />
 
-                                
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={5}>
+                            <Paper variant="outlined" >
+                            <TextField
+                                    name="telephone"
+                                    //value={newLoan.maxAmount}
+                                    id="outlined-helperText"
+                                    label="Telephone No"
+                                    placeholder="Enter Telephone No"
+                                    variant="outlined"
+                                    helperText={errors.telephone}
+                                    error={errors.telephone ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+                                <TextField
+                                    name="mobile"
+                                    //value={newLoan.maxAmount}
+                                    id="outlined-helperText"
+                                    label="Mobile No"
+                                    placeholder="Enter Mobile No"
+                                    variant="outlined"
+                                    helperText={errors.mobile}
+                                    error={errors.mobile ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+
+                                <TextField
+                                    name="passport"
+                                    //value={newLoan.maxAmount}
+                                    id="outlined-helperText"
+                                    label="Passport No"
+                                    placeholder="Enter Passport No"
+                                    variant="outlined"
+                                    helperText={errors.passport}
+                                    error={errors.passport ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
+
+
                             </Paper>
                         </Grid>
                     </Grid>
@@ -269,41 +548,75 @@ export default function NewCustomer(props) {
                         <Grid item xs={12}>
                             <Paper variant="outlined" >
                                 <TextField
+                                    name="income"
+                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Applicant Income"
-                                    helperText="Some important text"
+                                    placeholder="Enter Income"
                                     variant="outlined"
+                                    helperText={errors.income}
+                                    error={errors.income ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
                                 />
                                 <TextField
+                                    name="familyIncome"
+                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Family Income"
-                                    helperText="Some important text"
+                                    placeholder="Enter Family Income"
                                     variant="outlined"
+                                    helperText={errors.familyIncome}
+                                    error={errors.familyIncome ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
                                 />
                                 <TextField
+                                    name="total_members"
+                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Total Members"
-                                    helperText="Some important text"
+                                    placeholder="Enter Total Members"
                                     variant="outlined"
-                                />
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel htmlFor="outlined-age-native-simple">Customer status</InputLabel>
-                                <Select
-                                    native
-                                    onChange={handleChange}
-                                    label="Customer Status"
-                                    inputProps={{
-                                        name: 'status',
-                                        id: 'outlined-age-native-simple',
+                                    helperText={errors.total_members}
+                                    error={errors.total_members ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
                                     }}
-                                >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Ten</option>
-                                    <option value={20}>Twenty</option>
-                                    <option value={30}>Thirty</option>
-                                </Select>
-                                <FormHelperText>This is a helper text</FormHelperText>
-                            </FormControl>
+                                    onChange={onChange}
+                                />
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel shrink htmlFor="age-native-label-placeholder">
+                                        Customer Status
+                                    </InputLabel>
+                                    <Select
+                                        name="status"
+                                        //value={newLoan.status}
+                                        displayEmpty
+                                        className={classes.selectEmpty}
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                        onChange={onChange}
+                                    >
+                                        <MenuItem value="" disabled>
+                                        
+                                        </MenuItem>
+                                        {
+                                            status.map((eachRow, index) => {
+                                                return (
+                                                    <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                );
+                                            })
+                                        }
+                                    </Select>
+                                    <FormHelperText>*Required</FormHelperText>
+                                </FormControl>
 
                             </Paper>
                         </Grid>

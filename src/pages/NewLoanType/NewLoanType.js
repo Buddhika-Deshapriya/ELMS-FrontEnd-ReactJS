@@ -84,7 +84,7 @@ export default function NewLoanType(props) {
     minInterestRate: '',
     maxInterestRate: '',
     maxTimePeriod: '',
-    minTimePeriod: ''
+    minTimePeriod: '',
   }
   const [errors, setErrors] = useState(initErrors);
   const resetError  = () => {
@@ -192,19 +192,22 @@ export default function NewLoanType(props) {
                   />
 
                   <FormControl className={classes.formControl}>
-                    <InputLabel shrink htmlFor="age-native-label-placeholder">
+                    <InputLabel shrink >
                       Status
                     </InputLabel>
+                    <FormHelperText>{errors.status}</FormHelperText>
                     <Select
+                     variant="outlined"
                       name="status"
                       //value={newLoan.status}
                       displayEmpty
                       className={classes.selectEmpty}
                       inputProps={{ 'aria-label': 'Without label' }}
+                      error={errors.status ? 'error' : ''}
                       onChange={onChange}
                     >
                       <MenuItem value="" disabled>
-                        Placeholder
+                      
                       </MenuItem>
                       {
                         status.map((eachRow, index) => {
@@ -214,7 +217,7 @@ export default function NewLoanType(props) {
                         })
                       }
                     </Select>
-                    <FormHelperText>Placeholder</FormHelperText>
+                    
                   </FormControl>
                 </Box>
               </Paper>
@@ -233,9 +236,6 @@ export default function NewLoanType(props) {
                     helperText={errors.maxAmount}
                     error={errors.maxAmount ? 'error' : ''}
                     style={{ margin: 8 }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
                     InputLabelProps={{
                       shrink: true,
                     }}

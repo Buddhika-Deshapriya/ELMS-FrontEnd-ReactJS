@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
@@ -10,7 +11,7 @@ import {
 } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -89,8 +90,9 @@ export default function LoanType() {
     return (
         <AppTemplate>
             <div className="loanType-list">
-                <Link to={"new-loanType"} >
+                <Link to={"new-loan-type"} >
                     <Button
+                        size="small"
                         variant="contained"
                         color="secondary"
                         className="new-loan-type-add-button"
@@ -100,7 +102,7 @@ export default function LoanType() {
                         New Loan Type
             </Button>
                 </Link>
-                <br /><br /><br />
+                <br /><br />
                 <Grid item xs={12} sm={10}>
                     <Paper>
                         <TableContainer component={Paper}>
@@ -112,16 +114,35 @@ export default function LoanType() {
                                         <StyledTableCell align="left">Minimum Amount</StyledTableCell>
                                         <StyledTableCell align="left">Maximum Interest Rate</StyledTableCell>
                                         <StyledTableCell align="left">Minimum Interest Rate</StyledTableCell>
+                                        <StyledTableCell align="left"></StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {LoanTypes.map((row) => (
-                                        <StyledTableRow key={row.name}>
+                                        <StyledTableRow key={row.id}>
                                             <StyledTableCell align="left">{row.loanType}</StyledTableCell>
                                             <StyledTableCell align="left">{row.maxAmount}</StyledTableCell>
                                             <StyledTableCell align="left">{row.minAmount}</StyledTableCell>
                                             <StyledTableCell align="left">{row.maxInterestRate}</StyledTableCell>
                                             <StyledTableCell align="left">{row.minInterestRate}</StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <ButtonGroup>
+                                                    <Link to={"edit-loan-type/" + row.id} >
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-danger"
+                                                        >
+                                                            <EditIcon />
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-danger"
+                                                        >
+                                                            <LockOpenIcon />
+                                                        </Button>
+                                                    </Link>
+                                                </ButtonGroup>
+                                            </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>

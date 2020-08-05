@@ -1,13 +1,4 @@
 import React, { Component } from "react";
-
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
-import utils from '../../helper/utils';
-import { appConfig } from '../../configs/app.config';
-import tokens from "../../helper/tokens";
-import SystemUser from "../../helper/user";
-
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -17,11 +8,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import utils from '../../helper/utils';
+import { appConfig } from '../../configs/app.config';
+import tokens from "../../helper/tokens";
+import SystemUser from "../../helper/user";
 const { baseUrl } = appConfig;
 
 
@@ -30,7 +25,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to={""}>
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -187,7 +182,7 @@ class SignIn extends Component {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to={""} variant="body2">
                 Forgot password?
               </Link>
             </Grid>

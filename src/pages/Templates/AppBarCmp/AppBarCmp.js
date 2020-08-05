@@ -136,7 +136,7 @@ export default function AppBarCmp(props) {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap>
-          ELMS - Co-Operative Society
+          ELMS - Co-operative Society Badulla
         </Typography>
         <div className={classes.search}>
             <div className={classes.searchIcon}>

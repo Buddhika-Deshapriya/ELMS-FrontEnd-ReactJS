@@ -625,19 +625,22 @@ export default function NewCustomer(props) {
                     <Paper variant="outlined" >
                         <div>
                             <Button
+                                type="submit"
                                 variant="contained"
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<SendIcon />}
                             >
-                                Send
-                           </Button>
+                                Save
+                            </Button>
                             {" "}
                             <Button
+                                type="reset"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
+                                onClick={resetError}
                             >
                                 Reset
                         </Button>

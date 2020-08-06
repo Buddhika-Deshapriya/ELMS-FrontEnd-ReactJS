@@ -18,6 +18,7 @@ import SendIcon from '@material-ui/icons/Send';
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
+import SystemUser from "../../helper/user";
 const { baseUrl } = appConfig;
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,8 @@ export default function NewLoanType(props) {
 
   const classes = useStyles();
   const [status, setStatus] = useState([]);
+  const [dateTime, setDateTime] = useState(new Date());
+  const [userId, setUserdID] = useState([]);
    //Setup initial State
    const initLoan  = {
     loanType: null,
@@ -57,6 +60,11 @@ export default function NewLoanType(props) {
     setNewLoan({ ...newLoan, [e.target.name]: e.target.value });
   }
 
+  //Get Logged in user id
+  const getCurrentUser = async () => {
+    //console.log(SystemUser.get())
+    setUserdID(SystemUser.get().id);
+  };
 
   //Get Common Status
   const fetchLoanTypeStatus = async () => {
@@ -107,7 +115,11 @@ export default function NewLoanType(props) {
       minInterestRate: newLoan.minInterestRate,
       maxInterestRate: newLoan.maxInterestRate,
       maxTimePeriod: newLoan.maxTimePeriod,
-      minTimePeriod: newLoan.minTimePeriod
+      minTimePeriod: newLoan.minTimePeriod,
+      createdDate: dateTime,
+      createdUser: {
+        id: userId,
+      },
 
     };
     console.log('data', data);
@@ -142,6 +154,7 @@ export default function NewLoanType(props) {
   //This is same as componentdidmount()
   useEffect(() => {
     fetchLoanTypeStatus();
+    getCurrentUser();
   }, []);
 
   return (

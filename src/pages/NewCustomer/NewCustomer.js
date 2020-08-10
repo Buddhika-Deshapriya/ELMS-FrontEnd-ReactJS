@@ -248,18 +248,14 @@ export default function NewCustomer(props) {
     return (
         <AppTemplate>
             <div className="new-customer">
-                <form className={classes.root} noValidate autoComplete="off">
+                <form className={classes.root} noValidate autoComplete="off" onSubmit={SubmitNewCustomer}>
                     <Grid container spacing={1}>
                         <Grid item xs={12}>
                             <Paper variant="outlined" >
                                 <TextField
-                                    id="outlined-number"
+                                    id="outlined-helperText"
                                     label="Membership No"
-                                    type="number"
                                     helperText="Some important text"
-                                    // InputLabelProps={{
-                                    //     shrink: true,
-                                    // }}
                                     variant="outlined"
                                 />
                                 <TextField
@@ -271,7 +267,7 @@ export default function NewCustomer(props) {
                             </Paper>
                         </Grid>
                     </Grid>
-                    <br />
+                    <br /> 
 
                     <Paper variant="outlined" >
                         <div>

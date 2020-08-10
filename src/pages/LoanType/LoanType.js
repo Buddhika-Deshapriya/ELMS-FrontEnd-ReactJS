@@ -109,7 +109,7 @@ export default function LoanType() {
                             <Table className={classes.table} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell>Loan Type</StyledTableCell>
+                                        <StyledTableCell align="left">Loan Type</StyledTableCell>
                                         <StyledTableCell align="left">Maximum Amount</StyledTableCell>
                                         <StyledTableCell align="left">Minimum Amount</StyledTableCell>
                                         <StyledTableCell align="left">Maximum Interest Rate</StyledTableCell>
@@ -134,13 +134,17 @@ export default function LoanType() {
                                                         >
                                                             <EditIcon />
                                                         </Button>
+                                                        </Link>
+                                                </ButtonGroup>
+                                                <ButtonGroup>
+                                                <Link to={"view-loan-type/" + row.id} >
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
                                                         >
-                                                            <LockOpenIcon />
-                                                        </Button>
-                                                    </Link>
+                                                        <LockOpenIcon />
+                                                    </Button>
+                                                </Link>
                                                 </ButtonGroup>
                                             </StyledTableCell>
                                         </StyledTableRow>

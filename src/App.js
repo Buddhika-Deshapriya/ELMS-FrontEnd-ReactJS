@@ -16,6 +16,8 @@ import NewCustomer from './pages/NewCustomer/NewCustomer';
 import LoanType from './pages/LoanType/LoanType';
 import NewLoanType from './pages/NewLoanType/NewLoanType';
 import EditLoanType from './pages/EditLoanType/EditLoanType';
+import ViewLoanType from './pages/ViewLoanType/ViewLoanType';
+
 // import EditCustomer from './pages/EditCustomer/EditCustomer';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +69,7 @@ export default function App (props) {
         <Route path="/loantype-list" exact component={LoanType} />
         <Route path="/new-loan-type" exact component={NewLoanType} />
         <Route path="/edit-loan-type/:id" exact component={EditLoanType} />
+        <Route path="/view-loan-type/:id" exact component={ViewLoanType} />
         {/* <Route path="/edit-customer/:id" exact component={EditCustomer} /> */}
 
         <Route component={ErrorPage} />

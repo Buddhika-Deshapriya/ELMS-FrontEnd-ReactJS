@@ -9,6 +9,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
@@ -18,35 +21,38 @@ const { baseUrl } = appConfig;
 
 const useStyles = makeStyles({
     root: {
-      minWidth: 275,
+        minWidth: 275,
     },
     bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
     },
     title: {
-      fontSize: 16,
+        fontSize: 16,
     },
+
     pos: {
-      marginBottom: 12,
+        marginBottom: 12,
     },
-  });
+});
 
 export default function ViewLoanType(props) {
 
     const classes = useStyles();
     const [LoanType, ViewLoanType] = useState([]);
-    console.log('Loan Types', LoanType);
-   // console.log('props', props);
-   const loanTypeId = props.match.params.id;
- 
+    const [status, ViewStatus] = useState([]);
+    //console.log('Loan Types', LoanType);
+    // console.log('props', props);
+    const loanTypeId = props.match.params.id;
+
     const fetchLoanTypeData = async (loanTypeId) => {
 
         axios.get(`${baseUrl}/loantype/list/` + loanTypeId)
             .then(response => {
-                console.log('response', response);
+                // console.log('response', response);
                 ViewLoanType(response.data);
+                ViewStatus(response.data.status);
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -79,29 +85,60 @@ export default function ViewLoanType(props) {
 
     return (
         <AppTemplate>
+            <div className="order-view">
             <Card className={classes.root} variant="outlined">
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                         Loan Type is:
-                </Typography>
+                     </Typography>
                     <Typography variant="h5" component="h2">
-                    {LoanType.loanType} Loan
-                </Typography>
+                        {LoanType.loanType} Loan
+                     </Typography>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        Descriotion of the loan type:
-                </Typography>
-                    <Typography variant="h6" component="p">
+                        Description of the loan type:
+                     </Typography>
+                    <Typography variant="body1" component="p">
                         {LoanType.description}
-                </Typography>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-
+                    </Typography>
+                    <br />
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        Status:
+                     </Typography>
+                    <Typography variant="h6" component="h6">
+                    {/* {
+                          LoanType.map((row) => (
+                            row.status.type
+                          ))
+                    } */}
+                    {status.type == "active" ? <ThumbUpIcon /> : <ThumbDownIcon /> }
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
-            </AppTemplate>
-        );
-        
+            <Card className={classes.root} variant="outlined">
+                <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        Loan Type is:
+                     </Typography>
+                    <Typography variant="h5" component="h2">
+                        
+                     </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        Description of the loan type:
+                     </Typography>
+                    <Typography variant="body2" component="p">
+                       
+                    </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        Status:
+                     </Typography>
+                    <Typography variant="h6" component="h6">
+                        
+                    </Typography>
+                </CardContent>
+            </Card>
+            </div>
+
+        </AppTemplate>
+    );
+
 }

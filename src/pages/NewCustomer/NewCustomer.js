@@ -72,6 +72,12 @@ export default function NewCustomer(props) {
         passport: null
 
     }
+    
+    const [newCustomer, setNewCustomer] = useState(initCustomer);
+    const resetData = () => {
+        setNewCustomer(initCustomer)
+    }
+
 
     const onChange = (e) => {
         e.persist();
@@ -131,10 +137,7 @@ export default function NewCustomer(props) {
                 setFamilyType(response.data);
             })
     };
-    const [newCustomer, setNewCustomer] = useState(initCustomer);
-    const resetData = () => {
-        setNewCustomer(initCustomer)
-    }
+  
 
     //Error Handling
     const initErrors = {
@@ -166,12 +169,7 @@ export default function NewCustomer(props) {
         e.preventDefault();
         const data = {
 
-            membership_no: {
-                id: newCustomer.membership_no,
-            },
-            nic: {
-                id: newCustomer.nic,
-            },
+            
             title: {
                 id: newCustomer.title,
             },
@@ -188,6 +186,8 @@ export default function NewCustomer(props) {
                 id: newCustomer.familyType,
             },
 
+            membership_no: newCustomer.membership_no,
+            nic: newCustomer.nic,
             first_name: newCustomer.first_name,
             middle_name: newCustomer.middle_name,
             last_name: newCustomer.last_name,

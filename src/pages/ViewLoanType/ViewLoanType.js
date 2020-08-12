@@ -31,11 +31,6 @@ const useStyles = makeStyles({
     width: {
         maxWidth: 300,
     },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
     title: {
         fontSize: 16,
     },
@@ -46,11 +41,6 @@ const useStyles = makeStyles({
 
 export default function ViewLoanType(props) {
 
-    const [expanded, setExpanded] = React.useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     const classes = useStyles();
     const [LoanType, ViewLoanType] = useState([]);

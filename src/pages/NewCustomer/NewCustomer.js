@@ -443,8 +443,7 @@ export default function NewCustomer(props) {
                                     label="Last Name"
                                     placeholder="Enter Last Name"
                                     variant="outlined"
-                                    helperText={errors.last_name}
-                                    error={errors.last_name ? 'error' : ''}
+                                    helperText= "*Not Required"
                                     style={{ margin: 8 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -473,8 +472,7 @@ export default function NewCustomer(props) {
                                     label="Email Address"
                                     placeholder="Enter Email"
                                     variant="outlined"
-                                    helperText={errors.email}
-                                    error={errors.email ? 'error' : ''}
+                                    helperText= "*Not Required"
                                     style={{ margin: 8 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -541,8 +539,7 @@ export default function NewCustomer(props) {
                                     label="Passport No"
                                     placeholder="Enter Passport No"
                                     variant="outlined"
-                                    helperText={errors.passport}
-                                    error={errors.passport ? 'error' : ''}
+                                    helperText="*Not Required"
                                     style={{ margin: 8 }}
                                     InputLabelProps={{
                                         shrink: true,

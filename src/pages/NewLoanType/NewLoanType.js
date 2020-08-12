@@ -11,9 +11,8 @@ import {
 
 } from '@material-ui/core';
 
-import DeleteIcon from '@material-ui/icons/Delete';
 import SendIcon from '@material-ui/icons/Send';
-
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
@@ -357,7 +356,7 @@ export default function NewLoanType(props) {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                startIcon={<DeleteIcon />}
+                startIcon={<RotateLeftIcon />}
                 onClick={resetError}
               >
                 Reset

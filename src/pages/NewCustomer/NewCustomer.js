@@ -11,7 +11,7 @@ import {
 
 } from '@material-ui/core';
 
-import DeleteIcon from '@material-ui/icons/Delete';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SendIcon from '@material-ui/icons/Send';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -646,7 +646,7 @@ export default function NewCustomer(props) {
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                startIcon={<DeleteIcon />}
+                                startIcon={<RotateLeftIcon />}
                                 onClick={resetError}
                             >
                                 Reset

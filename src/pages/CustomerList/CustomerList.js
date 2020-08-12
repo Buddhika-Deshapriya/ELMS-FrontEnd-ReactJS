@@ -10,6 +10,8 @@ import {
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
+import EditIcon from '@material-ui/icons/Edit';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import './CustomerList.css'
 
@@ -142,6 +144,57 @@ export default function CustomerList() {
                                                 <StyledTableCell align="left">{row.nic}</StyledTableCell>
                                                 <StyledTableCell align="left">{row.mobile}</StyledTableCell>
                                                 <StyledTableCell align="left">{row.address}</StyledTableCell>
+                                                <StyledTableCell align="left">
+                                                <ButtonGroup>
+                                                    {/* <Link to={"edit-loan-type/" + row.id} > */}
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-danger"
+                                                            // //popover code
+                                                            // aria-owns={open ? 'mouse-over-popover' : undefined}
+                                                            // aria-haspopup="true"
+                                                            // onMouseEnter={handlePopoverOpen}
+                                                            // onMouseLeave={handlePopoverClose}
+                                                            // //popover code
+                                                        >
+                                                            <EditIcon />
+                                                        </Button>
+                                                        
+                                                            {/* <Popover
+                                                            id="mouse-over-popover"
+                                                            className={classes.popover}
+                                                            classes={{
+                                                            paper: classes.paper,
+                                                            }}
+                                                            open={open}
+                                                            anchorEl={anchorEl}
+                                                            anchorOrigin={{
+                                                            vertical: 'bottom',
+                                                            horizontal: 'left',
+                                                            }}
+                                                            transformOrigin={{
+                                                            vertical: 'top',
+                                                            horizontal: 'left',
+                                                            }}
+                                                            onClose={handlePopoverClose}
+                                                            disableRestoreFocus
+                                                        >
+                                                                 <Typography>Click To Edit</Typography>
+                                                            </Popover> */}
+                                                       
+                                                        {/* </Link> */}
+                                                </ButtonGroup>
+                                                <ButtonGroup>
+                                                <Link to={"view-customer/" + row.id} >
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-danger"
+                                                        >
+                                                        <FolderOpenIcon />
+                                                    </Button>
+                                                </Link>
+                                                </ButtonGroup>
+                                            </StyledTableCell>
                                             </StyledTableRow>
                                         ))
                                     }

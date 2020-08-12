@@ -17,6 +17,7 @@ import LoanType from './pages/LoanType/LoanType';
 import NewLoanType from './pages/NewLoanType/NewLoanType';
 import EditLoanType from './pages/EditLoanType/EditLoanType';
 import ViewLoanType from './pages/ViewLoanType/ViewLoanType';
+import ViewCustomer from './pages/ViewCustomer/ViewCustomer';
 
 // import EditCustomer from './pages/EditCustomer/EditCustomer';
 
@@ -70,6 +71,7 @@ export default function App (props) {
         <Route path="/new-loan-type" exact component={NewLoanType} />
         <Route path="/edit-loan-type/:id" exact component={EditLoanType} />
         <Route path="/view-loan-type/:id" exact component={ViewLoanType} />
+        <Route path="/view-customer/:id" exact component={ViewCustomer} />
         {/* <Route path="/edit-customer/:id" exact component={EditCustomer} /> */}
 
         <Route component={ErrorPage} />

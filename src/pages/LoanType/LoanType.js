@@ -7,14 +7,12 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
     Button, ButtonGroup,
     Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow, Paper, Grid, Container
+    TableContainer, TableHead, TableRow, Paper, Grid, Container,Popover,Typography
 } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';

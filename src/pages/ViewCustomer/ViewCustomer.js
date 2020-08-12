@@ -9,11 +9,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import IconButton from '@material-ui/core/IconButton';
 
+import BackupIcon from '@material-ui/icons/Backup';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+
 
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -24,22 +29,28 @@ const { baseUrl } = appConfig;
 
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 450,
+        maxWidth: 750,
     },
     width: {
-        maxWidth: 300,
-    },
-    title: {
-        fontSize: 16,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
+        '& > *': {
+            margin: theme.spacing(1),
+            maxWidth: 250,
+        },
+        title: {
+            fontSize: 16,
+        },
+        pos: {
+            marginBottom: 12,
+        },
+        input: {
+            display: 'none',
+        },
+    }
+}));
 
-export default function ViewLCustomer(props) {
+export default function ViewCustomer(props) {
 
 
     const classes = useStyles();
@@ -48,9 +59,9 @@ export default function ViewLCustomer(props) {
     const [user, ViewUser] = useState([]);
     const customerId = props.match.params.id;
 
-    const fetchLoanTypeData = async (customerId) => {
+    const fecthCustomerData = async (customerId) => {
 
-        axios.get(`${baseUrl}/customer/list/` + loanTypeId)
+        axios.get(`${baseUrl}/customer/list/` + customerId)
             .then(response => {
                 // console.log('response', response);
                 ViewCustomer(response.data);
@@ -83,7 +94,7 @@ export default function ViewLCustomer(props) {
     };
 
     useEffect(() => {
-        fetchLoanTypeData(customerId);
+        fecthCustomerData(customerId);
     }, []);
 
     return (
@@ -91,13 +102,46 @@ export default function ViewLCustomer(props) {
             <div className="customer-view">
                 <Grid container spacing={3}>
                     <Grid item xs>
-                        
+                        <Card className={classes.width} variant="outlined">
+                            <CardContent>
+
+                            </CardContent>
+                        </Card>
                         <br />
                         <br />
-                        
+                        <Card className={classes.width} variant="outlined">
+                            <CardContent>
+                                <Typography>
+                                    <input
+                                        accept="image/*"
+                                        className={classes.input}
+                                        id="contained-button-file"
+                                        multiple
+                                        type="file"
+                                    />
+                                    <label htmlFor="contained-button-file">
+                                        <br />
+                                    </label>
+                                    <input accept="image/*" className={classes.width} id="icon-button-file" type="file" />
+                                    <label htmlFor="icon-button-file">
+                                        <br />
+                                        <Button variant="contained" color="primary" component="span">
+                                            <BackupIcon fontSize="small" />
+                                            Upload
+                                    </Button>
+
+                                    </label>
+                                </Typography>
+                            </CardContent>
+                        </Card>
+
                     </Grid>
                     <Grid item xs>
-                        
+                        <Card className={classes.root} variant="outlined">
+                            <CardContent>
+
+                            </CardContent>
+                        </Card>
                     </Grid>
                     <Grid item xs>
 

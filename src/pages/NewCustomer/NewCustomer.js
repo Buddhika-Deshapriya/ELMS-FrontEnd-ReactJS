@@ -255,14 +255,28 @@ export default function NewCustomer(props) {
                                 <TextField
                                     id="outlined-helperText"
                                     label="Membership No"
-                                    helperText="Some important text"
                                     variant="outlined"
+                                    helperText={errors.membership_no}
+                                    placeholder="Enter Membership No"
+                                    error={errors.membership_no ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
                                 />
                                 <TextField
                                     id="outlined-helperText"
                                     label="NIC Number"
-                                    helperText="Some important text"
                                     variant="outlined"
+                                    helperText={errors.nic}
+                                    placeholder="Enter NIC Number"
+                                    error={errors.nic ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
                                 />
                             </Paper>
                         </Grid>

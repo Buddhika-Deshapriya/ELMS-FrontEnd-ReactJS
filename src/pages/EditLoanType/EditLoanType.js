@@ -42,6 +42,7 @@ export default function EditLoanType(props) {
     
   const classes = useStyles();
   const [status, setStatus] = useState([]);
+  
   //Setup initial State
   const initLoan  = {
     loanType: null,
@@ -85,7 +86,8 @@ export default function EditLoanType(props) {
         setNewLoan({
             ...newLoan,
             ...response.data,
-            status:response.data.status.id
+            status:response.data.status.id,
+            userid:response.data.createdUser.id
         })
         // console.log('format',{
         //     ...newLoan,
@@ -133,7 +135,11 @@ export default function EditLoanType(props) {
       minInterestRate: newLoan.minInterestRate,
       maxInterestRate: newLoan.maxInterestRate,
       maxTimePeriod: newLoan.maxTimePeriod,
-      minTimePeriod: newLoan.minTimePeriod
+      minTimePeriod: newLoan.minTimePeriod,
+      createdDate: newLoan.createdDate,
+      createdUser: {
+        id: newLoan.userid,
+      }
 
     };
     console.log('data', data);

@@ -5,22 +5,21 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Collapse from '@material-ui/core/Collapse';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-import IconButton from '@material-ui/core/IconButton';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditIcon from '@material-ui/icons/Edit';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
-import { Grid } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 const { baseUrl } = appConfig;
 
 
@@ -29,6 +28,9 @@ const useStyles = makeStyles({
     root: {
         maxWidth: 450,
     },
+    width: {
+        maxWidth: 300,
+    },
     bullet: {
         display: 'inline-block',
         margin: '0 2px',
@@ -36,10 +38,6 @@ const useStyles = makeStyles({
     },
     title: {
         fontSize: 16,
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
     },
     pos: {
         marginBottom: 12,
@@ -124,34 +122,37 @@ export default function ViewLoanType(props) {
                                     Status:
                         </Typography>
                                 <Typography variant="body1" component="p">
-                                    {status.type == "active" ? <ThumbUpIcon /> : <ThumbDownIcon />}
+                                    {status.type == "ACTIVE" ? <ThumbUpIcon /> : <ThumbDownIcon />}
                                 </Typography>
                             </CardContent>
                         </Card>
                         <br />
                         <br />
                         <Card className={classes.root} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        Created user is:
+                            <CardContent>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Created By:
                         </Typography>
-                                    <Typography variant="h5" component="h2">
-                                    </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        Description of the loan type:
+                                <Typography variant="h5" component="h2">
+                                    {user.firstName} {" "}
+                                    {user.middleName} {" "}
+                                    {user.lastName}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Created Date:
                         </Typography>
-                                    <Typography variant="body1" component="p">
+                                <Typography variant="body1" component="p">
+                                    {LoanType.createdDate}
+                                </Typography>
 
-                                    </Typography>
-
-                                </CardContent>
+                            </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs>
                         <Card className={classes.root} variant="outlined">
                             <CardContent>
                                 <Typography variant="h6" component="h6">
-                                    IMPORTANT DETAILS :
+                                    NUMERICAL DETAILS :
                             </Typography>
                                 <br />
                                 <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -166,37 +167,75 @@ export default function ViewLoanType(props) {
                                 <Typography variant="body1" component="p">
                                     {LoanType.minAmount}
                                 </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        Maximum Interest Rate:
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Maximum Interest Rate:
                         </Typography>
-                                    <Typography variant="body1" component="p">
-                                        {LoanType.maxInterestRate}
-                                    </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        Minimum Interest Rate:
+                                <Typography variant="body1" component="p">
+                                    {LoanType.maxInterestRate}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Minimum Interest Rate:
                         </Typography>
-                                    <Typography variant="body1" component="p">
-                                        {LoanType.minInterestRate}
-                                    </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        Maximum Time Period:
+                                <Typography variant="body1" component="p">
+                                    {LoanType.minInterestRate}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Maximum Time Period:
                         </Typography>
-                                    <Typography variant="body1" component="p">
-                                        {LoanType.maxTimePeriod}
-                                    </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        Minimum Time Period:
+                                <Typography variant="body1" component="p">
+                                    {LoanType.maxTimePeriod}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Minimum Time Period:
                         </Typography>
-                                    <Typography variant="body1" component="p">
-                                        {LoanType.minTimePeriod}
-                                    </Typography>
-                                </CardContent>
+                                <Typography variant="body1" component="p">
+                                    {LoanType.minTimePeriod}
+                                </Typography>
+                            </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs>
-                           
+
                     </Grid>
                 </Grid>
+                <br />
+                <Grid className={classes.width} variant="outlined" >
+                        <Card>
+                            <CardContent>
+                                <Typography>
+                                <ButtonGroup>
+                                <Link to={"/edit-loan-type/" + LoanType.id} >
+                                <Button
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                       
+                                    >
+                                        <EditIcon fontSize="small" />
+                                        Edit
+
+                                    </Button>
+                                </Link>
+                                </ButtonGroup>
+                                    {" "}
+                                    <ButtonGroup>
+                                    <Link to={"/loantype-list"} >
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        className={classes.button}
+                                       
+                                    >
+                                        <ArrowBackIosIcon fontSize="small" />
+                                        Back
+                                    </Button>
+                                    </Link>
+                                    </ButtonGroup>
+
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
             </div>
 
         </AppTemplate>

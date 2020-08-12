@@ -11,8 +11,10 @@ import {
 } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
@@ -27,6 +29,7 @@ const StyledTableCell = withStyles((theme) => ({
     body: {
         fontSize: 14,
     },
+    
 }))(TableCell);
 
 
@@ -43,6 +46,9 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
+    popover: {
+        pointerEvents: 'none',
+      }
 });
 
 
@@ -77,11 +83,31 @@ export default function LoanType() {
                     }
 
                 }
-            });
-
-
+            }
+        );
 
     };
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorE2, setAnchorE2] = React.useState(null);
+
+
+    const handlePopoverOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+        setAnchorE2(event.currentTarget);
+
+    };
+
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+        setAnchorE2(null);
+
+    };
+
+    const open1 = Boolean(anchorEl);
+    const open2 = Boolean(anchorE2);
+
+
 
     useEffect(() => {
         fetchData();
@@ -127,6 +153,12 @@ export default function LoanType() {
                                             <StyledTableCell align="left">{row.minInterestRate}</StyledTableCell>
                                             <StyledTableCell align="left">
                                                 <ButtonGroup>
+                                                    <Typography
+                                                        aria-owns={open1 ? 'mouse-over-popover' : undefined}
+                                                        aria-haspopup="true"
+                                                        onMouseEnter={handlePopoverOpen}
+                                                        onMouseLeave={handlePopoverClose}
+                                                    >
                                                     <Link to={"edit-loan-type/" + row.id} >
                                                         <Button
                                                             size="sm"
@@ -135,16 +167,62 @@ export default function LoanType() {
                                                             <EditIcon />
                                                         </Button>
                                                         </Link>
+                                                        </Typography>
+                                                    <Popover
+                                                        id="mouse-over-popover"
+                                                        className={classes.popover}
+                                                        
+                                                        open1={open1}
+                                                        anchorEl={anchorEl}
+                                                        anchorOrigin={{
+                                                            vertical: 'bottom',
+                                                            horizontal: 'center',
+                                                        }}
+                                                        transformOrigin={{
+                                                            vertical: 'top',
+                                                            horizontal: 'center',
+                                                        }}
+                                                        onClose={handlePopoverClose}
+                                                        disableRestoreFocus
+                                                    >
+                                                        <Typography>Edit</Typography>
+                                                    </Popover>
                                                 </ButtonGroup>
                                                 <ButtonGroup>
+                                                <Typography
+                                                        aria-owns={open2 ? 'mouse-over-popover' : undefined}
+                                                        aria-haspopup="true"
+                                                        onMouseEnter={handlePopoverOpen}
+                                                        onMouseLeave={handlePopoverClose}
+                                                    >
                                                 <Link to={"view-loan-type/" + row.id} >
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
                                                         >
-                                                        <LockOpenIcon />
+                                                        <FolderOpenIcon />
                                                     </Button>
                                                 </Link>
+                                                </Typography>
+                                                <Popover
+                                                        id="mouse-over-popover"
+                                                        className={classes.popover}
+                                                        
+                                                        open2={open2}
+                                                        anchorE2={anchorE2}
+                                                        anchorOrigin={{
+                                                            vertical: 'bottom',
+                                                            horizontal: 'center',
+                                                        }}
+                                                        transformOrigin={{
+                                                            vertical: 'top',
+                                                            horizontal: 'center',
+                                                        }}
+                                                        onClose={handlePopoverClose}
+                                                        disableRestoreFocus
+                                                    >
+                                                        <Typography>View</Typography>
+                                                    </Popover>
                                                 </ButtonGroup>
                                             </StyledTableCell>
                                         </StyledTableRow>

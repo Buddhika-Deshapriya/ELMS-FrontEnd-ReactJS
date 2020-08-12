@@ -9,6 +9,7 @@ import {
     Table, TableBody, TableCell,
     TableContainer, TableHead, TableRow, Paper, Grid, Container,Popover,Typography
 } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import EditIcon from '@material-ui/icons/Edit';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
@@ -40,7 +41,15 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-
+const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(12),
+      border: '1px solid #dadde9',
+    },
+  }))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -58,21 +67,6 @@ const useStyles = makeStyles((theme) => ({
 export default function LoanType() {
     const classes = useStyles();
     const [LoanTypes, setLoanTypes] = useState([]);
-
-    //popover
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handlePopoverOpen = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handlePopoverClose = () => {
-      setAnchorEl(null);
-    };
-  
-    const open = Boolean(anchorEl);
-    //popover
-
 
     console.log('Loan Types', LoanTypes);
 
@@ -155,38 +149,19 @@ export default function LoanType() {
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
-                                                            //popover code
-                                                            aria-owns={open ? 'mouse-over-popover' : undefined}
-                                                            aria-haspopup="true"
-                                                            onMouseEnter={handlePopoverOpen}
-                                                            onMouseLeave={handlePopoverClose}
-                                                            //popover code
+                                                      
                                                         >
-                                                            <EditIcon />
+                                                        {/* 
+                                                        mouse hover message to edit Button           */}
+                                                            <HtmlTooltip
+                                                            title={
+                                                                <React.Fragment>
+                                                                    <Typography color="inherit">Edit Loan Type</Typography>
+                                                                </React.Fragment>
+                                                            }
+                                                        ><EditIcon />
+                                                        </HtmlTooltip>
                                                         </Button>
-                                                        
-                                                            <Popover
-                                                            id="mouse-over-popover"
-                                                            className={classes.popover}
-                                                            classes={{
-                                                            paper: classes.paper,
-                                                            }}
-                                                            open={open}
-                                                            anchorEl={anchorEl}
-                                                            anchorOrigin={{
-                                                            vertical: 'bottom',
-                                                            horizontal: 'left',
-                                                            }}
-                                                            transformOrigin={{
-                                                            vertical: 'top',
-                                                            horizontal: 'left',
-                                                            }}
-                                                            onClose={handlePopoverClose}
-                                                            disableRestoreFocus
-                                                        >
-                                                                 <Typography>Click To Edit</Typography>
-                                                            </Popover>
-                                                       
                                                         </Link>
                                                 </ButtonGroup>
                                                 <ButtonGroup>
@@ -195,7 +170,17 @@ export default function LoanType() {
                                                             size="sm"
                                                             variant="outline-danger"
                                                         >
+                                                    {/* 
+                                                    mouse hover message to view button        */}
+                                                        <HtmlTooltip
+                                                                title={
+                                                                    <React.Fragment>
+                                                                        <Typography color="inherit">View Loan Type</Typography>
+                                                                    </React.Fragment>
+                                                                }
+                                                            >
                                                         <FolderOpenIcon />
+                                                        </HtmlTooltip>
                                                     </Button>
                                                 </Link>
                                                 </ButtonGroup>

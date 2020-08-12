@@ -104,11 +104,20 @@ export default function ViewCustomer(props) {
                     <Grid item xs>
                         <Card className={classes.width} variant="outlined">
                             <CardContent>
+                                <Typography>
+                                    {"Scanned images of NIC card"}
+                                </Typography>
+                                <Typography>
+                                    
+                                </Typography>
 
                             </CardContent>
                         </Card>
                         <br />
                         <br />
+                        
+                        {/* 
+                        upload link to inndividual customer NIC images in both sides              */}
                         <Card className={classes.width} variant="outlined">
                             <CardContent>
                                 <Typography>

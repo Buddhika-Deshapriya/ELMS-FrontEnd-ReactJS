@@ -7,8 +7,10 @@ import {
     Table, TableBody, TableCell,
     TableContainer, TableHead, TableRow, Paper, Grid, Container
 } from '@material-ui/core';
-
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+
 
 import EditIcon from '@material-ui/icons/Edit';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
@@ -30,6 +32,15 @@ const StyledTableCell = withStyles((theme) => ({
         fontSize: 14,
     },
 }))(TableCell);
+const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(12),
+      border: '1px solid #dadde9',
+    },
+  }))(Tooltip);
 
 
 
@@ -107,13 +118,6 @@ export default function CustomerList() {
                     </Button>
                 </Link>
                 <br /><br /><br />
-                {/* <ul>
-                    {customers.length > 0 ? customers.map(item => (
-                        <li key={item.id}>
-                            <a href={item.id}>{item.id}</a>
-                        </li>
-                    )) : <li>No Data</li>}
-                </ul> */}
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead>
@@ -150,37 +154,18 @@ export default function CustomerList() {
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
-                                                            // //popover code
-                                                            // aria-owns={open ? 'mouse-over-popover' : undefined}
-                                                            // aria-haspopup="true"
-                                                            // onMouseEnter={handlePopoverOpen}
-                                                            // onMouseLeave={handlePopoverClose}
-                                                            // //popover code
                                                         >
-                                                            <EditIcon />
+                                                            <HtmlTooltip
+                                                                title={
+                                                                    <React.Fragment>
+                                                                        <Typography color="inherit">Edit Customer</Typography>
+                                                                    </React.Fragment>
+                                                                }
+                                                            >
+                                                                <EditIcon />
+
+                                                            </HtmlTooltip>
                                                         </Button>
-                                                        
-                                                            {/* <Popover
-                                                            id="mouse-over-popover"
-                                                            className={classes.popover}
-                                                            classes={{
-                                                            paper: classes.paper,
-                                                            }}
-                                                            open={open}
-                                                            anchorEl={anchorEl}
-                                                            anchorOrigin={{
-                                                            vertical: 'bottom',
-                                                            horizontal: 'left',
-                                                            }}
-                                                            transformOrigin={{
-                                                            vertical: 'top',
-                                                            horizontal: 'left',
-                                                            }}
-                                                            onClose={handlePopoverClose}
-                                                            disableRestoreFocus
-                                                        >
-                                                                 <Typography>Click To Edit</Typography>
-                                                            </Popover> */}
                                                        
                                                         {/* </Link> */}
                                                 </ButtonGroup>
@@ -190,7 +175,15 @@ export default function CustomerList() {
                                                             size="sm"
                                                             variant="outline-danger"
                                                         >
-                                                        <FolderOpenIcon />
+                                                            <HtmlTooltip
+                                                                title={
+                                                                    <React.Fragment>
+                                                                        <Typography color="inherit">View Customer Profile</Typography>
+                                                                    </React.Fragment>
+                                                                }
+                                                            >
+                                                            <FolderOpenIcon />
+                                                            </HtmlTooltip>
                                                     </Button>
                                                 </Link>
                                                 </ButtonGroup>

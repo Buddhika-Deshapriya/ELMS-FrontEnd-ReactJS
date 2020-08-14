@@ -112,7 +112,7 @@ export default function ViewLoanType(props) {
                                     Status:
                         </Typography>
                                 <Typography variant="body1" component="p">
-                                    {status.type == "ACTIVE" ? <ThumbUpIcon /> : <ThumbDownIcon />}
+                                    {status.type == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -190,42 +190,41 @@ export default function ViewLoanType(props) {
                 </Grid>
                 <br />
                 <Grid className={classes.width} variant="outlined" >
-                        <Card>
-                            <CardContent>
-                                <Typography>
+                    <Card>
+                        <CardContent>
+                            <Typography>
                                 <ButtonGroup>
-                                <Link to={"/edit-loan-type/" + LoanType.id} >
-                                <Button
-                                        variant="contained"
-                                        color="primary"
-                                        className={classes.button}
-                                       
-                                    >
-                                        <EditIcon fontSize="small" />
+                                    <Link to={"/edit-loan-type/" + LoanType.id} >
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            className={classes.button}
+
+                                        >
+                                            <EditIcon fontSize="small" />
                                         Edit
 
                                     </Button>
-                                </Link>
+                                    </Link>
                                 </ButtonGroup>
-                                    {" "}
-                                    <ButtonGroup>
+                                {" "}
+                                <ButtonGroup>
                                     <Link to={"/loantype-list"} >
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        className={classes.button}
-                                       
-                                    >
-                                        <ArrowBackIosIcon fontSize="small" />
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            className={classes.button}
+
+                                        >
+                                            <ArrowBackIosIcon fontSize="small" />
                                         Back
                                     </Button>
                                     </Link>
-                                    </ButtonGroup>
-
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                                </ButtonGroup>
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </div>
 
         </AppTemplate>

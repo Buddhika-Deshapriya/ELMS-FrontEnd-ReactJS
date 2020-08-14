@@ -331,6 +331,14 @@ export default function ViewCustomer(props) {
                                                         {Customer.familyIncome}
                                                     </Typography>
                                                 </TableCell>
+                                                <TableCell>
+                                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                                        Passport No:
+                                                    </Typography>
+                                                    <Typography variant="body1" component="h2">
+                                                        {Customer.passport}
+                                                    </Typography>
+                                                </TableCell>
                                             </TableRow>
                                         </TableBody>
                                     </Table>

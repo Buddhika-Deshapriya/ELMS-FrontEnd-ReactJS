@@ -2,34 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles, withStyles, ThemeProvider } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import { green } from '@material-ui/core/colors';
 
 import BackupIcon from '@material-ui/icons/Backup';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-
-
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
 import { Grid, Paper, Box, Table, TableBody } from '@material-ui/core';
 const { baseUrl } = appConfig;
-
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         '& > *': {
             margin: theme.spacing(1),
             maxWidth: 300,
-        }
+        },
     },
     title: {
         fontSize: 16,
@@ -49,8 +42,21 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         display: 'none',
-    }
+    },
+    margin: {
+        margin: theme.spacing(1),
+    },
 }));
+
+const ColorButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText(green[500]),
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
+    },
+}))(Button);
 
 export default function ViewCustomer(props) {
 
@@ -182,14 +188,14 @@ export default function ViewCustomer(props) {
                                     </Card>
                                 </Grid>
                                 {/* 
-                                Created user and created         */}
+                                Created user and created date       */}
                                 <Grid item xs={4}>
                                     <Card>
                                         <CardContent>
                                             <Typography className={classes.title} color="textSecondary" gutterBottom>
                                                 Created By:
                                             </Typography>
-                                            <Typography variant="h5" component="h2">
+                                            <Typography variant="body1" component="h2" color="primary">
                                                 {user.firstName} {" "}
                                                 {user.middleName} {" "}
                                                 {user.lastName}
@@ -197,7 +203,7 @@ export default function ViewCustomer(props) {
                                             <Typography className={classes.title} color="textSecondary" gutterBottom>
                                                 Created Date:
                                             </Typography>
-                                            <Typography variant="body1" component="p">
+                                            <Typography variant="body1" component="p" color="primary">
                                                 {Customer.createdDate}
                                             </Typography>
                                         </CardContent>
@@ -348,7 +354,7 @@ export default function ViewCustomer(props) {
                         <br />
                         {/* 
                         Edit button and back button */}
-                        <Grid>
+                        <Grid item xs={6}>
                             <Paper className={classes.width}>
                                 <ButtonGroup>
                                     <Link>
@@ -356,7 +362,6 @@ export default function ViewCustomer(props) {
                                             variant="contained"
                                             color="primary"
                                             className={classes.button}
-
                                         >
                                             <EditIcon fontSize="small" />
                                         Edit
@@ -377,10 +382,14 @@ export default function ViewCustomer(props) {
                                         </ButtonGroup>
                                     </Link>
                                 </ButtonGroup>
+                                <ColorButton variant="contained" color="primary" className={classes.margin}>
+                                    <b>See Customer Accounts</b>
+                                </ColorButton>
                             </Paper>
                         </Grid>
                     </Grid>
                 </Grid>
+
             </div>
 
         </AppTemplate >

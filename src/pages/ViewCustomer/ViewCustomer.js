@@ -9,7 +9,7 @@ import { green } from '@material-ui/core/colors';
 import {
     Button, ButtonGroup,
     TableCell,
-    TableContainer, TableHead, TableRow, Container,Popover,Typography
+    TableContainer, TableHead, TableRow, Container, Popover, Typography
 } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -34,7 +34,7 @@ const StyledTableCell = withStyles((theme) => ({
     body: {
         fontSize: 14,
     },
-    
+
 }))(TableCell);
 
 const StyledTableRow = withStyles((theme) => ({
@@ -47,13 +47,13 @@ const StyledTableRow = withStyles((theme) => ({
 
 const HtmlTooltip = withStyles((theme) => ({
     tooltip: {
-      backgroundColor: '#f5f5f9',
-      color: 'rgba(0, 0, 0, 0.87)',
-      maxWidth: 220,
-      fontSize: theme.typography.pxToRem(12),
-      border: '1px solid #dadde9',
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
     },
-  }))(Tooltip);
+}))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -437,9 +437,11 @@ export default function ViewCustomer(props) {
                     </Grid>
                 </Grid>
                 <br />
-                <Button variant="contained" color="primary" className={classes.margin}>
-                    Add New Asset
+                <Link to={"/new-asset"} >
+                    <Button variant="contained" color="primary" className={classes.margin}>
+                        Add New Asset
                 </Button>
+                </Link>
                 <Grid item xs={12} sm={10}>
                     <Paper>
                         <TableContainer component={Paper}>
@@ -455,7 +457,7 @@ export default function ViewCustomer(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                {customerAssets.map((row) => (
+                                    {customerAssets.map((row) => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell align="left">{row.id}</StyledTableCell>
                                             <StyledTableCell align="left">{row.assetsType.type}</StyledTableCell>
@@ -465,14 +467,14 @@ export default function ViewCustomer(props) {
                                             <StyledTableCell align="left">
                                                 <ButtonGroup>
                                                     {/* <Link to={"edit-loan-type/" + customerAssets.id} > */}
-                                                        <Button
-                                                            size="sm"
-                                                            variant="outline-danger"
-                                                      
-                                                        >
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline-danger"
+
+                                                    >
                                                         {/* 
                                                         mouse hover message to edit Button           */}
-                                                            <HtmlTooltip
+                                                        <HtmlTooltip
                                                             title={
                                                                 <React.Fragment>
                                                                     <Typography color="inherit">Edit Asset</Typography>
@@ -480,12 +482,12 @@ export default function ViewCustomer(props) {
                                                             }
                                                         ><EditIcon />
                                                         </HtmlTooltip>
-                                                        </Button>
-                                                        {/* </Link> */}
+                                                    </Button>
+                                                    {/* </Link> */}
                                                 </ButtonGroup>
                                             </StyledTableCell>
                                         </StyledTableRow>
-                                ))}
+                                    ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>

@@ -159,9 +159,6 @@ export default function NewLoanType(props) {
   return (
     <AppTemplate>
       <div className="new-loan-type">
-        {/* <Typography variant="h4" gutterBottom>
-        Add New Loan Type
-      </Typography> */}
         <form autoComplete="off" onSubmit={SubmitNewLoanType}>
           <Grid container spacing={1}>
             <Grid item xs={5}>

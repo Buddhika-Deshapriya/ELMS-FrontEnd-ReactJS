@@ -2,27 +2,58 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import { createMuiTheme, makeStyles, withStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, withStyles, } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import { green } from '@material-ui/core/colors';
+import {
+    Button, ButtonGroup,
+    TableCell,
+    TableContainer, TableHead, TableRow, Container,Popover,Typography
+} from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import BackupIcon from '@material-ui/icons/Backup';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
 import { Grid, Paper, Box, Table, TableBody } from '@material-ui/core';
 const { baseUrl } = appConfig;
+
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+    
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+    root: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+}))(TableRow);
+
+const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(12),
+      border: '1px solid #dadde9',
+    },
+  }))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,6 +76,15 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: {
         margin: theme.spacing(1),
+    },
+    table: {
+        minWidth: 700,
+    },
+    popover: {
+        pointerEvents: 'none',
+    },
+    paper: {
+        padding: theme.spacing(1),
     },
 }));
 
@@ -70,6 +110,9 @@ export default function ViewCustomer(props) {
     const [gender, ViewGender] = useState([]);
     const [marriedStatus, ViewMarriedStatus] = useState([]);
     const [familyType, ViewFamilyType] = useState([]);
+    const [assetsType, ViewAssetsType] = useState([]);
+    const [customerAssets, ViewCustomerAssets] = useState([]);
+    const [assetsStatus, ViewAssetsStatus] = useState([]);
 
     const customerId = props.match.params.id;
 
@@ -86,6 +129,10 @@ export default function ViewCustomer(props) {
                 ViewGender(response.data.gender);
                 ViewMarriedStatus(response.data.marriedStatus);
                 ViewFamilyType(response.data.familyType);
+                ViewCustomerAssets(response.data.customerAssets);
+                ViewAssetsType(response.data.customerAssets.id.assetsType);
+                ViewAssetsStatus(response.data.customerAssets.assetsStatus);
+
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -353,7 +400,7 @@ export default function ViewCustomer(props) {
                         </Paper>
                         <br />
                         {/* 
-                        Edit button and back button */}
+                        Edit button and back button and see customer accounts button*/}
                         <Grid item xs={6}>
                             <Paper className={classes.width}>
                                 <ButtonGroup>
@@ -389,9 +436,62 @@ export default function ViewCustomer(props) {
                         </Grid>
                     </Grid>
                 </Grid>
-
+                <br />
+                <Button variant="contained" color="primary" className={classes.margin}>
+                    Add New Asset
+                </Button>
+                <Grid item xs={12} sm={10}>
+                    <Paper>
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="customized table">
+                                <TableHead>
+                                    <TableRow>
+                                        <StyledTableCell align="left"></StyledTableCell>
+                                        <StyledTableCell align="left">Assets Type</StyledTableCell>
+                                        <StyledTableCell align="left">Description</StyledTableCell>
+                                        <StyledTableCell align="left">Value</StyledTableCell>
+                                        <StyledTableCell align="left">Status</StyledTableCell>
+                                        <StyledTableCell align="left"></StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                {customerAssets.map((row) => (
+                                        <StyledTableRow key={row.id}>
+                                            <StyledTableCell align="left">{row.id}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.assetsType.type}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.description}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.value}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.assetsStatus.type == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}</StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <ButtonGroup>
+                                                    {/* <Link to={"edit-loan-type/" + customerAssets.id} > */}
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-danger"
+                                                      
+                                                        >
+                                                        {/* 
+                                                        mouse hover message to edit Button           */}
+                                                            <HtmlTooltip
+                                                            title={
+                                                                <React.Fragment>
+                                                                    <Typography color="inherit">Edit Asset</Typography>
+                                                                </React.Fragment>
+                                                            }
+                                                        ><EditIcon />
+                                                        </HtmlTooltip>
+                                                        </Button>
+                                                        {/* </Link> */}
+                                                </ButtonGroup>
+                                            </StyledTableCell>
+                                        </StyledTableRow>
+                                ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Paper>
+                </Grid>
             </div>
-
         </AppTemplate >
     );
 

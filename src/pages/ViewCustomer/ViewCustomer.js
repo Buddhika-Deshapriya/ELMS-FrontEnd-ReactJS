@@ -24,6 +24,7 @@ import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
 import { Grid, Paper, Box, Table, TableBody } from '@material-ui/core';
+import NewAsset from '../NewAsset/NewAsset';
 const { baseUrl } = appConfig;
 
 const StyledTableCell = withStyles((theme) => ({
@@ -466,7 +467,7 @@ export default function ViewCustomer(props) {
                                             <StyledTableCell align="left">{row.assetsStatus.type == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}</StyledTableCell>
                                             <StyledTableCell align="left">
                                                 <ButtonGroup>
-                                                    {/* <Link to={"edit-loan-type/" + customerAssets.id} > */}
+                                                    <Link to={"/edit-asset/" + row.id} >
                                                     <Button
                                                         size="sm"
                                                         variant="outline-danger"
@@ -483,7 +484,7 @@ export default function ViewCustomer(props) {
                                                         ><EditIcon />
                                                         </HtmlTooltip>
                                                     </Button>
-                                                    {/* </Link> */}
+                                                    </Link>
                                                 </ButtonGroup>
                                             </StyledTableCell>
                                         </StyledTableRow>

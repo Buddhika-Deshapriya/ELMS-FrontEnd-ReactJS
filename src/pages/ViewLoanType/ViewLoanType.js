@@ -46,8 +46,7 @@ export default function ViewLoanType(props) {
     const [LoanType, ViewLoanType] = useState([]);
     const [status, ViewStatus] = useState([]);
     const [user, ViewUser] = useState([]);
-    //console.log('Loan Types', LoanType);
-    // console.log('props', props);
+    
     const loanTypeId = props.match.params.id;
 
     const fetchLoanTypeData = async (loanTypeId) => {

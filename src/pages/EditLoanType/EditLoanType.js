@@ -88,12 +88,6 @@ export default function EditLoanType(props) {
             status:response.data.status.id,
             userid:response.data.createdUser.id
         })
-        // console.log('format',{
-        //     ...newLoan,
-        //     ...response.data,
-        //     status:response.data.status.id
-        // });
-
       })
   };
   
@@ -179,9 +173,6 @@ export default function EditLoanType(props) {
   return (
     <AppTemplate>
       <div className="edit-loan-type">
-        {/* <Typography variant="h4" gutterBottom>
-        Add New Loan Type
-      </Typography> */}
         <form autoComplete="off" onSubmit={UpdateLoanType}>
           <Grid container spacing={1}>
             <Grid item xs={5}>

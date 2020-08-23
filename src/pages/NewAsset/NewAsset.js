@@ -100,7 +100,6 @@ export default function NewAsset(props) {
         const data = {
             assetsType: newAsset.assetsType,
             description: newAsset.description,
-
             assetsStatus: {
                 id: newAsset.assetsStatus,
             },

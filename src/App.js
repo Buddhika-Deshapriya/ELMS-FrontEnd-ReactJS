@@ -19,6 +19,7 @@ import EditLoanType from './pages/EditLoanType/EditLoanType';
 import ViewLoanType from './pages/ViewLoanType/ViewLoanType';
 import ViewCustomer from './pages/ViewCustomer/ViewCustomer';
 import NewAsset from './pages/NewAsset/NewAsset';
+import EditAsset from './pages/EditAsset/EditAsset';
 
 // import EditCustomer from './pages/EditCustomer/EditCustomer';
 
@@ -73,7 +74,8 @@ export default function App (props) {
         <Route path="/edit-loan-type/:id" exact component={EditLoanType} />
         <Route path="/view-loan-type/:id" exact component={ViewLoanType} />
         <Route path="/view-customer/:id" exact component={ViewCustomer} />
-        <Route path="/new-asset" exact component={NewAsset} />
+        <Route path="/new-asset" exact component={NewAsset} />\
+        <Route path="/edit-asset/:id" exact component={EditAsset} />
 
         {/* <Route path="/edit-customer/:id" exact component={EditCustomer} /> */}
 

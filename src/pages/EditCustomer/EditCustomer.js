@@ -11,10 +11,9 @@
 
 // } from '@material-ui/core';
 
-// import DeleteIcon from '@material-ui/icons/Delete';
 // import SendIcon from '@material-ui/icons/Send';
 // import UpdateIcon from '@material-ui/icons/Update';
-
+// import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 // import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 // import { appConfig } from '../../configs/app.config';
@@ -42,26 +41,30 @@
     
 //   const classes = useStyles();
 //   const [status, setStatus] = useState([]);
+//   const [gender, setGender] = useState([]);
+
 //   //Setup initial State
-//   const initLoan  = {
-//     title: null,
+//   const initCustomer = {
 //     first_name: null,
 //     middle_name: null,
+//     status: null,
 //     last_name: null,
-//     gender: null,
-//     dob: null,
-//     nic: null,
 //     address: null,
-//     telephone: null,
-//     mobile: null,
+//     nic: null,
+//     title: null,
+//     membershipType: null,
+//     membership_no: null,
+//     familyType: null,
+//     dob: null,
 //     email: null,
 //     marriedStatus: null,
-//     familyIncome: null,
+//     mobile: null,
+//     telephone: null,
+//     gender: null,
 //     total_members: null,
-//     income: null,
-//     passport: null,
-//     membershipType: null,
-//     membership_no: null
+//     passport:null,
+//     income:null,
+//     familyIncome:null
 //   }
 //   const [newCustomer, setNewCustomer] = useState(initCustomer );
 //   const resetData  = () => {
@@ -78,7 +81,7 @@
 
 
 //   //Get Common Status
-//   const fetchLoanTypeStatus = async () => {
+//   const fetchCustomerStatus = async () => {
 //     axios.get(`${baseUrl}/commonstatus/list`)
 //       .then(response => {
 //         console.log('response', response);
@@ -86,22 +89,44 @@
 //       })
 //   };
 
-//   //Get Customer details by ID
-//   const fetchCustomerData = async (CustomerId) => {
-//     axios.get(`${baseUrl}/customer/list/` + CustomerId)
+//    //Get gender details
+//    const fetchCustomerGender = async () => {
+//     axios.get(`${baseUrl}/gender/list`)
 //       .then(response => {
 //         console.log('response', response);
-//         setNewCustomer({
+//         setGender(response.data);
+//       })
+//   };
+
+//    //Get title details
+//    const fetchCustomerTitle = async () => {
+//     axios.get(`${baseUrl}/title/list`)
+//       .then(response => {
+//         console.log('response', response);
+//         setTitle(response.data);
+//       })
+//   };
+
+//   //Get family type details
+//   const fetchCustomerTitle = async () => {
+//     axios.get(`${baseUrl}/familytype/list`)
+//       .then(response => {
+//         console.log('response', response);
+//         setFamilyType(response.data);
+//       })
+//   };
+
+//   //Get Loan Type details by ID
+//   const fetchCustomerData = async (customerId) => {
+//     axios.get(`${baseUrl}/customer/list/` + customerId)
+//       .then(response => {
+//         console.log('response', response);
+//         setNewLoan({
 //             ...newCustomer,
 //             ...response.data,
-//             status:response.data.status.id
+//             status:response.data.id.customerStatus.id,
+//             userid:response.data.createdUser.id
 //         })
-//         // console.log('format',{
-//         //     ...newCustomer,
-//         //     ...response.data,
-//         //     status:response.data.status.id
-//         // });
-
 //       })
 //   };
   
@@ -110,24 +135,15 @@
 
 //   //Error Handling
 //   const initErrors  = {
-//     title: '',
-//     first_name: '',
-//     middle_name: '',
-//     last_name: '',
-//     gender: '',
-//     dob: '',
-//     nic: '',
-//     address: '',
-//     telephone: '',
-//     mobile: '',
-//     email: '',
-//     marriedStatus: '',
-//     familyIncome: '',
-//     total_members: '',
-//     income: '',
-//     passport: '',
-//     membershipType: '',
-//     membership_no: ''
+//     loanType: '',
+//     description: '',
+//     status: '',
+//     maxAmount: '',
+//     minAmount: '',
+//     minInterestRate: '',
+//     maxInterestRate: '',
+//     maxTimePeriod: '',
+//     minTimePeriod: ''
 //   }
 //   const [errors, setErrors] = useState(initErrors);
 //   const resetError  = () => {
@@ -136,42 +152,33 @@
   
 
  
-//   const UpdateCustomer = (e) => {
+//   const UpdateLoanType = (e) => {
 //     e.preventDefault();
 //     const data = {
-//       id : newCustomer.id,
-//       mobile: newCustomer.mobile,
-//       telephone: newCustomer.telephone,
-//       email: newCustomer.email,
-//       address: newCustomer.address,
-//       familyIncome: newCustomer.familyIncome,
-//       total_members: newCustomer.total_members,
-//       income: newCustomer.income,
-//       familyType:newCustomer.familyType,
-//       marriedStatus: newCustomer.marriedStatus,
-
+//       id : newLoan.id,
+//       loanType: newLoan.loanType,
+//       description: newLoan.description,
 
 //       status: {
-//         id: newCustomer.status,
+//         id: newLoan.status,
 //       },
-//       membership_no: newCustomer.membership_no,
-//       title: newCustomer.title,
-//       first_name: newCustomer.first_name,
-//       middle_name: newCustomer.middle_name,
-//       last_name: newCustomer.last_name,
-//       gender: newCustomer.gender,
-//       dob: newCustomer.dob,
-//       nic: newCustomer.nic,
-//       membershipType: newCustomer.membershipType,
-//       passport: newCustomer.passport
-
+//       maxAmount: newLoan.maxAmount,
+//       minAmount: newLoan.minAmount,
+//       minInterestRate: newLoan.minInterestRate,
+//       maxInterestRate: newLoan.maxInterestRate,
+//       maxTimePeriod: newLoan.maxTimePeriod,
+//       minTimePeriod: newLoan.minTimePeriod,
+//       createdDate: newLoan.createdDate,
+//       createdUser: {
+//         id: newLoan.userid,
+//       }
 
 //     };
 //     console.log('data', data);
-//     axios.post(`${baseUrl}/customer/add`, data)
+//     axios.post(`${baseUrl}/loantype/add`, data)
 //       .then(function (response) {
 //         //console.log(response)
-//         utils.showSuccess("Customer Updated Successfully.");
+//         utils.showSuccess("Loan Updated Successfully.");
 //       })
 //       .catch(_errors => {
 //         //console.log('_errors',_errors);
@@ -199,32 +206,28 @@
 //   //This is same as componentdidmount()
 //   useEffect(() => {
 //     fetchCustomerStatus();
+//     fetchCustomerGender();
 //     fetchCustomerData(customerId);
 //   }, []);
 
 //   return (
 //     <AppTemplate>
-//       <div className="edit-customer">
-//         {/* <Typography variant="h4" gutterBottom>
-//         Add New Customer
-//       </Typography> */}
-//         <form autoComplete="off" onSubmit={UpdateCustomer}>
+//       <div className="edit-loan-type">
+//         <form autoComplete="off" onSubmit={UpdateLoanType}>
 //           <Grid container spacing={1}>
 //             <Grid item xs={5}>
 //               <Paper variant="outlined" >
 //                 <Box width="auto" p={1} my={0.5}>
 //                   <TextField
-//                     name="address "
-//                     value={newCustomer.address}
+//                     name="loanType"
+//                     value={newLoan.loanType}
 //                     id="outlined-full-width"
-//                     label="Address"
-//                     placeholder="Enter Address"
-//                     helperText={errors.address}
+//                     label="Loan Type Name"
+//                     placeholder="Enter Loan Type Name"
+//                     helperText={errors.loanType}
 //                     fullWidth
-//                     multiline
-//                     rows={4}
 //                     size="small"
-//                     error={errors.address ? 'error' : ''}
+//                     error={errors.loanType ? 'error' : ''}
                     
 //                     margin="normal"
 //                     InputLabelProps={{
@@ -234,13 +237,15 @@
 //                     onChange={onChange}
 //                   />
 //                   <TextField
-//                     name="telephone"
-//                     value={newCustomer.telephone}
+//                     name="description"
+//                     value={newLoan.description}
 //                     id="outlined-multiline-static"
-//                     label="Telephone No"
-//                     placeholder="Enter Telephone No"
-//                     helperText={errors.telephone}
-//                     error={errors.telephone ? 'error' : ''}
+//                     label="Description"
+//                     placeholder="Enter Description"
+//                     helperText={errors.description}
+//                     error={errors.description ? 'error' : ''}
+//                     multiline
+//                     rows={4}
 //                     fullWidth
 //                     variant="outlined"
 //                     InputLabelProps={{
@@ -248,112 +253,6 @@
 //                     }}
 //                     onChange={onChange}
 //                   />
-//                   <TextField
-//                     name="mobile"
-//                     value={newCustomer.mobile}
-//                     id="outlined-multiline-static"
-//                     label="Mobile No"
-//                     placeholder="Enter Mobile No"
-//                     helperText={errors.mobile}
-//                     error={errors.mobile ? 'error' : ''}
-//                     fullWidth
-//                     variant="outlined"
-//                     InputLabelProps={{
-//                       shrink: true,
-//                     }}
-//                     onChange={onChange}
-//                   />
-//                   <TextField
-//                     name="email"
-//                     value={newCustomer.email}
-//                     id="outlined-multiline-static"
-//                     label="Email"
-//                     placeholder="Enter Email"
-//                     helperText={errors.email}
-//                     error={errors.email ? 'error' : ''}
-//                     fullWidth
-//                     variant="outlined"
-//                     InputLabelProps={{
-//                       shrink: true,
-//                     }}
-//                     onChange={onChange}
-//                   />
-//                   {/* <TextField
-//                     name="marriedStatus"
-//                     value={newCustomer.marriedStatus}
-//                     id="outlined-multiline-static"
-//                     label="Married Status"
-//                     placeholder="Enter Family Type"
-//                     helperText={errors.familyType}
-//                     error={errors.familyType ? 'error' : ''}
-//                     fullWidth
-//                     variant="outlined"
-//                     InputLabelProps={{
-//                       shrink: true,
-//                     }}
-//                     onChange={onChange}
-//                   /> */}
-//                   <TextField
-//                     name="familyType"
-//                     value={newCustomer.familyType}
-//                     id="outlined-multiline-static"
-//                     label="Family Type"
-//                     placeholder="Enter Family Type"
-//                     helperText={errors.familyType}
-//                     error={errors.familyType ? 'error' : ''}
-//                     fullWidth
-//                     variant="outlined"
-//                     InputLabelProps={{
-//                       shrink: true,
-//                     }}
-//                     onChange={onChange}
-//                   />
-//                   <TextField
-//                     name="income"
-//                     value={newCustomer.income}
-//                     id="outlined-multiline-static"
-//                     label="Income"
-//                     placeholder="Enter Income"
-//                     helperText={errors.income}
-//                     error={errors.income ? 'error' : ''}
-//                     fullWidth
-//                     variant="outlined"
-//                     InputLabelProps={{
-//                       shrink: true,
-//                     }}
-//                     onChange={onChange}
-//                   />
-//                   <TextField
-//                     name="familyIncome"
-//                     value={newCustomer.familyIncome}
-//                     id="outlined-multiline-static"
-//                     label="Family Income"
-//                     placeholder="Enter Family Income"
-//                     helperText={errors.familyIncome}
-//                     error={errors.familyIncome ? 'error' : ''}
-//                     fullWidth
-//                     variant="outlined"
-//                     InputLabelProps={{
-//                       shrink: true,
-//                     }}
-//                     onChange={onChange}
-//                   />
-//                   <TextField
-//                     name="total_members"
-//                     value={newCustomer.total_members}
-//                     id="outlined-multiline-static"
-//                     label="Total Members"
-//                     placeholder="Enter Total Members"
-//                     helperText={errors.total_members}
-//                     error={errors.total_members ? 'error' : ''}
-//                     fullWidth
-//                     variant="outlined"
-//                     InputLabelProps={{
-//                       shrink: true,
-//                     }}
-//                     onChange={onChange}
-//                   />
-                  
 
 //                   <FormControl className={classes.formControl}>
 //                     <InputLabel shrink htmlFor="age-native-label-placeholder">
@@ -361,7 +260,7 @@
 //                     </InputLabel>
 //                     <Select
 //                       name="status"
-//                       value={newCustomer.status}
+//                       value={newLoan.status}
 //                       displayEmpty
 //                       className={classes.selectEmpty}
 //                       inputProps={{ 'aria-label': 'Without label' }}
@@ -506,7 +405,7 @@
 //                 variant="contained"
 //                 color="secondary"
 //                 className={classes.button}
-//                 startIcon={<DeleteIcon />}
+//                 startIcon={<RotateLeftIcon />}
 //                 onClick={resetError}
 //               >
 //                 Reset

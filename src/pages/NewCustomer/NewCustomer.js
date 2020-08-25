@@ -17,6 +17,8 @@ import SendIcon from '@material-ui/icons/Send';
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
+import SystemUser from "../../helper/user";
+
 const { baseUrl } = appConfig;
 
 const useStyles = makeStyles((theme) => ({
@@ -44,15 +46,16 @@ export default function NewCustomer(props) {
 
     const classes = useStyles();
     const [state, setState] = React.useState({
-
+        
     });
-    const [titles, setTitles] = useState([]);
-    const [genders, setGenders] = useState([]);
+    const [title, setTitles] = useState([]);
+    const [gender, setGenders] = useState([]);
     const [marialStatus, setMarialStatus] = useState([]);
     const [membershipType, setMembershipType] = useState([]);
     const [familyType, setFamilyType] = useState([]);
     const [status, setStatus] = useState([]);
-
+    const [dateTime, setDateTime] = useState(new Date());
+    const [userId, setUserID] = useState([]);
 
     //Setup initial State
     const initCustomer = {
@@ -69,10 +72,16 @@ export default function NewCustomer(props) {
         familyIncome: null,
         total_members: null,
         income: null,
-        passport: null
+        passport: null,
+        membershipType: null,
+        familyType: null,
+        customerStatus: null,
+        title: null,
+        gender: null,
+        marriedStatus: null,
 
     }
-    
+
     const [newCustomer, setNewCustomer] = useState(initCustomer);
     const resetData = () => {
         setNewCustomer(initCustomer)
@@ -93,6 +102,12 @@ export default function NewCustomer(props) {
             })
     };
 
+    //Get Logged in user id
+    const getCurrentUser = async () => {
+        //console.log(SystemUser.get())
+        setUserID(SystemUser.get().id);
+    };
+
     //Get customer Title
     const fetchCustomerTitle = async () => {
         axios.get(`${baseUrl}/title/list/`)
@@ -102,7 +117,7 @@ export default function NewCustomer(props) {
             })
     };
 
-    //Get customer Title
+    //Get customer Gender
     const fetchCustomerGender = async () => {
         axios.get(`${baseUrl}/gender/list/`)
             .then(response => {
@@ -137,7 +152,7 @@ export default function NewCustomer(props) {
                 setFamilyType(response.data);
             })
     };
-  
+
 
     //Error Handling
     const initErrors = {
@@ -151,6 +166,7 @@ export default function NewCustomer(props) {
         mobile: '',
         email: '',
         familyIncome: '',
+        familyType: '',
         total_members: '',
         income: '',
         passport: '',
@@ -169,7 +185,6 @@ export default function NewCustomer(props) {
         e.preventDefault();
         const data = {
 
-            
             title: {
                 id: newCustomer.title,
             },
@@ -179,7 +194,7 @@ export default function NewCustomer(props) {
             marriedStatus: {
                 id: newCustomer.marriedStatus,
             },
-            memebershipType: {
+            membershipType: {
                 id: newCustomer.membershipType,
             },
             familyType: {
@@ -201,10 +216,13 @@ export default function NewCustomer(props) {
             familyIncome: newCustomer.familyIncome,
             total_members: newCustomer.total_members,
 
-            status: {
+            customerStatus: {
                 id: newCustomer.status,
-            }
-
+            },
+            createdDate: dateTime,
+            createdUser: {
+                id: userId,
+            },
         };
         console.log('data', data);
         axios.post(`${baseUrl}/customer/add`, data)
@@ -243,6 +261,7 @@ export default function NewCustomer(props) {
         fetchCustomerMembershipType();
         fetchCustomerFamilyType();
         fetchCustomerStatus();
+        getCurrentUser();
     }, []);
 
     return (
@@ -255,6 +274,7 @@ export default function NewCustomer(props) {
                                 <TextField
                                     id="outlined-helperText"
                                     label="Membership No"
+                                    name="membership_no"
                                     variant="outlined"
                                     helperText={errors.membership_no}
                                     placeholder="Enter Membership No"
@@ -267,6 +287,7 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     id="outlined-helperText"
+                                    name="nic"
                                     label="NIC Number"
                                     variant="outlined"
                                     helperText={errors.nic}
@@ -281,7 +302,7 @@ export default function NewCustomer(props) {
                             </Paper>
                         </Grid>
                     </Grid>
-                    <br /> 
+                    <br />
 
                     <Paper variant="outlined" >
                         <div>
@@ -300,7 +321,7 @@ export default function NewCustomer(props) {
 
                                     </MenuItem>
                                     {
-                                        titles.map((eachRow, index) => {
+                                        title.map((eachRow, index) => {
                                             return (
                                                 <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
                                             );
@@ -312,7 +333,7 @@ export default function NewCustomer(props) {
                                 <InputLabel id="demo-simple-select-filled-label">Gender</InputLabel>
 
                                 <Select
-                                    name="Gender"
+                                    name="gender"
                                     //value={newCustomer.status}
                                     displayEmpty
                                     className={classes.selectEmpty}
@@ -323,7 +344,7 @@ export default function NewCustomer(props) {
 
                                     </MenuItem>
                                     {
-                                        genders.map((eachRow, index) => {
+                                        gender.map((eachRow, index) => {
                                             return (
                                                 <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
                                             );
@@ -436,14 +457,14 @@ export default function NewCustomer(props) {
                                     }}
                                     onChange={onChange}
                                 />
-                               <TextField
+                                <TextField
                                     name="last_name"
                                     //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Last Name"
                                     placeholder="Enter Last Name"
                                     variant="outlined"
-                                    helperText= "*Not Required"
+                                    helperText="*Not Required"
                                     style={{ margin: 8 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -472,7 +493,7 @@ export default function NewCustomer(props) {
                                     label="Email Address"
                                     placeholder="Enter Email"
                                     variant="outlined"
-                                    helperText= "*Not Required"
+                                    helperText="*Not Required"
                                     style={{ margin: 8 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -501,7 +522,7 @@ export default function NewCustomer(props) {
                         </Grid>
                         <Grid item xs={5}>
                             <Paper variant="outlined" >
-                            <TextField
+                                <TextField
                                     name="telephone"
                                     //value={newLoan.maxAmount}
                                     id="outlined-helperText"
@@ -612,7 +633,7 @@ export default function NewCustomer(props) {
                                         onChange={onChange}
                                     >
                                         <MenuItem value="" disabled>
-                                        
+
                                         </MenuItem>
                                         {
                                             status.map((eachRow, index) => {

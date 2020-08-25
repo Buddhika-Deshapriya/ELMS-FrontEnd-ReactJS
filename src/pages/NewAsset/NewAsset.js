@@ -16,7 +16,6 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
-import CustomerList from '../CustomerList/CustomerList';
 const { baseUrl } = appConfig;
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +45,8 @@ export default function NewAsset(props) {
     const classes = useStyles();
     const [assetsStatus, setAssetsStatus] = useState([]);
     const [assetsType, setAssetsType] = useState([]);
+
+    const customerId = props.match.params.id
 
     //Setup initial State
     const initAsset = {
@@ -86,7 +87,7 @@ export default function NewAsset(props) {
         assetsStatus: '',
         assetsType: '',
         description: '',
-        value: '',
+        value: ''
     }
 
     const [errors, setErrors] = useState(initErrors);
@@ -98,12 +99,20 @@ export default function NewAsset(props) {
     const SubmitNewAsset = (e) => {
         e.preventDefault();
         const data = {
-            assetsType: newAsset.assetsType,
+            id:newAsset.id,
             description: newAsset.description,
+            assetsType: {
+                id: newAsset.assetsType,
+            },
             assetsStatus: {
                 id: newAsset.assetsStatus,
             },
             value: newAsset.value,
+            customers:[
+                {
+                  id:newAsset.customerId,
+                }
+              ]
         };
 
         console.log('data', data);
@@ -144,7 +153,7 @@ export default function NewAsset(props) {
     return (
         <AppTemplate>
             <div className="new-asset">
-                <form autoComplete="off" onSubmit={SubmitNewAsset}>
+                <form autoComplete="off" noValidate onSubmit={SubmitNewAsset}>
                     <Grid container spacing={1}>
                         <Grid item xs={8}>
                             <Paper variant="outlined" >
@@ -157,11 +166,10 @@ export default function NewAsset(props) {
                                         <Select
                                             variant="outlined"
                                             name="assetsType"
-                                            //value={newLoan.status}
                                             displayEmpty
                                             className={classes.selectEmpty}
                                             inputProps={{ 'aria-label': 'Without label' }}
-                                            error={errors.status ? 'error' : ''}
+                                            error={errors.assetsType ? 'error' : ''}
                                             onChange={onChange}
                                         >
                                             <MenuItem value="" disabled>
@@ -221,13 +229,13 @@ export default function NewAsset(props) {
                                 <FormHelperText>{errors.assetsStatus}</FormHelperText>
                                 <Select
                                     variant="outlined"
-                                    name="status"
+                                    name="assetsStatus"
                                     //value={newLoan.status}
                                     displayEmpty
                                     label="Status"
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
-                                    error={errors.status ? 'error' : ''}
+                                    error={errors.assetsStatus ? 'error' : ''}
                                     onChange={onChange}
                                     InputLabelProps={{
                                         shrink: true,

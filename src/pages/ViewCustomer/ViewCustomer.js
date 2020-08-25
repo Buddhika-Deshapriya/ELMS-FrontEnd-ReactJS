@@ -404,7 +404,7 @@ export default function ViewCustomer(props) {
                         Edit button and back button and see customer accounts button*/}
                         <Grid item xs={6}>
                             <Paper className={classes.width}>
-                                <ButtonGroup>
+                                <ButtonGroup disableFocusRipple>
                                     <Link>
                                         <Button
                                             variant="contained"
@@ -416,7 +416,7 @@ export default function ViewCustomer(props) {
                                         </Button>
                                         {" "}
                                         <ButtonGroup>
-                                            <Link to={"/customer-list"} >
+                                            <Link to={"/customer-list"}>
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
@@ -466,11 +466,11 @@ export default function ViewCustomer(props) {
                                             <StyledTableCell align="left">{row.value}</StyledTableCell>
                                             <StyledTableCell align="left">{row.assetsStatus.type == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}</StyledTableCell>
                                             <StyledTableCell align="left">
-                                                <ButtonGroup>
+                                                <ButtonGroup disableFocusRipple>
                                                     <Link to={"/edit-asset/" + row.id} >
                                                     <Button
-                                                        size="sm"
-                                                        variant="outline-danger"
+                                                        size="small"
+                                                        variant="outlined"
 
                                                     >
                                                         {/* 

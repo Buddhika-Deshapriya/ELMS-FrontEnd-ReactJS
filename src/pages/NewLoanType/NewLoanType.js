@@ -41,7 +41,7 @@ export default function NewLoanType(props) {
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [dateTime, setDateTime] = useState(new Date());
-  const [userId, setUserdID] = useState([]);
+  const [userId, setUserID] = useState([]);
    //Setup initial State
    const initLoan  = {
     loanType: null,
@@ -62,7 +62,7 @@ export default function NewLoanType(props) {
   //Get Logged in user id
   const getCurrentUser = async () => {
     //console.log(SystemUser.get())
-    setUserdID(SystemUser.get().id);
+    setUserID(SystemUser.get().id);
   };
 
   //Get Common Status

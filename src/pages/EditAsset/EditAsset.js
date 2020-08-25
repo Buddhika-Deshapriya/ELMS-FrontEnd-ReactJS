@@ -57,8 +57,6 @@ export default function EditAsset(props) {
   }
 
   const assetId = props.match.params.id
-  console.log('req_id', assetId);
-
 
   const onChange = (e) => {
     e.persist();
@@ -93,7 +91,7 @@ export default function EditAsset(props) {
             ...response.data,
             assetsStatus:response.data.assetsStatus.id,
             assetsType:response.data.assetsType.id,
-            customerId:response.data.customers[0].id,
+            customerId:response.data.customers.id,
 
         })
       })

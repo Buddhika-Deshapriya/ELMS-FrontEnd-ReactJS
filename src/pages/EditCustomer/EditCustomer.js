@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     },
     grid: {
         marginLeft: theme.spacing(1),
+    },
+    width: {
+        width:615
     }
 
 }));
@@ -214,7 +217,7 @@ export default function EditLoanType(props) {
     const UpdateCustomer = (e) => {
         e.preventDefault();
         const data = {
-            id:newCustomer.id,
+            id: newCustomer.id,
             title: {
                 id: newCustomer.title,
             },
@@ -313,6 +316,7 @@ export default function EditLoanType(props) {
                                         className={classes.selectEmpty}
                                         inputProps={{ 'aria-label': 'Without label' }}
                                         onChange={onChange}
+                                        readOnly="readonly"
                                     >
                                         <MenuItem value="" disabled>
                                         </MenuItem>
@@ -336,6 +340,7 @@ export default function EditLoanType(props) {
                                         className={classes.selectEmpty}
                                         inputProps={{ 'aria-label': 'Without label' }}
                                         onChange={onChange}
+                                        readOnly="readonly"
                                     >
                                         <MenuItem value="" disabled>
 
@@ -360,6 +365,7 @@ export default function EditLoanType(props) {
                                         className={classes.selectEmpty}
                                         inputProps={{ 'aria-label': 'Without label' }}
                                         onChange={onChange}
+                                        readOnly="readonly"
                                     >
                                         <MenuItem value="" disabled>
 
@@ -482,7 +488,7 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                 />
                                 <br />
-                            <FormControl className={classes.formControl}>
+                                <FormControl className={classes.formControl}>
                                     <InputLabel shrink htmlFor="age-native-label-placeholder">
                                         Married Status
                                     </InputLabel>
@@ -556,10 +562,9 @@ export default function EditLoanType(props) {
                                 </FormControl>
                             </Paper>
                         </Grid>
-                        <br />
                         <Grid item xs={6}>
                             <Paper variant="outlined">
-                            <TextField
+                                <TextField
                                     name="first_name"
                                     value={newCustomer.first_name}
                                     id="outlined-multiline-static"
@@ -574,7 +579,7 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                     InputProps={{
                                         readOnly: true,
-                                      }}
+                                    }}
                                 />
                                 <TextField
                                     name="middle_name"
@@ -591,7 +596,7 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                     InputProps={{
                                         readOnly: true,
-                                      }}
+                                    }}
                                 />
                                 <TextField
                                     name="last_name"
@@ -608,7 +613,7 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                     InputProps={{
                                         readOnly: true,
-                                      }}
+                                    }}
                                 />
                                 <TextField
                                     name="membership_no"
@@ -625,7 +630,7 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                     InputProps={{
                                         readOnly: true,
-                                      }}
+                                    }}
                                 />
                                 <TextField
                                     name="nic"
@@ -642,7 +647,7 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                     InputProps={{
                                         readOnly: true,
-                                      }}
+                                    }}
                                 />
                                 <TextField
                                     name="passport"
@@ -659,7 +664,7 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                     InputProps={{
                                         readOnly: true,
-                                      }}
+                                    }}
                                 />
                                 <TextField
                                     name="dob"
@@ -677,33 +682,34 @@ export default function EditLoanType(props) {
                                     onChange={onChange}
                                     InputProps={{
                                         readOnly: true,
-                                      }}
+                                    }}
                                 />
                             </Paper>
                         </Grid>
-                        <Paper variant="outlined" >
-                            <div>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    endIcon={<UpdateIcon />}
-                                >
-                                    Update
+                    </Grid>
+                    <Grid>
+                        <br />
+                        <Paper variant="outlined" className={classes.width}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                endIcon={<UpdateIcon />}
+                            >
+                                Update
                             </Button>
-                                {" "}
-                                <Button
-                                    type="reset"
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.button}
-                                    startIcon={<RotateLeftIcon />}
-                                    onClick={resetError}
-                                >   
-                                    Reset
+                            {" "}
+                            <Button
+                                type="reset"
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                startIcon={<RotateLeftIcon />}
+                                onClick={resetError}
+                            >
+                                Reset
                         </Button>
-                            </div>
                         </Paper>
                     </Grid>
                 </form>

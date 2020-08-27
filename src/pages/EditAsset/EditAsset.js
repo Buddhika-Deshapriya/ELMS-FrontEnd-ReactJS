@@ -91,7 +91,7 @@ export default function EditAsset(props) {
             ...response.data,
             assetsStatus:response.data.assetsStatus.id,
             assetsType:response.data.assetsType.id,
-            customerId:response.data.customers.id,
+            customerId:response.data.id,
 
         })
       })
@@ -128,7 +128,8 @@ export default function EditAsset(props) {
       },
       customers:[
         {
-          id:newAsset.customerId        }
+          id:newAsset.customerId
+        }
       ]
     };
     console.log('data', data);
@@ -188,9 +189,7 @@ export default function EditAsset(props) {
                       displayEmpty
                       className={classes.selectEmpty}
                       inputProps={{ 'aria-label': 'Without label' }}
-                      InputProps={{
-                        readOnly: true,
-                      }}
+                      readOnly="readonly"
                       onChange={onChange}
                     >
                       <MenuItem value="" disabled>

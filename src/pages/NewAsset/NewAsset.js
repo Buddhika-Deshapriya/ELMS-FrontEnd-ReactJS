@@ -99,7 +99,6 @@ export default function NewAsset(props) {
     const SubmitNewAsset = (e) => {
         e.preventDefault();
         const data = {
-            id:newAsset.id,
             description: newAsset.description,
             assetsType: {
                 id: newAsset.assetsType,
@@ -230,16 +229,13 @@ export default function NewAsset(props) {
                                 <Select
                                     variant="outlined"
                                     name="assetsStatus"
-                                    //value={newLoan.status}
                                     displayEmpty
                                     label="Status"
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     error={errors.assetsStatus ? 'error' : ''}
                                     onChange={onChange}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
+                                    
                                 >
                                     <MenuItem value="" disabled>
 

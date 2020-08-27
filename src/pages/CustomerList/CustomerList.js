@@ -66,6 +66,7 @@ export default function CustomerList() {
             .then(response => {
                 console.log('response', response);
                 setCustomers(response.data);
+                
             })
             .catch(_errors => {
                 if (_errors.response) {

@@ -46,11 +46,11 @@ export default function NewCustomer(props) {
 
     const classes = useStyles();
     const [state, setState] = React.useState({
-        
+
     });
     const [title, setTitles] = useState([]);
     const [gender, setGenders] = useState([]);
-    const [marialStatus, setMarialStatus] = useState([]);
+    const [marriedStatus, setMarriedStatus] = useState([]);
     const [membershipType, setMembershipType] = useState([]);
     const [familyType, setFamilyType] = useState([]);
     const [status, setStatus] = useState([]);
@@ -78,7 +78,7 @@ export default function NewCustomer(props) {
         customerStatus: null,
         title: null,
         gender: null,
-        marriedStatus: null,
+        marriedStatus: null
 
     }
 
@@ -127,12 +127,12 @@ export default function NewCustomer(props) {
     };
 
     //Get marial status
-    const fetchCustomerMarialStatus = async () => {
+    const fetchCustomerMarriedStatus = async () => {
         axios.get(`${baseUrl}/marriedstatus/list/`)
             .then(response => {
                 console.log('response', response);
-                setMarialStatus(response.data);
-            })
+                setMarriedStatus(response.data);
+            })  
     };
 
     //Get membership type
@@ -170,10 +170,10 @@ export default function NewCustomer(props) {
         total_members: '',
         income: '',
         passport: '',
-        marriedStatus: '',
         membershipType: '',
         title: '',
         gender: '',
+        marriedStatus: '',
         customerStatus: ''
     }
     const [errors, setErrors] = useState(initErrors);
@@ -184,7 +184,6 @@ export default function NewCustomer(props) {
     const SubmitNewCustomer = (e) => {
         e.preventDefault();
         const data = {
-
             title: {
                 id: newCustomer.title,
             },
@@ -257,7 +256,7 @@ export default function NewCustomer(props) {
     useEffect(() => {
         fetchCustomerTitle();
         fetchCustomerGender();
-        fetchCustomerMarialStatus();
+        fetchCustomerMarriedStatus();
         fetchCustomerMembershipType();
         fetchCustomerFamilyType();
         fetchCustomerStatus();
@@ -303,19 +302,23 @@ export default function NewCustomer(props) {
                         </Grid>
                     </Grid>
                     <br />
-
                     <Paper variant="outlined" >
                         <div>
                             <FormControl className={classes.formControl} variant="outlined" >
-                                <InputLabel id="demo-simple-select-filled-label">Title </InputLabel>
-
+                                <InputLabel id="demo-simple-select-filled-label">
+                                    Title 
+                                </InputLabel>
+                                <FormHelperText>{errors.status}</FormHelperText>
                                 <Select
+                                    variant="outlined"
                                     name="title"
                                     //value={newLoan.status}
                                     displayEmpty
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     label="Title"
+                                    error={errors.title ? 'error' : ''}
+                                    onChange={onChange}
                                 >
                                     <MenuItem value="" disabled>
 
@@ -333,12 +336,14 @@ export default function NewCustomer(props) {
                                 <InputLabel id="demo-simple-select-filled-label">Gender</InputLabel>
 
                                 <Select
+                                    variant="outlined"
                                     name="gender"
-                                    //value={newCustomer.status}
                                     displayEmpty
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     label="Gender"
+                                    error={errors.gender ? 'error' : ''}
+                                    onChange={onChange}
                                 >
                                     <MenuItem value="" disabled>
 
@@ -353,21 +358,23 @@ export default function NewCustomer(props) {
                                 </Select>
                             </FormControl>
                             <FormControl className={classes.formControl} variant="outlined" >
-                                <InputLabel id="demo-simple-select-filled-label">Marial Status </InputLabel>
+                                <InputLabel id="demo-simple-select-filled-label">Married Status</InputLabel>
 
                                 <Select
-                                    name="marialStatus"
-                                    //value={newCustomer.status}
+                                    variant="outlined"
+                                    name="marriedStatus"
                                     displayEmpty
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
-                                    label="Marial Status"
+                                    label="Married Status"
+                                    error={errors.marriedStatus ? 'error' : ''}
+                                    onChange={onChange}
                                 >
                                     <MenuItem value="" disabled>
 
                                     </MenuItem>
                                     {
-                                        marialStatus.map((eachRow, index) => {
+                                    marriedStatus.map((eachRow, index) => {
                                             return (
                                                 <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
                                             );
@@ -379,12 +386,15 @@ export default function NewCustomer(props) {
                                 <InputLabel id="demo-simple-select-filled-label">Membership Type</InputLabel>
 
                                 <Select
+                                    variant="outlined"
                                     name="membershipType"
-                                    //value={newCustomer.status}
                                     displayEmpty
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     label="Membership Type"
+                                    error={errors.membershipType ? 'error' : ''}
+                                    onChange={onChange}
+
                                 >
                                     <MenuItem value="" disabled>
 
@@ -402,12 +412,14 @@ export default function NewCustomer(props) {
                                 <InputLabel id="demo-simple-select-filled-label">Family Type</InputLabel>
 
                                 <Select
+                                    variant="outlined"
                                     name="familyType"
-                                    //value={newCustomer.status}
                                     displayEmpty
                                     className={classes.selectEmpty}
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     label="Family Type"
+                                    error={errors.familyType ? 'error' : ''}
+                                    onChange={onChange}
                                 >
                                     <MenuItem value="" disabled>
 
@@ -625,11 +637,12 @@ export default function NewCustomer(props) {
                                         Customer Status
                                     </InputLabel>
                                     <Select
+                                        variant="outlined"
                                         name="status"
-                                        //value={newLoan.status}
                                         displayEmpty
                                         className={classes.selectEmpty}
                                         inputProps={{ 'aria-label': 'Without label' }}
+                                        error={errors.status ? 'error' : ''}
                                         onChange={onChange}
                                     >
                                         <MenuItem value="" disabled>

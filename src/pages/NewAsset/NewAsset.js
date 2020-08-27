@@ -46,8 +46,6 @@ export default function NewAsset(props) {
     const [assetsStatus, setAssetsStatus] = useState([]);
     const [assetsType, setAssetsType] = useState([]);
 
-    const customerId = props.match.params.id
-
     //Setup initial State
     const initAsset = {
         assetsType: null,
@@ -81,7 +79,6 @@ export default function NewAsset(props) {
         setNewAsset(initAsset)
     }
 
-
     //Error Handling
     const initErrors = {
         assetsStatus: '',
@@ -94,7 +91,6 @@ export default function NewAsset(props) {
     const resetError = () => {
         setErrors(initErrors)
     }
-
 
     const SubmitNewAsset = (e) => {
         e.preventDefault();
@@ -109,7 +105,7 @@ export default function NewAsset(props) {
             value: newAsset.value,
             customers:[
                 {
-                  id:newAsset.customerId,
+                  id:newAsset.id,
                 }
               ]
         };

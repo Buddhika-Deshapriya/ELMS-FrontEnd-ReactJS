@@ -308,7 +308,6 @@ export default function NewCustomer(props) {
                                 <InputLabel id="demo-simple-select-filled-label">
                                     Title 
                                 </InputLabel>
-                                <FormHelperText>{errors.status}</FormHelperText>
                                 <Select
                                     variant="outlined"
                                     name="title"

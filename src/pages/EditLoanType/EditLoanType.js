@@ -237,7 +237,6 @@ export default function EditLoanType(props) {
                         })
                       }
                     </Select>
-                    <FormHelperText>Placeholder</FormHelperText>
                   </FormControl>
                 </Box>
               </Paper>

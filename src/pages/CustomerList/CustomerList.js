@@ -151,7 +151,7 @@ export default function CustomerList() {
                                                 <StyledTableCell align="left">{row.address}</StyledTableCell>
                                                 <StyledTableCell align="left">
                                                 <ButtonGroup>
-                                                    {/* <Link to={"edit-loan-type/" + row.id} > */}
+                                                    <Link to={"edit-customer/" + row.id} >
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
@@ -168,7 +168,7 @@ export default function CustomerList() {
                                                             </HtmlTooltip>
                                                         </Button>
                                                        
-                                                        {/* </Link> */}
+                                                        </Link>
                                                 </ButtonGroup>
                                                 <ButtonGroup>
                                                 <Link to={"view-customer/" + row.id} >

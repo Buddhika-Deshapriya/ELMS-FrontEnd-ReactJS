@@ -20,8 +20,7 @@ import ViewLoanType from './pages/ViewLoanType/ViewLoanType';
 import ViewCustomer from './pages/ViewCustomer/ViewCustomer';
 import NewAsset from './pages/NewAsset/NewAsset';
 import EditAsset from './pages/EditAsset/EditAsset';
-
-// import EditCustomer from './pages/EditCustomer/EditCustomer';
+import EditCustomer from './pages/EditCustomer/EditCustomer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,8 +75,7 @@ export default function App (props) {
         <Route path="/view-customer/:id" exact component={ViewCustomer} />
         <Route path="/new-asset" exact component={NewAsset} />
         <Route path="/edit-asset/:id" exact component={EditAsset} />
-
-        {/* <Route path="/edit-customer/:id" exact component={EditCustomer} /> */}
+        <Route path="/edit-customer/:id" exact component={EditCustomer} />
 
         <Route component={ErrorPage} />
       </Switch>

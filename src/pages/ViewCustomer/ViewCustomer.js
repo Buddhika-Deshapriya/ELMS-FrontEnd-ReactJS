@@ -405,7 +405,7 @@ export default function ViewCustomer(props) {
                         <Grid item xs={6}>
                             <Paper className={classes.width}>
                                 <ButtonGroup disableFocusRipple>
-                                    <Link>
+                                    <Link to={"/edit-customer/"+ customerId}>
                                         <Button
                                             variant="contained"
                                             color="primary"

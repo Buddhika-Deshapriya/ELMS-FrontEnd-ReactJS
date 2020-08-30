@@ -52,20 +52,21 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
+const useStyles = makeStyles({
+    table: {
+        minWidth: 700,
+    },
+});
 
+export default function LoanApplicationList() {
 
-
-export default function CustomerList() {
-
-    const [customers, setCustomers] = useState([]);
-    console.log('customers', customers);
-
+    const [LoanApplication, setLoanApplications] = useState([]);
 
     const fetchData = async () => {
-        axios.get(`${baseUrl}/customer/list`)
+        axios.get(`${baseUrl}/loanapplication/list`)
             .then(response => {
                 console.log('response', response);
-                setCustomers(response.data);
+                setLoanApplications(response.data);
                 
             })
             .catch(_errors => {
@@ -96,26 +97,20 @@ export default function CustomerList() {
     useEffect(() => {
         fetchData();
     }, []);
-
-    const useStyles = makeStyles({
-        table: {
-            minWidth: 700,
-        },
-    });
     const classes = useStyles();
 
     return (
         <AppTemplate>
-            <div className="customer-list">
-                <Link to={"new-customer"} >
+            <div className="loan-application-list">
+                <Link to={"new-loan-application"} >
                     <Button
                         variant="contained"
                         color="secondary"
-                        className="new-customer-add-button"
+                        className="new-loan-application-add-button"
                         startIcon={<CloudUploadIcon />}
 
                     >
-                        New Customer
+                        New application
                     </Button>
                 </Link>
                 <br /><br /><br />
@@ -123,32 +118,32 @@ export default function CustomerList() {
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead>
                             <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
-                                <StyledTableCell>Customer Name</StyledTableCell>
-                                <StyledTableCell>Gender</StyledTableCell>
-                                <StyledTableCell align="left">Membership No</StyledTableCell>
-                                <StyledTableCell align="left">NIC</StyledTableCell>
-                                <StyledTableCell align="left">Mobile No</StyledTableCell>
-                                <StyledTableCell align="left">Address</StyledTableCell>
+                                <StyledTableCell>Membership No</StyledTableCell>
+                                <StyledTableCell>Application No</StyledTableCell>
+                                <StyledTableCell align="left">Amount</StyledTableCell>
+                                <StyledTableCell align="left">Date</StyledTableCell>
+                                <StyledTableCell align="left">Status</StyledTableCell>
+                                <StyledTableCell align="left">Description</StyledTableCell>
+                                <StyledTableCell align="left">Approved Amount</StyledTableCell>
                                 <StyledTableCell align="left"></StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
-                                customers.length === 0 ?
+                                LoanApplication.length === 0 ?
                                     <TableRow align="center">
-                                        <TableCell colSpan="5">No Customers Available</TableCell>
+                                        <TableCell colSpan="5">No Loan Applications Available</TableCell>
                                     </TableRow> :
                                     
-                                        customers.map((row) => (
+                                        LoanApplication.map((row) => (
                                             <StyledTableRow key={row.id}>
-                                                <StyledTableCell component="th" scope="row">
-                                                    {row.first_name}{" "}{row.middle_name}{" "}{row.last_name}
-                                                </StyledTableCell>
-                                                <StyledTableCell align="left">{row.gender.type}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.membership_no}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.nic}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.mobile}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.address}</StyledTableCell>
+                                                <StyledTableCell align="left">{}</StyledTableCell>
+                                                <StyledTableCell align="left">{}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.amount}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.status.type}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.description}</StyledTableCell>
+                                                <StyledTableCell align="left">{}</StyledTableCell>
                                                 <StyledTableCell align="left">
                                                 <ButtonGroup>
                                                     <Link to={"edit-customer/" + row.id} >

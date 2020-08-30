@@ -21,6 +21,7 @@ import ViewCustomer from './pages/ViewCustomer/ViewCustomer';
 import NewAsset from './pages/NewAsset/NewAsset';
 import EditAsset from './pages/EditAsset/EditAsset';
 import EditCustomer from './pages/EditCustomer/EditCustomer';
+import LoanApplicationList from './pages/LoanApplicationList/LoanApplicationList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +77,7 @@ export default function App (props) {
         <Route path="/new-asset" exact component={NewAsset} />
         <Route path="/edit-asset/:id" exact component={EditAsset} />
         <Route path="/edit-customer/:id" exact component={EditCustomer} />
-
+        <Route path="/loan-application-list" exact component={LoanApplicationList} />
         <Route component={ErrorPage} />
       </Switch>
       {isHideSpinner?'':<LoadingSpinner />}

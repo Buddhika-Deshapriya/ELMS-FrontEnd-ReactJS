@@ -164,6 +164,7 @@ export default function LoanType() {
                                                         </Button>
                                                         </Link>
                                                 </ButtonGroup>
+                                                {"|"}
                                                 <ButtonGroup>
                                                 <Link to={"view-loan-type/" + row.id} >
                                                         <Button

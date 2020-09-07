@@ -137,7 +137,7 @@ export default function LoanApplicationList() {
                                     
                                         LoanApplication.map((row) => (
                                             <StyledTableRow key={row.id}>
-                                                <StyledTableCell align="left">{}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.customers[0].membership_no}</StyledTableCell>
                                                 <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
                                                 <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                                 <StyledTableCell align="left">{row.createdDate}</StyledTableCell>

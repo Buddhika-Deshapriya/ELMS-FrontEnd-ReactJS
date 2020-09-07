@@ -51,10 +51,10 @@ export default function NewAsset(props) {
         assetsType: null,
         description: null,
         assetsStatus: null,
-        value: null,
+        value: null
     }
     const onChange = (e) => {
-        e.persist();
+      //  e.persist();
         setNewAsset({ ...NewAsset, [e.target.name]: e.target.value });
     }
 
@@ -74,7 +74,7 @@ export default function NewAsset(props) {
             })
     };
 
-    const [newAsset, setNewAsset] = useState(initAsset);
+    const [newAsset, setNewAsset] = useState(initAsset );
     const resetData = () => {
         setNewAsset(initAsset)
     }
@@ -107,10 +107,10 @@ export default function NewAsset(props) {
                 {
                   id:newAsset.id,
                 }
-              ]
+            ],
         };
 
-        console.log('data', data);
+        console.log('data-set', data);
         axios.post(`${baseUrl}/customerassets/add`, data)
             .then(function (response) {
                 //console.log(response)
@@ -148,7 +148,7 @@ export default function NewAsset(props) {
     return (
         <AppTemplate>
             <div className="new-asset">
-                <form autoComplete="off" noValidate onSubmit={SubmitNewAsset}>
+                <form autoComplete="off"  onSubmit={SubmitNewAsset}>
                     <Grid container spacing={1}>
                         <Grid item xs={8}>
                             <Paper variant="outlined" >

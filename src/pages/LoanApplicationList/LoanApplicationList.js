@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import './CustomerList.css'
+import './LoanApplicationList.css'
 
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -138,15 +138,15 @@ export default function LoanApplicationList() {
                                         LoanApplication.map((row) => (
                                             <StyledTableRow key={row.id}>
                                                 <StyledTableCell align="left">{}</StyledTableCell>
-                                                <StyledTableCell align="left">{}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.amount}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                                 <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.status.type}</StyledTableCell>
+                                                <StyledTableCell align="left">{}</StyledTableCell>
                                                 <StyledTableCell align="left">{row.description}</StyledTableCell>
                                                 <StyledTableCell align="left">{}</StyledTableCell>
                                                 <StyledTableCell align="left">
                                                 <ButtonGroup>
-                                                    <Link to={"edit-customer/" + row.id} >
+                                                    {/* <Link to={"edit-customer/" + row.id} > */}
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
@@ -154,7 +154,7 @@ export default function LoanApplicationList() {
                                                             <HtmlTooltip
                                                                 title={
                                                                     <React.Fragment>
-                                                                        <Typography color="inherit">Edit Customer</Typography>
+                                                                        <Typography color="inherit">Edit Application</Typography>
                                                                     </React.Fragment>
                                                                 }
                                                             >
@@ -163,11 +163,11 @@ export default function LoanApplicationList() {
                                                             </HtmlTooltip>
                                                         </Button>
                                                        
-                                                        </Link>
+                                                        {/* </Link> */}
                                                 </ButtonGroup>
                                                 {"|"}
                                                 <ButtonGroup>
-                                                <Link to={"view-customer/" + row.id} >
+                                                {/* <Link to={"view-customer/" + row.id} > */}
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
@@ -175,14 +175,14 @@ export default function LoanApplicationList() {
                                                             <HtmlTooltip
                                                                 title={
                                                                     <React.Fragment>
-                                                                        <Typography color="inherit">View Customer Profile</Typography>
+                                                                        <Typography color="inherit">View Application</Typography>
                                                                     </React.Fragment>
                                                                 }
                                                             >
                                                             <FolderOpenIcon />
                                                             </HtmlTooltip>
                                                     </Button>
-                                                </Link>
+                                                {/* </Link> */}
                                                 </ButtonGroup>
                                             </StyledTableCell>
                                             </StyledTableRow>

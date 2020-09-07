@@ -66,7 +66,7 @@ export default function DrawerCmp(props) {
           </ListItem>
         </Link>
         <Divider />
-        <Link to="/customers" className={classes.link}>
+        <Link to="/loan-application-list" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
               <FormatAlignJustifyIcon />

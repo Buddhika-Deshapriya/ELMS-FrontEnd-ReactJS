@@ -62,6 +62,9 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
+    title: {
+        fontSize: 16,
+    },
 });
 
 export default function LoanApplicationList() {
@@ -170,12 +173,39 @@ export default function LoanApplicationList() {
                                                     aria-labelledby="alert-dialog-title"
                                                     aria-describedby="alert-dialog-description"
                                                 >
-                                                <DialogTitle id="alert-dialog-title">{"Customers of this loan!"}</DialogTitle>
-                                                <DialogContent>
-                                                    <DialogContentText id="alert-dialog-description">
-                                                        
-                                                    </DialogContentText>
-                                                </DialogContent>
+                                                    <DialogTitle id="alert-dialog-title">{"Customers of this loan:"}</DialogTitle>
+                                                    <DialogContent>
+                                                        <DialogContentText id="alert-dialog-description">
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                                                        Customer Name:
+                                                                </Typography>
+                                                                    <Typography variant="body1" component="h2">
+                                                                        {row.customers[0].first_name}{" "}
+                                                                        {row.customers[0].middle_name}{" "}
+                                                                        {row.customers[0].last_name}
+                                                                    </Typography>
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                                                        Membership No:
+                                                                    </Typography>
+                                                                    <Typography variant="body1" component="h2">
+                                                                        {row.customers[0].membership_no}
+                                                                    </Typography>
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                                                        NIC No:
+                                                                    </Typography>
+                                                                    <Typography variant="body1" component="h2">
+                                                                        {row.customers[0].nic}
+                                                                    </Typography>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        </DialogContentText>
+                                                    </DialogContent>
                                                 </Dialog>
                                             </StyledTableCell>
 

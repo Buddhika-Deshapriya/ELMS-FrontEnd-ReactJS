@@ -10,11 +10,17 @@ import {
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 import EditIcon from '@material-ui/icons/Edit';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import './LoanApplicationList.css'
 
 
@@ -34,13 +40,13 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 const HtmlTooltip = withStyles((theme) => ({
     tooltip: {
-      backgroundColor: '#f5f5f9',
-      color: 'rgba(0, 0, 0, 0.87)',
-      maxWidth: 220,
-      fontSize: theme.typography.pxToRem(12),
-      border: '1px solid #dadde9',
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
     },
-  }))(Tooltip);
+}))(Tooltip);
 
 
 
@@ -62,12 +68,22 @@ export default function LoanApplicationList() {
 
     const [LoanApplication, setLoanApplications] = useState([]);
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const fetchData = async () => {
         axios.get(`${baseUrl}/loanapplication/list`)
             .then(response => {
                 console.log('response', response);
                 setLoanApplications(response.data);
-                
+
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -118,13 +134,13 @@ export default function LoanApplicationList() {
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead>
                             <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
-                                <StyledTableCell>Membership No</StyledTableCell>
                                 <StyledTableCell>Application No</StyledTableCell>
                                 <StyledTableCell align="left">Amount</StyledTableCell>
                                 <StyledTableCell align="left">Date</StyledTableCell>
                                 <StyledTableCell align="left">Status</StyledTableCell>
                                 <StyledTableCell align="left">Description</StyledTableCell>
                                 <StyledTableCell align="left">Approved Amount</StyledTableCell>
+                                <StyledTableCell>See Customers</StyledTableCell>
                                 <StyledTableCell align="left"></StyledTableCell>
                             </TableRow>
                         </TableHead>
@@ -134,60 +150,79 @@ export default function LoanApplicationList() {
                                     <TableRow align="center">
                                         <TableCell colSpan="5">No Loan Applications Available</TableCell>
                                     </TableRow> :
-                                    
-                                        LoanApplication.map((row) => (
-                                            <StyledTableRow key={row.id}>
-                                                <StyledTableCell align="left">{row.customers[0].membership_no}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                                <StyledTableCell align="left">{}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.description}</StyledTableCell>
-                                                <StyledTableCell align="left">{}</StyledTableCell>
-                                                <StyledTableCell align="left">
+
+                                    LoanApplication.map((row) => (
+                                        <StyledTableRow key={row.id}>
+                                            <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
+                                            <StyledTableCell align="left">{}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.description}</StyledTableCell>
+                                            <StyledTableCell align="left">{}</StyledTableCell>
+
+                                            <StyledTableCell align="left">
+                                                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                                                    <SupervisorAccountIcon />
+                                                </Button>
+                                                <Dialog
+                                                    open={open}
+                                                    onClose={handleClose}
+                                                    aria-labelledby="alert-dialog-title"
+                                                    aria-describedby="alert-dialog-description"
+                                                >
+                                                <DialogTitle id="alert-dialog-title">{"Customers of this loan!"}</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-description">
+                                                        
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                </Dialog>
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="left">
                                                 <ButtonGroup>
                                                     {/* <Link to={"edit-customer/" + row.id} > */}
-                                                        <Button
-                                                            size="sm"
-                                                            variant="outline-danger"
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline-danger"
+                                                    >
+                                                        <HtmlTooltip
+                                                            title={
+                                                                <React.Fragment>
+                                                                    <Typography color="inherit">Edit Application</Typography>
+                                                                </React.Fragment>
+                                                            }
                                                         >
-                                                            <HtmlTooltip
-                                                                title={
-                                                                    <React.Fragment>
-                                                                        <Typography color="inherit">Edit Application</Typography>
-                                                                    </React.Fragment>
-                                                                }
-                                                            >
-                                                                <EditIcon />
+                                                            <EditIcon />
 
-                                                            </HtmlTooltip>
-                                                        </Button>
-                                                       
-                                                        {/* </Link> */}
+                                                        </HtmlTooltip>
+                                                    </Button>
+
+                                                    {/* </Link> */}
                                                 </ButtonGroup>
                                                 {"|"}
                                                 <ButtonGroup>
-                                                {/* <Link to={"view-customer/" + row.id} > */}
-                                                        <Button
-                                                            size="sm"
-                                                            variant="outline-danger"
+                                                    {/* <Link to={"view-customer/" + row.id} > */}
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline-danger"
+                                                    >
+                                                        <HtmlTooltip
+                                                            title={
+                                                                <React.Fragment>
+                                                                    <Typography color="inherit">View Application</Typography>
+                                                                </React.Fragment>
+                                                            }
                                                         >
-                                                            <HtmlTooltip
-                                                                title={
-                                                                    <React.Fragment>
-                                                                        <Typography color="inherit">View Application</Typography>
-                                                                    </React.Fragment>
-                                                                }
-                                                            >
                                                             <FolderOpenIcon />
-                                                            </HtmlTooltip>
+                                                        </HtmlTooltip>
                                                     </Button>
-                                                {/* </Link> */}
+                                                    {/* </Link> */}
                                                 </ButtonGroup>
                                             </StyledTableCell>
-                                            </StyledTableRow>
-                                        ))
-                                    }
+                                        </StyledTableRow>
+                                    ))
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>

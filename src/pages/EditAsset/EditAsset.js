@@ -212,6 +212,8 @@ export default function EditAsset(props) {
                     placeholder="Enter Description"
                     helperText={errors.description}
                     fullWidth
+                    multiline
+                    rows={4}
                     size="small"
                     error={errors.description ? 'error' : ''}
                     
@@ -219,9 +221,6 @@ export default function EditAsset(props) {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    InputProps={{
-                        readOnly: true,
-                      }}
                     variant="outlined"
                     onChange={onChange}
                   />
@@ -237,9 +236,6 @@ export default function EditAsset(props) {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    InputProps={{
-                        readOnly: true,
-                      }}
                     onChange={onChange}
                   />
 

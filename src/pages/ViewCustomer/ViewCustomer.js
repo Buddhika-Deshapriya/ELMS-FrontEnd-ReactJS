@@ -168,6 +168,8 @@ export default function ViewCustomer(props) {
         <AppTemplate>
             <div className="customer-view">
                 <Grid container spacing={2}>
+                    {/* 
+                    Scanned Image of Customer NIC */}
                     <Grid item xs={3}>
                         <Box className={classes.width}>
                             <Card className={classes.width} variant="outlined">
@@ -405,7 +407,7 @@ export default function ViewCustomer(props) {
                         <Grid item xs={6}>
                             <Paper className={classes.width}>
                                 <ButtonGroup disableFocusRipple>
-                                    <Link to={"/edit-customer/"+ customerId}>
+                                    <Link to={"/edit-customer/" + customerId}>
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -443,31 +445,30 @@ export default function ViewCustomer(props) {
                         Add New Asset
                 </Button>
                 </Link>
-                <Grid item xs={12} sm={10}>
-                    <Paper>
-                        <TableContainer component={Paper}>
-                            <Table className={classes.table} aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="left"></StyledTableCell>
-                                        <StyledTableCell align="left">Assets Type</StyledTableCell>
-                                        <StyledTableCell align="left">Description</StyledTableCell>
-                                        <StyledTableCell align="left">Value</StyledTableCell>
-                                        <StyledTableCell align="left">Status</StyledTableCell>
-                                        <StyledTableCell align="left"></StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {customerAssets.map((row) => (
-                                        <StyledTableRow key={row.id}>
-                                            <StyledTableCell align="left">{row.id}</StyledTableCell>
-                                            <StyledTableCell align="left">{row.assetsType.type}</StyledTableCell>
-                                            <StyledTableCell align="left">{row.description}</StyledTableCell>
-                                            <StyledTableCell align="left">{row.value}</StyledTableCell>
-                                            <StyledTableCell align="left">{row.assetsStatus.type == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}</StyledTableCell>
-                                            <StyledTableCell align="left">
-                                                <ButtonGroup disableFocusRipple>
-                                                    <Link to={"/edit-asset/" + row.id} >
+                {/* 
+                Customer Assets Details */}
+                <Grid item xs={12} sm={12}>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell align="left">Assets Type</StyledTableCell>
+                                    <StyledTableCell align="left">Description</StyledTableCell>
+                                    <StyledTableCell align="left">Value</StyledTableCell>
+                                    <StyledTableCell align="left">Status</StyledTableCell>
+                                    <StyledTableCell align="left"></StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {customerAssets.map((row) => (
+                                    <StyledTableRow key={row.id}>
+                                        <StyledTableCell align="left">{row.assetsType.type}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.description}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.value}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.assetsStatus.type == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}</StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            <ButtonGroup disableFocusRipple>
+                                                <Link to={"/edit-asset/" + row.id} >
                                                     <Button
                                                         size="small"
                                                         variant="outlined"
@@ -484,15 +485,14 @@ export default function ViewCustomer(props) {
                                                         ><EditIcon />
                                                         </HtmlTooltip>
                                                     </Button>
-                                                    </Link>
-                                                </ButtonGroup>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Paper>
+                                                </Link>
+                                            </ButtonGroup>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </Grid>
             </div>
         </AppTemplate >

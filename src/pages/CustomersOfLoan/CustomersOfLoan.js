@@ -6,14 +6,20 @@ import clsx from 'clsx';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
     Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow, Tooltip, Container
+    TableContainer, TableHead, TableRow, Tooltip, Button, Container
 } from '@material-ui/core';
 import { Grid, Paper } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
+import { ThemeProvider } from '@material-ui/styles';
+
+
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
@@ -69,16 +75,21 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.shortest,
         }),
     },
-    expandOpen: {
-        color:red,
-    }
 }));
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+    },
+});
 
 export default function ViewLoanCustomerData(props) {
 
 
     const classes = useStyles();
     const [CustomersData, ViewCustomerData] = useState([]);
+    const [membershipType, ViewMembershipType] = useState([]);
+    const [customerStatus, ViewCustomerStatus] = useState([]);
+
 
     const [expanded, setExpanded] = React.useState(false);
 
@@ -94,6 +105,8 @@ export default function ViewLoanCustomerData(props) {
             .then(response => {
                 console.log('response', response);
                 ViewCustomerData(response.data.customers);
+                ViewMembershipType(response.data.customers.membershipType);
+                ViewCustomerStatus(response.data.customers.customerStatus);
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -151,8 +164,15 @@ export default function ViewLoanCustomerData(props) {
                                                         onClick={handleExpandClick}
                                                         aria-expanded={expanded}
                                                         aria-label="show more" align="left">
-                                                            {row.membership_no}
-                                                        </StyledTableCell>
+                                                        <Link>
+                                                            <ThemeProvider theme={theme}>
+                                                                <Typography color="primary">
+                                                                    {row.membership_no}
+                                                                </Typography>
+                                                            </ThemeProvider>
+                                                            
+                                                        </Link>
+                                                    </StyledTableCell>
                                                     <StyledTableCell align="left">{row.first_name}{" "} {row.middle_name}{" "}{row.last_name}</StyledTableCell>
                                                     <StyledTableCell align="left">{row.nic}</StyledTableCell>
                                                 </StyledTableRow>
@@ -163,35 +183,44 @@ export default function ViewLoanCustomerData(props) {
                         </TableContainer>
                     </Grid>
                     <Grid item xs={7}>
-                        <Card>
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                <CardContent>
-                                    <Typography paragraph>Method:</Typography>
-                                    <Typography paragraph>
-                                        Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                                        minutes.
-                                </Typography>
-                                    <Typography paragraph>
-                                        Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                                        heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                                        browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-                                        and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-                                        pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-                                        saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                                </Typography>
-                                    <Typography paragraph>
-                                        Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-                                        without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-                                        medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-                                        again without stirring, until mussels have opened and rice is just tender, 5 to 7
-                                        minutes more. (Discard any mussels that don’t open.)
-                                </Typography>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <Card>
+                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography variant="H6" component="h2" color="secondary">
+                                                Membership Details :
+                                        </Typography>
+                                            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                                Membership Type:
+                                        </Typography>
+                                            <Typography variant="h5" component="h2">
+                                                {CustomersData.membershipType}
+                                            </Typography>
+                                            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                                Status:
+                                        </Typography>
+                                            <Typography variant="body1" component="p">
+                                                {CustomersData.customerStatus == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}
+                                            </Typography>
+                                        </CardContent>
+                                    </Collapse>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Card>
+                                <Collapse in={expanded} timeout="auto" unmountOnExit>
                                     <Typography>
-                                        Set aside off of the heat to let rest for 10 minutes, and then serve.
-                                 </Typography>
-                                </CardContent>
-                            </Collapse>
-                        </Card>
+                                        <Link to={"/view-customer/"+ CustomerId}>
+                                        <Button variant="contained" color="primary">
+                                            View More
+                                        </Button>
+                                        </Link>
+                                    </Typography>
+                                    </Collapse>
+                                </Card>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>

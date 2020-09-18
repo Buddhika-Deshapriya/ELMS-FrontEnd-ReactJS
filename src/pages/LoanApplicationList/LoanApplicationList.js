@@ -175,7 +175,7 @@ export default function LoanApplicationList() {
                                             </StyledTableCell>
                                                 <StyledTableCell align="left">
                                                     <ButtonGroup>
-                                                        {/* <Link to={"edit-customer/" + row.id} > */}
+                                                        <Link to={"/edit-loan-application/" + row.id} >
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
@@ -192,7 +192,7 @@ export default function LoanApplicationList() {
                                                             </HtmlTooltip>
                                                         </Button>
 
-                                                        {/* </Link> */}
+                                                        </Link>
                                                     </ButtonGroup>
                                                     {"|"}
                                                     <ButtonGroup>

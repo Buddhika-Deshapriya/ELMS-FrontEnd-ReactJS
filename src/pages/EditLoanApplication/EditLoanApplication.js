@@ -7,7 +7,7 @@ import {
     Button, ButtonGroup,
     Table, TableBody, TableCell,
     TableContainer, TableHead, TableRow, Paper, Grid, Container, TextField, InputLabel, Select, FormControl, Icon,
-    FormHelperText, MenuItem, Box, NativeSelect
+    FormHelperText, MenuItem, Box,
 
 } from '@material-ui/core';
 
@@ -18,6 +18,7 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
+import SystemUser from "../../helper/user";
 const { baseUrl } = appConfig;
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
     formControl: {
         margin: theme.spacing(1, 1, 1, 1),
+        width: 200
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -40,7 +42,9 @@ export default function EditLoanApplication(props) {
 
 
     const classes = useStyles();
-    const [loanStatus, setStatus] = useState([]);
+    const [loanTypeId, setLoanType] = useState([]);
+    const [dateTime, setDateTime] = useState(new Date());
+    const [userId, setUserID] = useState([]);
 
     //Setup initial State
     const initLoanApplication = {
@@ -51,7 +55,7 @@ export default function EditLoanApplication(props) {
         noOfRentals: null,
         otherCharges: null,
         paymentPeriod: null,
-        rentalType: null
+        rentalTypeId: null
     }
     const [newApp, setNewLoanApplication] = useState(initLoanApplication);
     const resetData = () => {
@@ -65,15 +69,18 @@ export default function EditLoanApplication(props) {
         e.persist();
         setNewLoanApplication({ ...newApp, [e.target.name]: e.target.value });
     }
-
-
-    //Get Loan Status
-    const fetchLoanStatus = async () => {
-        axios.get(`${baseUrl}/loanstatus/list`)
+    //Get loan type details
+    const fetchLoanTypeData = async () => {
+        axios.get(`${baseUrl}/loantype/list`)
             .then(response => {
                 console.log('response', response);
-                setStatus(response.data);
+                setLoanType(response.data);
             })
+    }
+    //Get Logged in user id
+    const getCurrentUser = async () => {
+        //console.log(SystemUser.get())
+        setUserID(SystemUser.get().id);
     };
 
     //Get loan application details by ID
@@ -84,11 +91,13 @@ export default function EditLoanApplication(props) {
                 setNewLoanApplication({
                     ...newApp,
                     ...response.data,
-                    membership_no: response.data.customers.membership_no,
+                    membership_no: response.data.customers[0].membership_no,
                     rentalTypeId: response.data.rentalTypeId.type,
                     loanStatus: response.data.loanStatus.type,
-                    loanTypeId:response.data.loanTypeId.loanType,
-                })
+                    loanTypeId: response.data.loanTypeId.loanType,
+                    userid: response.data.createdUser.id
+
+                });
             })
     };
 
@@ -102,13 +111,13 @@ export default function EditLoanApplication(props) {
         loanAmount: '',
         Description: '',
         effectiveRate: '',
-        loanstatus: '',
+        loanStatus: '',
         noOfRentals: '',
         otherCharges: '',
         paymentPeriod: '',
         loanTypeId: '',
         membership_no: '',
-        rentalType: ''
+        rentalTypeId: ''
     }
     const [errors, setErrors] = useState(initErrors);
     const resetError = () => {
@@ -127,12 +136,18 @@ export default function EditLoanApplication(props) {
             effectiveRate: newApp.effectiveRate,
             otherCharges: newApp.otherCharges,
             paymentPeriod: newApp.paymentPeriod,
-            rentalTypeId: newApp.rentalTypeId,
+            rentalTypeId: {
+                id: newApp.rentalTypeId,
+            },
+            loanTypeId: {
+                id: newApp.loanTypeId,
+            },
             createdDate: newApp.createdDate,
             membership_no: newApp.membership_no,
+            createdDate: dateTime,
             createdUser: {
-                id: newApp.userid,
-            }
+                id: userId,
+            },
 
         };
         console.log('data', data);
@@ -166,8 +181,10 @@ export default function EditLoanApplication(props) {
 
     //This is same as componentdidmount()
     useEffect(() => {
-        fetchLoanStatus();
         fetchLoanApplicationData(LoanApplicationId);
+        fetchLoanTypeData();
+        getCurrentUser();
+
     }, []);
 
     return (
@@ -194,7 +211,7 @@ export default function EditLoanApplication(props) {
                                 />
                             </Grid>
                             <Grid item xs={3}>
-                            <TextField
+                                <TextField
                                     name="applicationNo"
                                     value={newApp.applicationNo}
                                     id="outlined-helperText"
@@ -211,7 +228,7 @@ export default function EditLoanApplication(props) {
                                 />
                             </Grid>
                             <Grid item xs={3}>
-                            <TextField
+                                <TextField
                                     name="calculationNo"
                                     value={newApp.calculationNo}
                                     id="outlined-helperText"
@@ -228,7 +245,7 @@ export default function EditLoanApplication(props) {
                                 />
                             </Grid>
                             <Grid item xs={3}>
-                            <TextField
+                                <TextField
                                     name="loanStatus"
                                     value={newApp.loanStatus}
                                     id="outlined-helperText"
@@ -292,19 +309,30 @@ export default function EditLoanApplication(props) {
                         <Grid item xs={5}>
                             <Paper variant="outlined" >
                                 <div>
-                                <TextField
-                                        name="loanTypeId"
-                                        value={newApp.loanTypeId}
-                                        id="outlined-helperText"
-                                        label="Loan Type"
-                                        helperText="Some important text"
-                                        variant="outlined"
-                                        style={{ margin: 8 }}
-                                        onChange={onChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
+                                    <FormControl className={classes.formControl}>
+                                        <InputLabel shrink htmlFor="age-native-label-placeholder">
+                                            Loan Type
+                                        </InputLabel>
+                                        <Select
+                                            name="loanTypeId"
+                                            value={newApp.loanTypeId}
+                                            displayEmpty
+                                            className={classes.selectEmpty}
+                                            inputProps={{ 'aria-label': 'Without label' }}
+                                            onChange={onChange}
+                                        >
+                                            <MenuItem value="" disabled>
+
+                                            </MenuItem>
+                                            {
+                                                loanTypeId.map((eachRow, index) => {
+                                                    return (
+                                                        <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                    );
+                                                })
+                                            }
+                                        </Select>
+                                    </FormControl>
                                     <TextField
                                         name="effectiveRate"
                                         value={newApp.effectiveRate}

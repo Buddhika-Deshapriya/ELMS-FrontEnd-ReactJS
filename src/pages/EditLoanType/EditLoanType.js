@@ -18,6 +18,7 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
+import SystemUser from "../../helper/user";
 const { baseUrl } = appConfig;
 
 const useStyles = makeStyles((theme) => ({
@@ -38,12 +39,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditLoanType(props) {
 
-    
+
   const classes = useStyles();
   const [status, setStatus] = useState([]);
-  
+  const [dateTime, setDateTime] = useState(new Date());
+  const [userId, setUserID] = useState([]);
+
   //Setup initial State
-  const initLoan  = {
+  const initLoan = {
     loanType: null,
     description: null,
     status: null,
@@ -54,8 +57,8 @@ export default function EditLoanType(props) {
     maxTimePeriod: null,
     minTimePeriod: null
   }
-  const [newLoan, setNewLoan] = useState(initLoan );
-  const resetData  = () => {
+  const [newLoan, setNewLoan] = useState(initLoan);
+  const resetData = () => {
     setNewLoan(initLoan)
   }
 
@@ -66,7 +69,11 @@ export default function EditLoanType(props) {
     e.persist();
     setNewLoan({ ...newLoan, [e.target.name]: e.target.value });
   }
-
+  //Get Logged in user id
+  const getCurrentUser = async () => {
+    //console.log(SystemUser.get())
+    setUserID(SystemUser.get().id);
+  };
 
   //Get Common Status
   const fetchLoanTypeStatus = async () => {
@@ -83,19 +90,19 @@ export default function EditLoanType(props) {
       .then(response => {
         console.log('response', response);
         setNewLoan({
-            ...newLoan,
-            ...response.data,
-            status:response.data.status.id,
-            userid:response.data.createdUser.id
+          ...newLoan,
+          ...response.data,
+          status: response.data.status.id,
+          userid: response.data.createdUser.id
         })
       })
   };
-  
-  
+
+
 
 
   //Error Handling
-  const initErrors  = {
+  const initErrors = {
     loanType: '',
     description: '',
     status: '',
@@ -107,16 +114,16 @@ export default function EditLoanType(props) {
     minTimePeriod: ''
   }
   const [errors, setErrors] = useState(initErrors);
-  const resetError  = () => {
+  const resetError = () => {
     setErrors(initErrors)
   }
-  
 
- 
+
+
   const UpdateLoanType = (e) => {
     e.preventDefault();
     const data = {
-      id : newLoan.id,
+      id: newLoan.id,
       loanType: newLoan.loanType,
       description: newLoan.description,
 
@@ -130,9 +137,10 @@ export default function EditLoanType(props) {
       maxTimePeriod: newLoan.maxTimePeriod,
       minTimePeriod: newLoan.minTimePeriod,
       createdDate: newLoan.createdDate,
-      createdUser: {
-        id: newLoan.userid,
-      }
+      createdDate: dateTime,
+            createdUser: {
+                id: userId,
+            },
 
     };
     console.log('data', data);
@@ -147,7 +155,7 @@ export default function EditLoanType(props) {
           //console.log('Test');
           const _sErrors = _errors.response.data.errors;
           const _error = _errors.response.data.error;
-          if(_sErrors!==undefined){
+          if (_sErrors !== undefined) {
             let errorsObj = {}
             _sErrors.forEach(error => {
               const { defaultMessage, field } = error
@@ -168,6 +176,8 @@ export default function EditLoanType(props) {
   useEffect(() => {
     fetchLoanTypeStatus();
     fetchLoanTypeData(loanTypeId);
+    getCurrentUser();
+
   }, []);
 
   return (
@@ -188,7 +198,7 @@ export default function EditLoanType(props) {
                     fullWidth
                     size="small"
                     error={errors.loanType ? 'error' : ''}
-                    
+
                     margin="normal"
                     InputLabelProps={{
                       shrink: true,
@@ -254,11 +264,11 @@ export default function EditLoanType(props) {
                     style={{ margin: 8 }}
                     onChange={onChange}
                     InputLabelProps={{
-                        shrink: true,
-                      }}
+                      shrink: true,
+                    }}
                     InputProps={{
-                        readOnly: true,
-                      }}
+                      readOnly: true,
+                    }}
                   />
                   <TextField
                     name="minAmount"
@@ -270,15 +280,15 @@ export default function EditLoanType(props) {
                     style={{ margin: 8 }}
                     onChange={onChange}
                     InputLabelProps={{
-                        shrink: true,
-                      }}
+                      shrink: true,
+                    }}
                     InputProps={{
-                        readOnly: true,
-                      }}
+                      readOnly: true,
+                    }}
                   />
                   <TextField
                     name="maxInterestRate"
-                     value={newLoan.maxInterestRate}
+                    value={newLoan.maxInterestRate}
                     id="outlined-helperText"
                     label="Maximum Interest Rate"
                     helperText="Some important text"
@@ -286,11 +296,11 @@ export default function EditLoanType(props) {
                     style={{ margin: 8 }}
                     onChange={onChange}
                     InputLabelProps={{
-                        shrink: true,
-                      }}
+                      shrink: true,
+                    }}
                     InputProps={{
-                        readOnly: true,
-                      }}
+                      readOnly: true,
+                    }}
                   />
                   <TextField
                     name="minInterestRate"
@@ -302,11 +312,11 @@ export default function EditLoanType(props) {
                     style={{ margin: 8 }}
                     onChange={onChange}
                     InputLabelProps={{
-                        shrink: true,
-                      }}
+                      shrink: true,
+                    }}
                     InputProps={{
-                        readOnly: true,
-                      }}
+                      readOnly: true,
+                    }}
                   />
                   <TextField
                     name="maxTimePeriod"
@@ -318,11 +328,11 @@ export default function EditLoanType(props) {
                     style={{ margin: 8 }}
                     onChange={onChange}
                     InputLabelProps={{
-                        shrink: true,
-                      }}
+                      shrink: true,
+                    }}
                     InputProps={{
-                        readOnly: true,
-                      }}
+                      readOnly: true,
+                    }}
 
                   />
                   <TextField
@@ -335,11 +345,11 @@ export default function EditLoanType(props) {
                     style={{ margin: 8 }}
                     onChange={onChange}
                     InputLabelProps={{
-                        shrink: true,
-                      }}
+                      shrink: true,
+                    }}
                     InputProps={{
-                        readOnly: true,
-                      }}
+                      readOnly: true,
+                    }}
                   />
 
                 </div>

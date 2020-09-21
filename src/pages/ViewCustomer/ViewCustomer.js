@@ -18,7 +18,6 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';

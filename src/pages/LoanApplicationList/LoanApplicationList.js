@@ -162,7 +162,7 @@ export default function LoanApplicationList() {
                                             <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
                                             <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                             <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                            <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
+                                            <StyledTableCell align="left">{}</StyledTableCell>
                                             <StyledTableCell align="left">{row.description}</StyledTableCell>
                                             <StyledTableCell align="left">{}</StyledTableCell>
 

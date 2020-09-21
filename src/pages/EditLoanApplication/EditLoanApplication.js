@@ -43,6 +43,7 @@ export default function EditLoanApplication(props) {
 
     const classes = useStyles();
     const [loanTypeId, setLoanType] = useState([]);
+    const [rentalTypeId, setRentalType] = useState([]);
     const [dateTime, setDateTime] = useState(new Date());
     const [userId, setUserID] = useState([]);
 
@@ -70,10 +71,19 @@ export default function EditLoanApplication(props) {
         setNewLoanApplication({ ...newApp, [e.target.name]: e.target.value });
     }
     //Get loan type details
+    const fetchRentalTypeData = async () => {
+        axios.get(`${baseUrl}/rentaltype/list`)
+            .then(response => {
+                console.log('response', response);
+                setRentalType(response.data);
+            })
+    }
+
+    //Get loan type details
     const fetchLoanTypeData = async () => {
         axios.get(`${baseUrl}/loantype/list`)
             .then(response => {
-                console.log('response', response);
+                console.log('loanType', response);
                 setLoanType(response.data);
             })
     }
@@ -92,7 +102,7 @@ export default function EditLoanApplication(props) {
                     ...newApp,
                     ...response.data,
                     membership_no: response.data.customers[0].membership_no,
-                    rentalTypeId: response.data.rentalTypeId.type,
+                    rentalTypeId: response.data.rentalTypeId.id,
                     loanStatus: response.data.loanStatus.type,
                     loanTypeId: response.data.loanTypeId.loanType,
                     userid: response.data.createdUser.id
@@ -183,6 +193,7 @@ export default function EditLoanApplication(props) {
     useEffect(() => {
         fetchLoanApplicationData(LoanApplicationId);
         fetchLoanTypeData();
+        fetchRentalTypeData();
         getCurrentUser();
 
     }, []);
@@ -376,20 +387,30 @@ export default function EditLoanApplication(props) {
                                             shrink: true,
                                         }}
                                     />
-                                    <TextField
-                                        name="rentalTypeId"
-                                        value={newApp.rentalTypeId}
-                                        id="outlined-helperText"
-                                        label="Rental Type"
-                                        helperText="Some important text"
-                                        variant="outlined"
-                                        style={{ margin: 8 }}
-                                        onChange={onChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
+                                     <FormControl className={classes.formControl}>
+                                        <InputLabel shrink htmlFor="age-native-label-placeholder">
+                                            Rental Type
+                                        </InputLabel>
+                                        <Select
+                                            name="rentalTypeId"
+                                            value={newApp.rentalTypeId}
+                                            displayEmpty
+                                            className={classes.selectEmpty}
+                                            inputProps={{ 'aria-label': 'Without label' }}
+                                            onChange={onChange}
+                                        >
+                                            <MenuItem value="" disabled>
 
-                                    />
+                                            </MenuItem>
+                                            {
+                                                rentalTypeId.map((eachRow, index) => {
+                                                    return (
+                                                        <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                    );
+                                                })
+                                            }
+                                        </Select>
+                                    </FormControl>
                                     <TextField
                                         name="otherCharges"
                                         value={newApp.otherCharges}

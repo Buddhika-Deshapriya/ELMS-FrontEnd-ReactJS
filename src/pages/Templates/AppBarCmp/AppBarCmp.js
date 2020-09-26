@@ -4,14 +4,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory, Link } from "react-router-dom";
 import Menu from '@material-ui/core/Menu';
 import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
+
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
-
+import KeyboardIcon from '@material-ui/icons/Keyboard';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const drawerWidth = 240;
 
@@ -20,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: theme.palette.text.primary
   },
-  
+
   root: {
     flexGrow: 1,
   },
- 
+
   appBar: {
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
@@ -92,8 +93,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   toolbarButtons: {
-   marginLeft: 'auto',
+    marginLeft: 'auto',
   },
+  KeyboardIcon: {
+    marginLeft: 50
+  }
 }));
 
 
@@ -107,7 +111,7 @@ export default function AppBarCmp(props) {
     props.toggleDrawerHandler(true);
   };
 
- 
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -115,12 +119,12 @@ export default function AppBarCmp(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
-    
+
   };
 
   const handleLogout = () => {
     localStorage.clear();
-    history.push('/signin'); 
+    history.push('/signin');
   }
 
   return (
@@ -139,17 +143,30 @@ export default function AppBarCmp(props) {
           ELMS - Co-operative Society Badulla
         </Typography>
         <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </div>
+        <div className={classes.KeyboardIcon}>
+          <Link >
+          <IconButton
+            aria-label="loan calculator"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <KeyboardIcon />
+          </IconButton>
+          </Link>
         </div>
         <div className={classes.toolbarButtons}>
           <IconButton
@@ -176,8 +193,8 @@ export default function AppBarCmp(props) {
             open={open}
             onClose={handleClose}
           >
-             <Link to="/profile" className={classes.link}> <MenuItem >My Profile</MenuItem></Link>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <Link to="/profile" className={classes.link}> <MenuItem >My Profile</MenuItem></Link>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </Toolbar>

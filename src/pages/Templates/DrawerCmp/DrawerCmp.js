@@ -104,6 +104,14 @@ export default function DrawerCmp(props) {
             <ListItemText primary={"Approved loans"} />
           </ListItem>
         </Link>
+        <Link to="/branch-list" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <CheckCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Branches"} />
+          </ListItem>
+        </Link>
         <Divider />
         <ListSubheader inset>System settings</ListSubheader>
         <Link to="/order" className={classes.link}>

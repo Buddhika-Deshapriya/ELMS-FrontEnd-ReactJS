@@ -70,7 +70,7 @@ export default function EditLoanApplication(props) {
         e.persist();
         setNewLoanApplication({ ...newApp, [e.target.name]: e.target.value });
     }
-    //Get loan type details
+    //Get rental type details
     const fetchRentalTypeData = async () => {
         axios.get(`${baseUrl}/rentaltype/list`)
             .then(response => {

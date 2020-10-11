@@ -23,7 +23,11 @@ import EditAsset from './pages/EditAsset/EditAsset';
 import EditCustomer from './pages/EditCustomer/EditCustomer';
 import LoanApplicationList from './pages/LoanApplicationList/LoanApplicationList';
 import ViewLoanCustomerData from "./pages/CustomersOfLoan/CustomersOfLoan";
+import SubmitNewApplication from "./pages/NewLoan/NewLoan";
 import EditLoanApplication from "./pages/EditLoanApplication/EditLoanApplication";
+import Branch from './pages/Branches/Branches';
+import EditBranch from './pages/EditBranch/EditBranch';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,8 +85,12 @@ export default function App (props) {
         <Route path="/edit-asset/:id" exact component={EditAsset} />
         <Route path="/edit-customer/:id" exact component={EditCustomer} />
         <Route path="/loan-application-list" exact component={LoanApplicationList} />
+        <Route path="/new-loan-application" exact component={SubmitNewApplication} />
         <Route path="/loan-application-customer-data/:id" exact component={ViewLoanCustomerData} />
         <Route path="/edit-loan-application/:id" exact component={EditLoanApplication} />
+        <Route path="/branch-list" exact component={Branch} />
+        <Route path="/edit-branch/:id" exact component={EditBranch} />
+
 
         <Route component={ErrorPage} />
       </Switch>

@@ -124,7 +124,7 @@ export default function LoanApplicationList() {
     return (
         <AppTemplate>
             <div className="loan-application-list">
-                <Link to={"new-loan-application"} >
+                <Link to={"/new-loan-application"} >
                     <Button
                         variant="contained"
                         color="secondary"

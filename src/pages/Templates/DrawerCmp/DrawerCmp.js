@@ -13,6 +13,9 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import HomeIcon from '@material-ui/icons/Home';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import Axios from 'axios';
 
@@ -104,16 +107,16 @@ export default function DrawerCmp(props) {
             <ListItemText primary={"Approved loans"} />
           </ListItem>
         </Link>
+        <Divider />
+        <ListSubheader inset>System settings</ListSubheader>
         <Link to="/branch-list" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
-              <CheckCircleIcon />
+              <AccountBalanceIcon />
             </ListItemIcon>
             <ListItemText primary={"Branches"} />
           </ListItem>
         </Link>
-        <Divider />
-        <ListSubheader inset>System settings</ListSubheader>
         <Link to="/order" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
@@ -133,13 +136,13 @@ export default function DrawerCmp(props) {
       </ListItem>
       <ListItem button>
         <ListItemIcon>
-          <AssignmentIcon />
+          <AssessmentIcon />
         </ListItemIcon>
         <ListItemText primary="Last quarter" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
-          <AssignmentIcon />
+          <TrendingUpIcon />
         </ListItemIcon>
         <ListItemText primary="Year-end Income" />
       </ListItem>

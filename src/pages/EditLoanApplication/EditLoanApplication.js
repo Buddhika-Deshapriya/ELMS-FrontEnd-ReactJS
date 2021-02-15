@@ -338,7 +338,7 @@ export default function EditLoanApplication(props) {
                                             {
                                                 loanTypeId.map((eachRow, index) => {
                                                     return (
-                                                        <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                        <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.loanType}</MenuItem>
                                                     );
                                                 })
                                             }

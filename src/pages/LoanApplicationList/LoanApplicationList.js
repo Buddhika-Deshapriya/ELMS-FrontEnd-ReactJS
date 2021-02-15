@@ -111,9 +111,6 @@ export default function LoanApplicationList() {
 
                 }
             });
-
-
-
     };
 
     useEffect(() => {
@@ -130,7 +127,6 @@ export default function LoanApplicationList() {
                         color="secondary"
                         className="new-loan-application-add-button"
                         startIcon={<CloudUploadIcon />}
-
                     >
                         New application
                     </Button>
@@ -141,11 +137,10 @@ export default function LoanApplicationList() {
                         <TableHead>
                             <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
                                 <StyledTableCell>Application No</StyledTableCell>
+                                <StyledTableCell>Calculation No</StyledTableCell>
                                 <StyledTableCell align="left">Amount</StyledTableCell>
                                 <StyledTableCell align="left">Date</StyledTableCell>
                                 <StyledTableCell align="left">Status</StyledTableCell>
-                                <StyledTableCell align="left">Description</StyledTableCell>
-                                <StyledTableCell align="left">Approved Amount</StyledTableCell>
                                 <StyledTableCell>See Customers</StyledTableCell>
                                 <StyledTableCell align="left"></StyledTableCell>
                             </TableRow>
@@ -160,12 +155,10 @@ export default function LoanApplicationList() {
                                     LoanApplication.map((row) => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.calculationNo}</StyledTableCell>
                                             <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                             <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
                                             <StyledTableCell align="left">{}</StyledTableCell>
-                                            <StyledTableCell align="left">{row.description}</StyledTableCell>
-                                            <StyledTableCell align="left">{}</StyledTableCell>
-
                                             <StyledTableCell align="left">
                                               <Link to={"loan-application-customer-data/" + row.id} >
                                                         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -178,20 +171,16 @@ export default function LoanApplicationList() {
                                                         <Link to={"/edit-loan-application/" + row.id} >
                                                         <Button
                                                             size="sm"
-                                                            variant="outline-danger"
-                                                        >
+                                                            variant="outline-danger">
                                                             <HtmlTooltip
                                                                 title={
                                                                     <React.Fragment>
                                                                         <Typography color="inherit">Edit Application</Typography>
                                                                     </React.Fragment>
-                                                                }
-                                                            >
+                                                                }>
                                                                 <EditIcon />
-
                                                             </HtmlTooltip>
                                                         </Button>
-
                                                         </Link>
                                                     </ButtonGroup>
                                                     {"|"}
@@ -206,8 +195,7 @@ export default function LoanApplicationList() {
                                                                     <React.Fragment>
                                                                         <Typography color="inherit">View Application</Typography>
                                                                     </React.Fragment>
-                                                                }
-                                                            >
+                                                                }>
                                                                 <FolderOpenIcon />
                                                             </HtmlTooltip>
                                                         </Button>
@@ -215,8 +203,7 @@ export default function LoanApplicationList() {
                                                     </ButtonGroup>
                                                 </StyledTableCell>
                                         </StyledTableRow>
-                                    ))
-                            }
+                                    ))}
                         </TableBody>
                     </Table>
                 </TableContainer>

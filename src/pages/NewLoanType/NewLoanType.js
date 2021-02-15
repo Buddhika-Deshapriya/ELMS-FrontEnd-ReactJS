@@ -125,7 +125,7 @@ export default function NewLoanType(props) {
     axios.post(`${baseUrl}/loantype/add`, data)
       .then(function (response) {
         //console.log(response)
-        utils.showSuccess("New Loan Saved Successfully.");
+        utils.showSuccess("New Loan Type Saved Successfully.");
       })
       .catch(_errors => {
         //console.log('_errors',_errors);

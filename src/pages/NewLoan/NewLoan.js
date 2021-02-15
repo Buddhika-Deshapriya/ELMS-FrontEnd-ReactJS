@@ -37,6 +37,11 @@ const useStyles = makeStyles((theme) => ({
   },
   textFields: {
     margin: theme.spacing(1, 1, 1, 1),
+    width: 235,
+  },
+  descriptions: {
+    margin: theme.spacing(1, 1, 1, 1),
+    width: 485,
   },
 }));
 
@@ -202,6 +207,7 @@ export default function NewLoanApplication(props) {
       <div className="new-loan-application">
         <form autoComplete="off" onSubmit={SubmitNewLoanApplication}>
           <Grid container spacing={1}>
+            <Grid item xs={8}>
             <Paper>
               <TextField
                 name="applicationNo"
@@ -235,13 +241,29 @@ export default function NewLoanApplication(props) {
                 variant="outlined"
                 onChange={onChange}
               />
+              <TextField
+                name="membershipNo"
+                id="outlined-full-width"
+                label="Membership No"
+                helperText={errors.membershipNo}
+                size="small"
+                error={errors.membershipNo ? 'error' : ''}
+                className={classes.textFields}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                onChange={onChange}
+              />
             </Paper>
+            </Grid>
           </Grid>
           <br />
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Paper>
-              <FormControl className={classes.formControl} variant="outlined" >
+                <FormControl className={classes.formControl} variant="outlined" >
                   <InputLabel id="demo-simple-select-filled-label">Branch Code</InputLabel>
 
                   <Select
@@ -259,13 +281,13 @@ export default function NewLoanApplication(props) {
                     {
                       branch.map((eachRow, index) => {
                         return (
-                          <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                          <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.branchCode}</MenuItem>
                         );
                       })
                     }
                   </Select>
                 </FormControl>
-              <FormControl className={classes.formControl} variant="outlined" >
+                <FormControl className={classes.formControl} variant="outlined" >
                   <InputLabel id="demo-simple-select-filled-label">Loan Type</InputLabel>
 
                   <Select
@@ -283,7 +305,7 @@ export default function NewLoanApplication(props) {
                     {
                       loanTypeId.map((eachRow, index) => {
                         return (
-                          <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                          <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.loanType}</MenuItem>
                         );
                       })
                     }
@@ -291,7 +313,6 @@ export default function NewLoanApplication(props) {
                 </FormControl>
                 <FormControl className={classes.formControl} variant="outlined" >
                   <InputLabel id="demo-simple-select-filled-label">Rental Type</InputLabel>
-
                   <Select
                     variant="outlined"
                     name="rentalTypeId"
@@ -316,9 +337,108 @@ export default function NewLoanApplication(props) {
               </Paper>
             </Grid>
           </Grid>
-          <Grid>
-            <br />
-            <Paper variant="outlined" >
+          <br />
+          <Grid container spacing={2}>
+            <Grid item xs={5}>
+              <Paper>
+              
+              <TextField
+                name="loanAmount"
+                id="outlined-full-width"
+                label="Loan Amount"
+                helperText={errors.loanAmount}
+                size="medium"
+                error={errors.loanAmount ? 'error' : ''}
+                className={classes.textFields}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                onChange={onChange}
+              />
+              <TextField
+                name="description"
+                id="outlined-full-width"
+                label="Description"
+                helperText={errors.description}
+                size="medium"
+                error={errors.description ? 'error' : ''}
+                className={classes.descriptions}
+                margin="normal"
+                rows={4}
+                multiline
+                fullwidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                onChange={onChange}
+              />
+              </Paper>
+            </Grid>
+            <Grid item xs={5}>
+            <Paper>
+              <TextField
+                name="effectiveRate"
+                id="outlined-full-width"
+                label="Effective Rate"
+                helperText={errors.effectiveRate}
+                size="medium"
+                error={errors.effectiveRate ? 'error' : ''}
+                className={classes.textFields}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                onChange={onChange}
+              />
+              <TextField
+                name="noOfRentals"
+                id="outlined-full-width"
+                label="No of Rentals"
+                helperText={errors.noOfRentals}
+                size="medium"
+                error={errors.noOfRentals ? 'error' : ''}
+                className={classes.textFields}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                onChange={onChange}
+              />
+              <TextField
+                name="paymentPeriod"
+                id="outlined-full-width"
+                label="Payment Prediod"
+                helperText={errors.paymentPeriod}
+                size="medium"
+                error={errors.paymentPeriod ? 'error' : ''}
+                className={classes.textFields}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                onChange={onChange}
+              />
+              <TextField
+                name="otherCharges"
+                id="outlined-full-width"
+                label="Other Charges"
+                helperText={errors.otherCharges}
+                size="medium"
+                error={errors.otherCharges ? 'error' : ''}
+                className={classes.textFields}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                onChange={onChange}
+              />
               <div>
                 <Button
                   type="submit"
@@ -341,7 +461,8 @@ export default function NewLoanApplication(props) {
                   Reset
                         </Button>
               </div>
-            </Paper>
+              </Paper>
+            </Grid>
           </Grid>
         </form>
       </div>

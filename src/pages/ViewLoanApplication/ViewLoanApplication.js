@@ -21,7 +21,7 @@ const { baseUrl } = appConfig;
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 450,
+        maxWidth: 300,
     },
     width: {
         maxWidth: 300,
@@ -51,7 +51,7 @@ export default function ViewLoanApplication(props) {
 
     const fetchLoanApplicationData = async (loanApplicationId) => {
 
-        axios.get(`${baseUrl}/loanApplication/list/` + loanApplicationId)
+        axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
             .then(response => {
                 // console.log('response', response);
                 ViewLoanApplication(response.data);
@@ -93,14 +93,26 @@ export default function ViewLoanApplication(props) {
         <AppTemplate>
             <div className="loan-application-view">
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={4}>
                         <Card className={classes.root} variant="outlined">
                             <CardContent>
                                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                                     Membership No:
                         </Typography>
                                 <Typography variant="h5" component="h2">
-                                    {/* {membershipNo.membership_no} */}
+                                    {membershipNo.membership_no}
+                        </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={4}>
+                    <Card className={classes.root} variant="outlined">
+                            <CardContent>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Application No:
+                        </Typography>
+                                <Typography variant="h6" component="h6">
+                                    {loanApplication.applicationNo}
                         </Typography>
                             </CardContent>
                         </Card>

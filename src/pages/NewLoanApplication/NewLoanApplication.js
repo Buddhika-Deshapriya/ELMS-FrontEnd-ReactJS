@@ -50,7 +50,8 @@ export default function NewLoanApplication(props) {
   const [rentalTypeId, setRentalType] = useState([]);
   const [loanTypeId, setLoanType] = useState([]);
   const [branch, setBranch] = useState([]);
-
+  const [genApplicationNo, setGenApplicationNo] = useState([]);
+  const [genCalculationNo, setGenCalculationNo] = useState([]);
 
   //Setup initial State
   const initApplication = {
@@ -79,6 +80,15 @@ export default function NewLoanApplication(props) {
       .then(response => {
         console.log('branch', response);
         setBranch(response.data);
+      })
+  }
+  //Get Loan application generated id
+  const fetchLoanApplicationGenId = async () => {
+    axios.get(`${baseUrl}/loanapplicationinvoicenumbergenerate/takeid`)
+      .then(response => {
+        console.log('Generated No', response);
+        setGenApplicationNo(response.data.applicationNo);
+        setGenCalculationNo(response.data.calculationNo);
       })
   }
   //Get rental type details
@@ -135,8 +145,8 @@ export default function NewLoanApplication(props) {
   const SubmitNewLoanApplication = (e) => {
     e.preventDefault();
     const data = {
-      applicationNo: NewApplication.applicationNo,
-      calculationNo: NewApplication.calculationNo,
+      applicationNo: NewApplication.genApplicationNo,
+      calculationNo: NewApplication.genCalculationNo,
       membershipNo: NewApplication.membershipNo,
       loanTypeId: {
         id: NewApplication.loanTypeId,
@@ -196,6 +206,7 @@ export default function NewLoanApplication(props) {
     fetchBranchData();
     fetchLoanTypeData();
     fetchRentalTypeData();
+    fetchLoanApplicationGenId();
     getCurrentUser();
   }, []);
 

@@ -23,7 +23,6 @@ import { Grid, Paper } from '@material-ui/core';
 const { baseUrl } = appConfig;
 
 
-
 const useStyles = makeStyles({
     root: {
         maxWidth: 450,

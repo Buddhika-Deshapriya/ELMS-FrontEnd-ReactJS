@@ -23,7 +23,7 @@ import EditAsset from './pages/EditAsset/EditAsset';
 import EditCustomer from './pages/EditCustomer/EditCustomer';
 import LoanApplicationList from './pages/LoanApplicationList/LoanApplicationList';
 import ViewLoanCustomerData from "./pages/CustomersOfLoan/CustomersOfLoan";
-import SubmitNewApplication from "./pages/NewLoan/NewLoanApplication";
+import SubmitNewApplication from "./pages/NewLoanApplication/NewLoanApplication";
 import EditLoanApplication from "./pages/EditLoanApplication/EditLoanApplication";
 import ViewLoanApplication from "./pages/ViewLoanApplication/ViewLoanApplication";
 import Branch from './pages/Branches/Branches';

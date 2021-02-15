@@ -5,17 +5,11 @@ import { Link } from 'react-router-dom';
 import {
     Button, ButtonGroup,
     Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow, Paper, Grid, Container
+    TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
 
 import EditIcon from '@material-ui/icons/Edit';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';

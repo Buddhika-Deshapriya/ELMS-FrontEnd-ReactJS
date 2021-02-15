@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
     Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow, Tooltip, Button, Container
+    TableContainer, TableHead, TableRow, Tooltip, Button,
 } from '@material-ui/core';
 import { Grid, Paper } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';

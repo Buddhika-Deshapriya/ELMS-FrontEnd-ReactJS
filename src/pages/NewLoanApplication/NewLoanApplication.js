@@ -4,11 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, ButtonGroup,
-  Table, TableBody, TableCell,
-  TableContainer, TableHead, TableRow, Paper, Grid, Container, TextField, InputLabel, Select, FormControl, Icon,
-  FormHelperText, MenuItem, Box, NativeSelect
-
+  Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
+   MenuItem,
 } from '@material-ui/core';
 
 import SendIcon from '@material-ui/icons/Send';

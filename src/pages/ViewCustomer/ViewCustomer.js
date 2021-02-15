@@ -9,7 +9,7 @@ import { green } from '@material-ui/core/colors';
 import {
     Button, ButtonGroup,
     TableCell,
-    TableContainer, TableHead, TableRow, Container, Popover, Typography
+    TableContainer, TableHead, TableRow, Typography
 } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -23,7 +23,6 @@ import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
 import { Grid, Paper, Box, Table, TableBody } from '@material-ui/core';
-import NewAsset from '../NewAsset/NewAsset';
 const { baseUrl } = appConfig;
 
 const StyledTableCell = withStyles((theme) => ({

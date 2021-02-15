@@ -23,8 +23,9 @@ import EditAsset from './pages/EditAsset/EditAsset';
 import EditCustomer from './pages/EditCustomer/EditCustomer';
 import LoanApplicationList from './pages/LoanApplicationList/LoanApplicationList';
 import ViewLoanCustomerData from "./pages/CustomersOfLoan/CustomersOfLoan";
-import SubmitNewApplication from "./pages/NewLoan/NewLoan";
+import SubmitNewApplication from "./pages/NewLoanApplication/NewLoanApplication";
 import EditLoanApplication from "./pages/EditLoanApplication/EditLoanApplication";
+import ViewLoanApplication from "./pages/ViewLoanApplication/ViewLoanApplication";
 import Branch from './pages/Branches/Branches';
 import EditBranch from './pages/EditBranch/EditBranch';
 
@@ -88,6 +89,7 @@ export default function App (props) {
         <Route path="/new-loan-application" exact component={SubmitNewApplication} />
         <Route path="/loan-application-customer-data/:id" exact component={ViewLoanCustomerData} />
         <Route path="/edit-loan-application/:id" exact component={EditLoanApplication} />
+        <Route path="/view-loan-application/:id" exact component={ViewLoanApplication} />
         <Route path="/branch-list" exact component={Branch} />
         <Route path="/edit-branch/:id" exact component={EditBranch} />
 

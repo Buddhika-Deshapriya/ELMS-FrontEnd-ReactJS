@@ -185,7 +185,7 @@ export default function LoanApplicationList() {
                                                     </ButtonGroup>
                                                     {"|"}
                                                     <ButtonGroup>
-                                                        {/* <Link to={"view-customer/" + row.id} > */}
+                                                        <Link to={"view-loan-application/" + row.id} >
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"
@@ -199,7 +199,7 @@ export default function LoanApplicationList() {
                                                                 <FolderOpenIcon />
                                                             </HtmlTooltip>
                                                         </Button>
-                                                        {/* </Link> */}
+                                                        </Link>
                                                     </ButtonGroup>
                                                 </StyledTableCell>
                                         </StyledTableRow>

@@ -116,7 +116,6 @@ export default function ViewLoanType(props) {
                             </CardContent>
                         </Card>
                         <br />
-                        <br />
                         <Card className={classes.root} variant="outlined">
                             <CardContent>
                                 <Typography className={classes.title} color="textSecondary" gutterBottom>

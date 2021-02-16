@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import {
+    TextField,
+} from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
+import CardActionArea from '@material-ui/core/CardActionArea';
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
@@ -19,7 +24,7 @@ import { Grid, Paper } from '@material-ui/core';
 const { baseUrl } = appConfig;
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 300,
     },
@@ -29,13 +34,13 @@ const useStyles = makeStyles({
     title: {
         fontSize: 16,
     },
-    pos: {
-        marginBottom: 12,
+    textField: {
+        margin: theme.spacing(1, 1, 1, 1),
     },
     card: {
         width: 940,
     },
-});
+}));
 
 export default function ViewLoanApplication(props) {
 
@@ -98,90 +103,176 @@ export default function ViewLoanApplication(props) {
                 <Grid container spacing={4}>
                     <Grid item xs={3}>
                         <Card className={classes.root} variant="outlined">
-                            <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    Membership No:
+                            <CardActionArea>
+                                <CardContent>
+                                    <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
+                                        Membership No:
                         </Typography>
-                                <Typography variant="h5" component="h2">
-                                    {membershipNo.membership_no}
-                                </Typography>
-                            </CardContent>
+                                    <Typography variant="h5" component="h2">
+                                        {membershipNo.membership_no}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
                         </Card>
                     </Grid>
                     <Grid item xs={3}>
                         <Card className={classes.root} variant="outlined">
-                            <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    Application No:
+                            <CardActionArea>
+                                <CardContent>
+                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                        Application No:
                         </Typography>
-                                <Typography variant="h6" component="h6">
-                                    {loanApplication.applicationNo}
-                                </Typography>
-                            </CardContent>
+                                    <Typography variant="h6" component="h6">
+                                        {loanApplication.applicationNo}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
                         </Card>
                     </Grid>
                     <Grid item xs={3}>
                         <Card className={classes.root} variant="outlined">
-                            <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    Calculation No:
+                            <CardActionArea>
+                                <CardContent>
+                                    <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
+                                        Calculation No:
                         </Typography>
-                                <Typography variant="h6" component="h6">
-                                    {loanApplication.calculationNo}
-                                </Typography>
-                            </CardContent>
+                                    <Typography variant="h6" component="h6">
+                                        {loanApplication.calculationNo}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
                         </Card>
                     </Grid>
                     <Grid item xs={3}>
                         <Card className={classes.root} variant="outlined">
-                            <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    Status:
+                            <CardActionArea>
+                                <CardContent>
+                                    <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
+                                        Status:
                         </Typography>
-                                <Typography variant="h6" component="h6">
-                                    {loanStatus.type}
-                                </Typography>
-                            </CardContent>
+                                    <Typography variant="h6" component="h6">
+                                        {loanStatus.type}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
                         </Card>
                     </Grid>
                 </Grid>
+                <br />
+                <br />
                 <Grid container spacing={2}>
                     <Grid item xs={9}>
-                        <Card className={classes.root} variant="outlined" className={classes.card}>
-                            <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    Membership No:
-                        </Typography>
-                                <Typography variant="h5" component="h2">
-                                    {membershipNo.membership_no}
-                                </Typography>
-                            </CardContent>
-                        </Card>
+                        <Paper>
+                            <Grid container spacing={3}>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="loanAmount"
+                                        value={loanApplication.loanAmount}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Loan Amount"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="effectiveRate"
+                                        value={loanApplication.effectiveRate}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Effective Rate"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="loanType"
+                                        value={loanType.loanType}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Loan Type"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={3}>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="rentalType"
+                                        value={rentalType.type}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Rental Type"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="noOfRentals"
+                                        value={loanApplication.noOfRentals}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="No of Rentals"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="paymentPeriod"
+                                        value={loanApplication.paymentPeriod}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Payment Period"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Paper>
                     </Grid>
                     <Grid item xs={3}>
                         <Card className={classes.root} variant="outlined">
-                            <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    Created By:
+                            <CardActionArea>
+                                <CardContent>
+                                    <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
+                                        Created By:
                         </Typography>
-                                <Typography variant="h5" component="h2">
-                                    {user.firstName} {" "}
-                                    {user.middleName} {" "}
-                                    {user.lastName}
-                                </Typography>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    User Role:
+                                    <Typography variant="h5" component="h2">
+                                        {user.firstName} {" "}
+                                        {user.middleName} {" "}
+                                        {user.lastName}
+                                    </Typography>
+                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                        User Role:
                         </Typography>
-                                <Typography variant="h5" component="h2">
-                                    {user.name}
-                                </Typography>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    Created Date:
+                                    <Typography variant="h5" component="h2">
+                                        {user.name}
+                                    </Typography>
+                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                        Created Date:
                         </Typography>
-                                <Typography variant="body1" component="p">
-                                    {loanApplication.createdDate}
-                                </Typography>
-                            </CardContent>
+                                    <Typography variant="body1" component="p">
+                                        {loanApplication.createdDate}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
                         </Card>
                     </Grid>
                 </Grid>

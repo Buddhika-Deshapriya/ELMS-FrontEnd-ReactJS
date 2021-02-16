@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl, MenuItem, Box,
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditLoanApplication(props) {
 
+    const history = useHistory();
 
     const classes = useStyles();
     const [loanTypeId, setLoanType] = useState([]);
@@ -100,7 +102,7 @@ export default function EditLoanApplication(props) {
                     membership_no: response.data.customers[0].membership_no,
                     rentalTypeId: response.data.rentalTypeId.id,
                     loanStatus: response.data.loanStatus.type,
-                    loanTypeId: response.data.loanTypeId.loanType,
+                    loanTypeId: response.data.loanTypeId.id,
                     userid: response.data.createdUser.id
 
                 });
@@ -383,7 +385,7 @@ export default function EditLoanApplication(props) {
                                             shrink: true,
                                         }}
                                     />
-                                     <FormControl className={classes.formControl}>
+                                    <FormControl className={classes.formControl}>
                                         <InputLabel shrink htmlFor="age-native-label-placeholder">
                                             Rental Type
                                         </InputLabel>
@@ -433,17 +435,20 @@ export default function EditLoanApplication(props) {
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<UpdateIcon />}
+                                onClick={() => history.goBack()}
                             >
                                 Update
-            </Button>
+                            </Button>
                             {" "}
                             <Button
+                                type="reset"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
+                                startIcon={<RotateLeftIcon />}
                                 onClick={resetError}
                             >
-                                Back
+                                Reset
                         </Button>
                         </div>
                     </Paper>

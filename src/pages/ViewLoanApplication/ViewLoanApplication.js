@@ -32,6 +32,9 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
+    card: {
+        width: 940,
+    },
 });
 
 export default function ViewLoanApplication(props) {
@@ -92,8 +95,8 @@ export default function ViewLoanApplication(props) {
     return (
         <AppTemplate>
             <div className="loan-application-view">
-                <Grid container spacing={2}>
-                    <Grid item xs={4}>
+                <Grid container spacing={4}>
+                    <Grid item xs={3}>
                         <Card className={classes.root} variant="outlined">
                             <CardContent>
                                 <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -101,19 +104,83 @@ export default function ViewLoanApplication(props) {
                         </Typography>
                                 <Typography variant="h5" component="h2">
                                     {membershipNo.membership_no}
-                        </Typography>
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={4}>
-                    <Card className={classes.root} variant="outlined">
+                    <Grid item xs={3}>
+                        <Card className={classes.root} variant="outlined">
                             <CardContent>
                                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                                     Application No:
                         </Typography>
                                 <Typography variant="h6" component="h6">
                                     {loanApplication.applicationNo}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Card className={classes.root} variant="outlined">
+                            <CardContent>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Calculation No:
                         </Typography>
+                                <Typography variant="h6" component="h6">
+                                    {loanApplication.calculationNo}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Card className={classes.root} variant="outlined">
+                            <CardContent>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Status:
+                        </Typography>
+                                <Typography variant="h6" component="h6">
+                                    {loanStatus.type}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                    <Grid item xs={9}>
+                        <Card className={classes.root} variant="outlined" className={classes.card}>
+                            <CardContent>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Membership No:
+                        </Typography>
+                                <Typography variant="h5" component="h2">
+                                    {membershipNo.membership_no}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Card className={classes.root} variant="outlined">
+                            <CardContent>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Created By:
+                        </Typography>
+                                <Typography variant="h5" component="h2">
+                                    {user.firstName} {" "}
+                                    {user.middleName} {" "}
+                                    {user.lastName}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    User Role:
+                        </Typography>
+                                <Typography variant="h5" component="h2">
+                                    {user.name}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Created Date:
+                        </Typography>
+                                <Typography variant="body1" component="p">
+                                    {loanApplication.createdDate}
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Grid>

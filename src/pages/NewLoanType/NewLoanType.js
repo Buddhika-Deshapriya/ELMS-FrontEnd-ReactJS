@@ -163,7 +163,6 @@ export default function NewLoanType(props) {
                 <Box width="auto" p={1} my={0.5}>
                   <TextField
                     name="loanType"
-                    //value={newLoan.loanType}
                     id="outlined-full-width"
                     label="Loan Type Name"
                     placeholder="Enter Loan Type Name"
@@ -181,7 +180,6 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="description"
-                    //value={newLoan.description}
                     id="outlined-multiline-static"
                     label="Description"
                     placeholder="Enter Description"
@@ -205,7 +203,6 @@ export default function NewLoanType(props) {
                     <Select
                      variant="outlined"
                       name="status"
-                      //value={newLoan.status}
                       displayEmpty
                       className={classes.selectEmpty}
                       inputProps={{ 'aria-label': 'Without label' }}
@@ -233,7 +230,6 @@ export default function NewLoanType(props) {
                 <div>
                   <TextField
                     name="maxAmount"
-                    //value={newLoan.maxAmount}
                     id="outlined-helperText"
                     label="Maximum Amount"
                     placeholder="Enter Maximum Amount"
@@ -249,7 +245,6 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="minAmount"
-                    //value={newLoan.minAmount}
                     id="outlined-helperText"
                     label="Minimum Amount"
                     placeholder="Enter Minimum Amount"
@@ -265,7 +260,6 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="maxInterestRate"
-                    // value={newLoan.maxInterestRate}
                     id="outlined-helperText"
                     label="Maximum Interest Rate"
                     placeholder="Enter Maximum Interest"
@@ -281,7 +275,6 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="minInterestRate"
-                    //value={newLoan.minInterestRate}
                     id="outlined-helperText"
                     label="Minimum Interest Rate"
                     placeholder="Enter Maximum Interest"
@@ -297,7 +290,6 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="maxTimePeriod"
-                    //value={newLoan.maxTimePeriod}
                     id="outlined-helperText"
                     label="Maximum Time Period"
                     placeholder="Enter Maximum Time Period"
@@ -313,7 +305,6 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="minTimePeriod"
-                    //value={newLoan.minTimePeriod}
                     id="outlined-helperText"
                     label="Minimum Time Period"
                     placeholder="Enter Minimum Time Period"

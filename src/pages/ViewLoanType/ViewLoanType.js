@@ -40,7 +40,6 @@ const useStyles = makeStyles({
 
 export default function ViewLoanType(props) {
 
-
     const classes = useStyles();
     const [LoanType, ViewLoanType] = useState([]);
     const [status, ViewStatus] = useState([]);
@@ -77,9 +76,6 @@ export default function ViewLoanType(props) {
 
                 }
             });
-
-
-
     };
 
     useEffect(() => {

@@ -42,8 +42,6 @@ const HtmlTooltip = withStyles((theme) => ({
     },
 }))(Tooltip);
 
-
-
 const StyledTableRow = withStyles((theme) => ({
     root: {
         '&:nth-of-type(odd)': {
@@ -65,6 +63,7 @@ export default function LoanApplicationList() {
 
     const [LoanApplication, setLoanApplications] = useState([]);
     const [CustomerData, setCustomerData] = useState([]);
+    const [loanStatus, setLoanStatus] = useState([]);
 
 
     const [open, setOpen] = React.useState(false);
@@ -83,6 +82,7 @@ export default function LoanApplicationList() {
                 console.log('response', response);
                 setLoanApplications(response.data);
                 setCustomerData(response.data[0].customers);
+                setLoanStatus(response.data[0].loanStatus);
 
             })
             .catch(_errors => {
@@ -135,7 +135,7 @@ export default function LoanApplicationList() {
                                 <StyledTableCell align="left">Amount</StyledTableCell>
                                 <StyledTableCell align="left">Date</StyledTableCell>
                                 <StyledTableCell align="left">Status</StyledTableCell>
-                                <StyledTableCell>See Customers</StyledTableCell>
+                                <StyledTableCell align="left">See Customers</StyledTableCell>
                                 <StyledTableCell align="left"></StyledTableCell>
                             </TableRow>
                         </TableHead>
@@ -152,7 +152,7 @@ export default function LoanApplicationList() {
                                             <StyledTableCell align="left">{row.calculationNo}</StyledTableCell>
                                             <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                             <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                            <StyledTableCell align="left">{}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                             <StyledTableCell align="left">
                                               <Link to={"loan-application-customer-data/" + row.id} >
                                                         <Button variant="outlined" color="primary" onClick={handleClickOpen}>

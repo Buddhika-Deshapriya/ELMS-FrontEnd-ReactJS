@@ -87,8 +87,8 @@ export default function NewLoanApplication(props) {
     axios.get(`${baseUrl}/loanapplicationinvoicenumbergenerate/takeid`)
       .then(response => {
         console.log('Generated No', response);
-        setGenApplicationNo(response.data.applicationNo);
-        setGenCalculationNo(response.data.calculationNo);
+        setGenApplicationNo(response.data);
+        setGenCalculationNo(response.data);
       })
   }
   //Get rental type details
@@ -145,8 +145,8 @@ export default function NewLoanApplication(props) {
   const SubmitNewLoanApplication = (e) => {
     e.preventDefault();
     const data = {
-      applicationNo: NewApplication.genApplicationNo,
-      calculationNo: NewApplication.genCalculationNo,
+      applicationNo: genApplicationNo.applicationNo,
+      calculationNo: genCalculationNo.calculationNo,
       membershipNo: NewApplication.membershipNo,
       loanTypeId: {
         id: NewApplication.loanTypeId,
@@ -221,15 +221,15 @@ export default function NewLoanApplication(props) {
                 name="applicationNo"
                 id="outlined-full-width"
                 label="Application No"
+                value={genApplicationNo.applicationNo}
                 helperText={errors.applicationNo}
                 size="small"
                 error={errors.applicationNo ? 'error' : ''}
                 className={classes.textFields}
-
                 margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                InputProps={{
+                  readOnly: true,
+              }}
                 variant="outlined"
                 onChange={onChange}
               />
@@ -237,15 +237,15 @@ export default function NewLoanApplication(props) {
                 name="calculationNo"
                 id="outlined-full-width"
                 label="Calculation No"
+                value={genCalculationNo.calculationNo}
                 helperText={errors.calculationNo}
                 size="small"
                 error={errors.calculationNo ? 'error' : ''}
                 className={classes.textFields}
-
                 margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                InputProps={{
+                  readOnly: true,
+              }}
                 variant="outlined"
                 onChange={onChange}
               />

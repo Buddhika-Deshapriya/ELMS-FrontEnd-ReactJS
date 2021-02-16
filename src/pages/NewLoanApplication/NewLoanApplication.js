@@ -87,8 +87,8 @@ export default function NewLoanApplication(props) {
     axios.get(`${baseUrl}/loanapplicationinvoicenumbergenerate/takeid`)
       .then(response => {
         console.log('Generated No', response);
-        setGenApplicationNo(response.data);
-        setGenCalculationNo(response.data);
+        setGenApplicationNo(response.data[0]);
+        setGenCalculationNo(response.data[0]);
       })
   }
   //Get rental type details
@@ -227,6 +227,9 @@ export default function NewLoanApplication(props) {
                 error={errors.applicationNo ? 'error' : ''}
                 className={classes.textFields}
                 margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 InputProps={{
                   readOnly: true,
               }}
@@ -243,6 +246,9 @@ export default function NewLoanApplication(props) {
                 error={errors.calculationNo ? 'error' : ''}
                 className={classes.textFields}
                 margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 InputProps={{
                   readOnly: true,
               }}

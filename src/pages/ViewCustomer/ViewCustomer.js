@@ -6,6 +6,7 @@ import { makeStyles, withStyles, } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { green } from '@material-ui/core/colors';
+import { useHistory } from "react-router-dom";
 import {
     Button, ButtonGroup,
     TableCell,
@@ -99,6 +100,7 @@ const ColorButton = withStyles((theme) => ({
 
 export default function ViewCustomer(props) {
 
+    const history = useHistory();
 
     const classes = useStyles();
     const [Customer, ViewCustomer] = useState([]);
@@ -416,12 +418,13 @@ export default function ViewCustomer(props) {
                                         </Button>
                                         {" "}
                                         <ButtonGroup>
-                                            <Link to={"/customer-list"}>
+                                            <Link >
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
                                                     className={classes.button}
-
+                                                    onClick={() => {history.goBack()
+                                                    }}
                                                 >
                                                     <ArrowBackIosIcon fontSize="small" />
                                         Back

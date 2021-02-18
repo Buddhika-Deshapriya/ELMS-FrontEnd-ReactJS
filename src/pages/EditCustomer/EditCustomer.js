@@ -173,7 +173,7 @@ export default function EditLoanType(props) {
                     marriedStatus: response.data.marriedStatus.id,
                     membershipType: response.data.membershipType.id,
                     title: response.data.title.id,
-                    gender: response.data.title.id
+                    gender: response.data.gender.id
                 })
             })
     };

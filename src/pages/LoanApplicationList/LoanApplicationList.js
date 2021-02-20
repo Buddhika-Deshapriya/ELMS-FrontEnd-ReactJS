@@ -82,7 +82,7 @@ export default function LoanApplicationList() {
                 console.log('response', response);
                 setLoanApplications(response.data);
                 setCustomerData(response.data[0].customers);
-                setLoanStatus(response.data[0].loanStatus);
+                setLoanStatus(response.data.loanStatus);
 
             })
             .catch(_errors => {
@@ -160,7 +160,7 @@ export default function LoanApplicationList() {
                                                 </Button>
                                                 </Link>
                                             </StyledTableCell>
-                                                <StyledTableCell align="left">
+                                            <StyledTableCell align="left">
                                                     <ButtonGroup>
                                                         <Link to={"/edit-loan-application/" + row.id} >
                                                         <Button

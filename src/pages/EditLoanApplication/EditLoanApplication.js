@@ -54,7 +54,8 @@ export default function EditLoanApplication(props) {
         noOfRentals: null,
         otherCharges: null,
         paymentPeriod: null,
-        rentalTypeId: null
+        rentalTypeId: null,
+
     }
     const [newApp, setNewLoanApplication] = useState(initLoanApplication);
     const resetData = () => {
@@ -103,7 +104,8 @@ export default function EditLoanApplication(props) {
                     rentalTypeId: response.data.rentalTypeId.id,
                     loanStatus: response.data.loanStatus.type,
                     loanTypeId: response.data.loanTypeId.id,
-                    userid: response.data.createdUser.id
+                    userid: response.data.createdUser.id,
+                    branch: response.data.branch.branchCode,
 
                 });
             })
@@ -125,7 +127,8 @@ export default function EditLoanApplication(props) {
         paymentPeriod: '',
         loanTypeId: '',
         membership_no: '',
-        rentalTypeId: ''
+        rentalTypeId: '',
+
     }
     const [errors, setErrors] = useState(initErrors);
     const resetError = () => {
@@ -149,6 +152,12 @@ export default function EditLoanApplication(props) {
             },
             loanTypeId: {
                 id: newApp.loanTypeId,
+            },
+            loanStatus: {
+                id: 1,
+            },
+            branch: {
+                id: newApp.branch,
             },
             createdDate: newApp.createdDate,
             membership_no: newApp.membership_no,
@@ -201,8 +210,8 @@ export default function EditLoanApplication(props) {
             <div className="edit-loan-application">
                 <form autoComplete="off" onSubmit={UpdateLoanApplication}>
                     <Paper>
-                        <Grid container spacing={4}>
-                            <Grid item xs={3}>
+                        <Grid container spacing={5}>
+                            <Grid item xs={2}>
                                 <TextField
                                     name="membership_no"
                                     value={newApp.membership_no}
@@ -211,6 +220,7 @@ export default function EditLoanApplication(props) {
                                     variant="outlined"
                                     style={{ margin: 8 }}
                                     onChange={onChange}
+                                    size="small"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -226,6 +236,7 @@ export default function EditLoanApplication(props) {
                                     id="outlined-helperText"
                                     label="Application No"
                                     variant="outlined"
+                                    size="small"
                                     style={{ margin: 8 }}
                                     onChange={onChange}
                                     InputLabelProps={{
@@ -243,6 +254,7 @@ export default function EditLoanApplication(props) {
                                     id="outlined-helperText"
                                     label="Calculatio No"
                                     variant="outlined"
+                                    size="small"
                                     style={{ margin: 8 }}
                                     onChange={onChange}
                                     InputLabelProps={{
@@ -253,14 +265,33 @@ export default function EditLoanApplication(props) {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={2}>
                                 <TextField
                                     name="loanStatus"
                                     value={newApp.loanStatus}
                                     id="outlined-helperText"
                                     label="Loan Status"
                                     variant="outlined"
+                                    size="small"
                                     style={{ margin: 8 }}
+                                    onChange={onChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={2}>
+                                <TextField  
+                                    name="branch"
+                                    value={newApp.branch}
+                                    id="outlined-helperText"
+                                    label="Branch Code"
+                                    variant="outlined"
+                                    size="small"
+                                    style={{ margin: 10 }}
                                     onChange={onChange}
                                     InputLabelProps={{
                                         shrink: true,
@@ -318,6 +349,8 @@ export default function EditLoanApplication(props) {
                         <Grid item xs={5}>
                             <Paper variant="outlined" >
                                 <div>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={6}>
                                     <FormControl className={classes.formControl}>
                                         <InputLabel shrink htmlFor="age-native-label-placeholder">
                                             Loan Type
@@ -327,6 +360,7 @@ export default function EditLoanApplication(props) {
                                             value={newApp.loanTypeId}
                                             displayEmpty
                                             className={classes.selectEmpty}
+                                            
                                             inputProps={{ 'aria-label': 'Without label' }}
                                             onChange={onChange}
                                         >
@@ -347,7 +381,6 @@ export default function EditLoanApplication(props) {
                                         value={newApp.effectiveRate}
                                         id="outlined-helperText"
                                         label="Effective Rate"
-                                        helperText="Some important text"
                                         variant="outlined"
                                         helperText={errors.effectiveRate}
                                         error={errors.effectiveRate ? 'error' : ''}
@@ -362,7 +395,6 @@ export default function EditLoanApplication(props) {
                                         value={newApp.paymentPeriod}
                                         id="outlined-helperText"
                                         label="Payment Period"
-                                        helperText="Some important text"
                                         helperText={errors.paymentPeriod}
                                         error={errors.paymentPeriod ? 'error' : ''}
                                         variant="outlined"
@@ -372,19 +404,8 @@ export default function EditLoanApplication(props) {
                                             shrink: true,
                                         }}
                                     />
-                                    <TextField
-                                        name="noOfRentals"
-                                        value={newApp.noOfRentals}
-                                        id="outlined-helperText"
-                                        label="No of Rentals"
-                                        helperText="Some important text"
-                                        variant="outlined"
-                                        style={{ margin: 8 }}
-                                        onChange={onChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
+                                    </Grid>
+                                    <Grid item xs={6}>
                                     <FormControl className={classes.formControl}>
                                         <InputLabel shrink htmlFor="age-native-label-placeholder">
                                             Rental Type
@@ -410,11 +431,12 @@ export default function EditLoanApplication(props) {
                                         </Select>
                                     </FormControl>
                                     <TextField
-                                        name="otherCharges"
-                                        value={newApp.otherCharges}
+                                        name="noOfRentals"
+                                        value={newApp.noOfRentals}
                                         id="outlined-helperText"
-                                        label="Other Charges"
-                                        helperText="Some important text"
+                                        label="No of Rentals"
+                                        helperText={errors.noOfRentals}
+                                        error={errors.noOfRentals ? 'error' : ''}
                                         variant="outlined"
                                         style={{ margin: 8 }}
                                         onChange={onChange}
@@ -422,6 +444,25 @@ export default function EditLoanApplication(props) {
                                             shrink: true,
                                         }}
                                     />
+                                    
+                                    <TextField
+                                        name="otherCharges"
+                                        value={newApp.otherCharges}
+                                        id="outlined-helperText"
+                                        label="Other Charges"
+                                        helperText={errors.otherCharges}
+                                        error={errors.otherCharges ? 'error' : ''}
+                                        variant="outlined"
+                                        style={{ margin: 8 }}
+                                        onChange={onChange}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                    </Grid>
+                                    </Grid>
+                                   
+                                   
                                 </div>
                             </Paper>
                         </Grid>

@@ -16,7 +16,7 @@ export const interceptor =  function(excludeUrl, cb) {
   
   axios.interceptors.response.use(
     (response) => {
-      console.log('response', response);
+      //console.log('response', response);
       // Return a successful response back to the calling service
       cb({loaderIsHide:true, redirectTo:''})
       return response;

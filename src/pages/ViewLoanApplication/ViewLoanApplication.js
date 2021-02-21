@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import {
     TextField,
 } from '@material-ui/core';
-import { useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -29,7 +29,10 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 300,
     },
     width: {
-        maxWidth: 300,
+        '& > *': {
+            margin: theme.spacing(1),
+            maxWidth: 300,
+        },
     },
     title: {
         fontSize: 16,
@@ -44,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ViewLoanApplication(props) {
 
-    const history= useHistory();
+    const history = useHistory();
 
     const classes = useStyles();
     const [loanApplication, ViewLoanApplication] = useState([]);
@@ -62,15 +65,15 @@ export default function ViewLoanApplication(props) {
 
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
             .then(response => {
-                // console.log('response', response);
+                console.log('response', response);
                 ViewLoanApplication(response.data);
-                ViewMembershipNo(response.data.customers);
+                ViewMembershipNo(response.data.customers[0]);
                 ViewLoanType(response.data.loanTypeId);
                 ViewLoanStatus(response.data.loanStatus);
                 ViewBranch(response.data.branch);
                 ViewRentalType(response.data.rentalTypeId);
                 ViewUser(response.data.createdUser);
-                ViewUserRole(response.data.createdUser.roles);
+                ViewUserRole(response.data.createdUser.roles[0]);
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -109,7 +112,7 @@ export default function ViewLoanApplication(props) {
                                     <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
                                         Membership No:
                         </Typography>
-                                    <Typography variant="h5" component="h2">
+                                    <Typography variant="h6" component="h6">
                                         {membershipNo.membership_no}
                                     </Typography>
                                 </CardContent>
@@ -248,69 +251,63 @@ export default function ViewLoanApplication(props) {
                             </Grid>
                         </Paper>
                     </Grid>
-                    <Grid item xs={3}>
-                        <Card className={classes.root} variant="outlined">
-                            <CardActionArea>
-                                <CardContent>
-                                    <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
-                                        Created By:
+                    <Card className={classes.root} variant="outlined">
+                        <CardActionArea>
+                            <CardContent>
+                                <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
+                                    Created By:
                         </Typography>
-                                    <Typography variant="h5" component="h2">
-                                        {user.firstName} {" "}
-                                        {user.middleName} {" "}
-                                        {user.lastName}
-                                    </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        User Role:
+                                <Typography variant="h5" component="h2">
+                                    {user.firstName} {" "}
+                                    {user.middleName} {" "}
+                                    {user.lastName}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    User Role:
                         </Typography>
-                                    <Typography variant="h5" component="h2">
-                                        {user.name}
-                                    </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        Created Date:
+                                <Typography variant="h6" component="h5">
+                                    {userRole.name}
+                                </Typography>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    Created Date:
                         </Typography>
-                                    <Typography variant="body1" component="p">
-                                        {loanApplication.createdDate}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
+                                <Typography variant="body1" component="p">
+                                    {loanApplication.createdDate}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
                 </Grid>
-                <Grid className={classes.width} variant="outlined" >
-                    <Card>
-                        <CardContent>
-                            <Typography>
-                                <ButtonGroup>
-                                    <Link to={"/edit-loan-application/" + loanApplication.id} >
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            className={classes.button}
-                                        >
-                                            <EditIcon fontSize="small" />
+                <Grid item xs={3}>
+                    <Paper className={classes.width}>
+                        <ButtonGroup disableFocusRipple>
+                            <Link to={"/edit-loan-application/" + loanApplication.id} >
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                >
+                                    <EditIcon fontSize="small" />
                                         Edit
 
                                     </Button>
-                                    </Link>
-                                </ButtonGroup>
-                                {" "}
-                                <ButtonGroup>
-                                    <Link to={"/loanApplication-list"} >
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            className={classes.button}
-                                            onClick={() => history.goBack()}
-                                        >
-                                            <ArrowBackIosIcon fontSize="small" />
+                            </Link>
+                            </ButtonGroup>
+                            {" "}
+                            <ButtonGroup>
+                                <Link >
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        className={classes.button}
+                                        onClick={() => history.goBack()}
+                                    >
+                                        <ArrowBackIosIcon fontSize="small" />
                                         Back
                                     </Button>
-                                    </Link>
-                                </ButtonGroup>
-                            </Typography>
-                        </CardContent>
-                    </Card>
+                                </Link>
+                            </ButtonGroup>
+                    </Paper>
                 </Grid>
             </div>
 

@@ -404,7 +404,7 @@ export default function ViewCustomer(props) {
                         <br />
                         {/* 
                         Edit button and back button and see customer accounts button*/}
-                        <Grid item xs={6}>
+                        <Grid item xs={7}>
                             <Paper className={classes.width}>
                                 <ButtonGroup disableFocusRipple>
                                     <Link to={"/edit-customer/" + customerId}>
@@ -416,6 +416,8 @@ export default function ViewCustomer(props) {
                                             <EditIcon fontSize="small" />
                                         Edit
                                         </Button>
+                                        </Link>
+                                        </ButtonGroup>
                                         {" "}
                                         <ButtonGroup>
                                             <Link >
@@ -431,8 +433,6 @@ export default function ViewCustomer(props) {
                                     </Button>
                                             </Link>
                                         </ButtonGroup>
-                                    </Link>
-                                </ButtonGroup>
                                 <ColorButton variant="contained" color="primary" className={classes.margin}>
                                     <b>See Customer Accounts</b>
                                 </ColorButton>

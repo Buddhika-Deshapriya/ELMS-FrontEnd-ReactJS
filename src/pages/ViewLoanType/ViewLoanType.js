@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -39,6 +39,8 @@ const useStyles = makeStyles({
 });
 
 export default function ViewLoanType(props) {
+
+    const history = useHistory();
 
     const classes = useStyles();
     const [LoanType, ViewLoanType] = useState([]);
@@ -207,6 +209,7 @@ export default function ViewLoanType(props) {
                                             variant="contained"
                                             color="secondary"
                                             className={classes.button}
+                                            onClick={() => history.goBack()}
 
                                         >
                                             <ArrowBackIosIcon fontSize="small" />

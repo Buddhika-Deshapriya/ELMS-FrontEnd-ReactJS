@@ -110,9 +110,6 @@ export default function EditLoanApplication(props) {
             })
     };
 
-
-
-
     //Error Handling
     const initErrors = {
         applicationNo: '',

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles , withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 import {
   Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
   FormHelperText, MenuItem, Box,
@@ -33,11 +34,19 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
   },
 }));
+const ColorButton = withStyles((theme) => ({
+  root: {
+      color: theme.palette.getContrastText(green[500]),
+      backgroundColor: green[500],
+      '&:hover': {
+          backgroundColor: green[700],
+      },
+  },
+}))(Button);
 
 export default function NewLoanType(props) {
 
   const history = useHistory();
-  const loanTypeId = props.match.params.id;
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [dateTime, setDateTime] = useState(new Date());
@@ -330,7 +339,6 @@ export default function NewLoanType(props) {
           <br />
           <Paper variant="outlined" >
             <div>
-              <Link to ={"/view-loan-type/" + loanTypeId}>
               <Button
                 type="submit"
                 variant="contained"
@@ -340,18 +348,19 @@ export default function NewLoanType(props) {
               >
                 Save
             </Button>
-            </Link>
+            <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                <b>Reset</b>
+              </ColorButton>
               {" "}
               <Button
-                type="reset"
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                startIcon={<RotateLeftIcon />}
-                onClick={resetError}
+                onClick={() => history.goBack()}
               >
-                Reset
-                        </Button>
+                Back
+              </Button>
+              
             </div>
           </Paper>
         </form>

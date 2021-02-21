@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles , withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 import {
   Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
    MenuItem,
@@ -42,7 +43,15 @@ const useStyles = makeStyles((theme) => ({
     width: 485,
   },
 }));
-
+const ColorButton = withStyles((theme) => ({
+  root: {
+      color: theme.palette.getContrastText(green[500]),
+      backgroundColor: green[500],
+      '&:hover': {
+          backgroundColor: green[700],
+      },
+  },
+}))(Button);
 export default function NewLoanApplication(props) {
 
   const history = useHistory();

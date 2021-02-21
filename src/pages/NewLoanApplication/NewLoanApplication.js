@@ -457,26 +457,27 @@ export default function NewLoanApplication(props) {
                 onChange={onChange}
               />
               <div>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  endIcon={<SendIcon />}
-                >
-                  Save
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                endIcon={<SendIcon />}
+              >
+                Save
             </Button>
-                {" "}
-                <Button
-                  type="reset"
-                  variant="contained"
-                  color="secondary"
-                  className={classes.button}
-                  startIcon={<RotateLeftIcon />}
-                  onClick={resetError}
-                >
-                  Reset
-                        </Button>
+            <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                <b>Reset</b>
+              </ColorButton>
+              {" "}
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={() => history.goBack()}
+              >
+                Back
+              </Button>
               </div>
               </Paper>
             </Grid>

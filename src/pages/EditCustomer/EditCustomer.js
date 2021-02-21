@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl, MenuItem,
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditLoanType(props) {
 
+    const history = useHistory();
 
     const classes = useStyles();
     const [customerStatus, setStatus] = useState([]);
@@ -692,6 +694,7 @@ export default function EditLoanType(props) {
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<UpdateIcon />}
+                                onClick={() => history.goBack()}
                             >
                                 Update
                             </Button>

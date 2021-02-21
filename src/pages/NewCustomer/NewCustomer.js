@@ -56,6 +56,7 @@ export default function NewCustomer(props) {
     const [status, setStatus] = useState([]);
     const [dateTime, setDateTime] = useState(new Date());
     const [userId, setUserID] = useState([]);
+    const [genMemNo, setGenMemNo] = useState([]);
 
     //Setup initial State
     const initCustomer = {
@@ -97,7 +98,7 @@ export default function NewCustomer(props) {
     const fetchCustomerStatus = async () => {
         axios.get(`${baseUrl}/commonstatus/list`)
             .then(response => {
-                console.log('response', response);
+                // console.log('response', response);
                 setStatus(response.data);
             })
     };
@@ -112,7 +113,7 @@ export default function NewCustomer(props) {
     const fetchCustomerTitle = async () => {
         axios.get(`${baseUrl}/title/list/`)
             .then(response => {
-                console.log('response', response);
+                // console.log('response', response);
                 setTitles(response.data);
             })
     };
@@ -121,7 +122,7 @@ export default function NewCustomer(props) {
     const fetchCustomerGender = async () => {
         axios.get(`${baseUrl}/gender/list/`)
             .then(response => {
-                console.log('response', response);
+                // console.log('response', response);
                 setGenders(response.data);
             })
     };
@@ -130,7 +131,7 @@ export default function NewCustomer(props) {
     const fetchCustomerMarriedStatus = async () => {
         axios.get(`${baseUrl}/marriedstatus/list/`)
             .then(response => {
-                console.log('response', response);
+                // console.log('response', response);
                 setMarriedStatus(response.data);
             })  
     };
@@ -139,7 +140,7 @@ export default function NewCustomer(props) {
     const fetchCustomerMembershipType = async () => {
         axios.get(`${baseUrl}/membershiptype/list/`)
             .then(response => {
-                console.log('response', response);
+                // console.log('response', response);
                 setMembershipType(response.data);
             })
     };
@@ -148,11 +149,19 @@ export default function NewCustomer(props) {
     const fetchCustomerFamilyType = async () => {
         axios.get(`${baseUrl}/familytype/list/`)
             .then(response => {
-                console.log('response', response);
+                // console.log('response', response);
                 setFamilyType(response.data);
             })
     };
 
+    //Get Customer Membership generated No
+  const fetchCustomerGenMembershipNo = async () => {
+    axios.get(`${baseUrl}/customergenmembershipno/takememno`)
+      .then(response => {
+        console.log('Generated No', response);
+        setGenMemNo(response.data[0]);
+      })
+  }
 
     //Error Handling
     const initErrors = {
@@ -200,7 +209,7 @@ export default function NewCustomer(props) {
                 id: newCustomer.familyType,
             },
 
-            membership_no: newCustomer.membership_no,
+            membership_no: genMemNo.membership_no,
             nic: newCustomer.nic,
             first_name: newCustomer.first_name,
             middle_name: newCustomer.middle_name,
@@ -260,6 +269,7 @@ export default function NewCustomer(props) {
         fetchCustomerMembershipType();
         fetchCustomerFamilyType();
         fetchCustomerStatus();
+        fetchCustomerGenMembershipNo();
         getCurrentUser();
     }, []);
 
@@ -275,8 +285,8 @@ export default function NewCustomer(props) {
                                     label="Membership No"
                                     name="membership_no"
                                     variant="outlined"
+                                    value={genMemNo.membership_no}
                                     helperText={errors.membership_no}
-                                    placeholder="Enter Membership No"
                                     error={errors.membership_no ? 'error' : ''}
                                     style={{ margin: 8 }}
                                     InputLabelProps={{

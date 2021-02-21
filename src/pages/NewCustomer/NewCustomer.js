@@ -295,7 +295,7 @@ export default function NewCustomer(props) {
                                     label="Membership No"
                                     name="membership_no"
                                     variant="outlined"
-                                    value={genMemNo.mem}
+                                    value={genMemNo.membership_no}
                                     helperText={errors.membership_no}
                                     error={errors.membership_no ? 'error' : ''}
                                     style={{ margin: 8 }}

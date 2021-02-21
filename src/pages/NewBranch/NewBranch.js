@@ -59,6 +59,8 @@ export default function NewBranch(props) {
     const [branchStatus, setBranchStatus] = useState([]);
     const [dateTime, setDateTime] = useState(new Date());
     const [userId, setUserID] = useState([]);
+    const [genBranchCode, setGenBranchCode] = useState([]);
+
     //Setup initial State
     const initBranch = {
         branchCode: null,
@@ -86,6 +88,14 @@ export default function NewBranch(props) {
             })
     };
 
+    //Get Customer Membership generated No
+    const fetchGenBranchCode = async () => {
+        axios.get(`${baseUrl}/branchcodegenerate/takecode`)
+            .then(response => {
+                console.log('Generated No', response);
+                setGenBranchCode(response.data[0]);
+            })
+    }
 
     const [newBranch, setNewBranch] = useState(initBranch);
     const resetData = () => {
@@ -110,7 +120,7 @@ export default function NewBranch(props) {
     const SubmitNewBranch = (e) => {
         e.preventDefault();
         const data = {
-            branchCode: newBranch.branchCode,
+            branchCode: genBranchCode.branchCode,
             branchName: newBranch.branchName,
 
             branchStatus: {
@@ -152,6 +162,7 @@ export default function NewBranch(props) {
     //This is same as componentdidmount()
     useEffect(() => {
         fetchBranchStatus();
+        fetchGenBranchCode();
         getCurrentUser();
     }, []);
 
@@ -166,6 +177,7 @@ export default function NewBranch(props) {
                                     <TextField
                                         name="branchCode"
                                         id="outlined-full-width"
+                                        value={genBranchCode.branchCode}
                                         label="Branch Code"
                                         helperText={errors.branchCode}
                                         className={classes.textFields}

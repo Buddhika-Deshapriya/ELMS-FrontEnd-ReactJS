@@ -463,7 +463,6 @@ export default function NewLoanApplication(props) {
                   color="primary"
                   className={classes.button}
                   endIcon={<SendIcon />}
-                  onClick={() => history.goBack()}
                 >
                   Save
             </Button>

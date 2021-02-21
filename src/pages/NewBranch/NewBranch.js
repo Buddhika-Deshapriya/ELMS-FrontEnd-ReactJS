@@ -138,7 +138,7 @@ export default function NewBranch(props) {
                 }
             });
     };
-    
+
     //This is same as componentdidmount()
     useEffect(() => {
         fetchBranchStatus();
@@ -255,7 +255,6 @@ export default function NewBranch(props) {
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<SendIcon />}
-                                onClick={() => history.goBack()}
                             >
                                 Save
                             </Button>

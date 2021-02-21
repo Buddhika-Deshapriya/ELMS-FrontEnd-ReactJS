@@ -467,7 +467,6 @@ export default function EditLoanApplication(props) {
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<UpdateIcon />}
-                                onClick={() => history.goBack()}
                             >
                                 Update
                             </Button>

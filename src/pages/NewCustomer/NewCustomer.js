@@ -680,7 +680,6 @@ export default function NewCustomer(props) {
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<SendIcon />}
-                                onClick={() => history.goBack()}
                             >
                                 Save
                             </Button>

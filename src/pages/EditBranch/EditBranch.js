@@ -276,7 +276,6 @@ export default function EditBranch(props) {
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<UpdateIcon />}
-                                onClick={() => history.goBack()}
                             >
                                 Update
                             </Button>

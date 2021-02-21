@@ -37,11 +37,12 @@ const useStyles = makeStyles((theme) => ({
 export default function NewLoanType(props) {
 
   const history = useHistory();
-
+  const loanTypeId = props.match.params.id;
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [dateTime, setDateTime] = useState(new Date());
   const [userId, setUserID] = useState([]);
+
    //Setup initial State
    const initLoan  = {
     loanType: null,
@@ -329,16 +330,17 @@ export default function NewLoanType(props) {
           <br />
           <Paper variant="outlined" >
             <div>
+              <Link to ={"/view-loan-type/" + loanTypeId}>
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
                 className={classes.button}
                 endIcon={<SendIcon />}
-                onClick={() => history.goBack()}
               >
                 Save
             </Button>
+            </Link>
               {" "}
               <Button
                 type="reset"

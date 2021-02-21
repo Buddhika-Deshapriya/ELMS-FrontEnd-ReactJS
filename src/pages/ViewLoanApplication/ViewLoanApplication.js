@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import {
     TextField,
 } from '@material-ui/core';
-
+import { useHistory} from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ViewLoanApplication(props) {
 
+    const history= useHistory();
 
     const classes = useStyles();
     const [loanApplication, ViewLoanApplication] = useState([]);
@@ -300,6 +301,7 @@ export default function ViewLoanApplication(props) {
                                             variant="contained"
                                             color="secondary"
                                             className={classes.button}
+                                            onClick={() => history.goBack()}
                                         >
                                             <ArrowBackIosIcon fontSize="small" />
                                         Back

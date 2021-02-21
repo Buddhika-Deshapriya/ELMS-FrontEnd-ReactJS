@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1, 1, 1, 1),
   },
-
   formControl: {
     margin: theme.spacing(1, 1, 1, 1),
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+    width: 200,
   },
 }));
 

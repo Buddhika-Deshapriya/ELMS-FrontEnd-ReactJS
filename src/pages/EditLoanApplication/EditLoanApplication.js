@@ -106,7 +106,6 @@ export default function EditLoanApplication(props) {
                     loanTypeId: response.data.loanTypeId.id,
                     userid: response.data.createdUser.id,
                     branch: response.data.branch.branchCode,
-
                 });
             })
     };
@@ -128,14 +127,11 @@ export default function EditLoanApplication(props) {
         loanTypeId: '',
         membership_no: '',
         rentalTypeId: '',
-
     }
     const [errors, setErrors] = useState(initErrors);
     const resetError = () => {
         setErrors(initErrors)
     }
-
-
 
     const UpdateLoanApplication = (e) => {
         e.preventDefault();
@@ -156,9 +152,7 @@ export default function EditLoanApplication(props) {
             loanStatus: {
                 id: 1,
             },
-            branch: {
-                id: newApp.branch,
-            },
+            branch: newApp.branch,
             createdDate: newApp.createdDate,
             membership_no: newApp.membership_no,
             createdDate: dateTime,

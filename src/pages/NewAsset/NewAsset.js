@@ -3,9 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+
 import {
-    Button, Paper, Grid,  InputLabel, Select, FormControl, TextField,
+    Button, Paper, Grid, InputLabel, Select, FormControl, TextField,
     FormHelperText, MenuItem, Card,
 
 } from '@material-ui/core';
@@ -34,12 +36,24 @@ const useStyles = makeStyles((theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
-    margin:{
+    margin: {
         marginLeft: theme.spacing(1),
         marginBottom: theme.spacing(1),
         width: 500,
+    },
+    width: {
+        width: 830,
     }
 }));
+const ColorButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText(green[500]),
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
+    },
+}))(Button);
 
 export default function NewAsset(props) {
 
@@ -57,7 +71,7 @@ export default function NewAsset(props) {
         value: null
     }
     const onChange = (e) => {
-      //  e.persist();
+        //  e.persist();
         setNewAsset({ ...NewAsset, [e.target.name]: e.target.value });
     }
 
@@ -77,7 +91,7 @@ export default function NewAsset(props) {
             })
     };
 
-    const [newAsset, setNewAsset] = useState(initAsset );
+    const [newAsset, setNewAsset] = useState(initAsset);
     const resetData = () => {
         setNewAsset(initAsset)
     }
@@ -106,9 +120,9 @@ export default function NewAsset(props) {
                 id: newAsset.assetsStatus,
             },
             value: newAsset.value,
-            customers:[
+            customers: [
                 {
-                  id:newAsset.id,
+                    id: newAsset.id,
                 }
             ],
         };
@@ -150,7 +164,7 @@ export default function NewAsset(props) {
     return (
         <AppTemplate>
             <div className="new-asset">
-                <form autoComplete="off"  onSubmit={SubmitNewAsset}>
+                <form autoComplete="off" onSubmit={SubmitNewAsset}>
                     <Grid container spacing={1}>
                         <Grid item xs={8}>
                             <Paper variant="outlined" >
@@ -182,74 +196,74 @@ export default function NewAsset(props) {
                                         </Select>
                                     </FormControl>
                                     <Card width="500">
-                                    <TextField
-                                        name="value"
-                                        id="outlined-helperText"
-                                        label="Value"
-                                        placeholder="Enter Value"
-                                        variant="outlined"
-                                        helperText={errors.value}
-                                        error={errors.value ? 'error' : ''}
-                                        style={{ margin: 8 }}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        onChange={onChange}
-                                    />
-                                    <br />                              
-                                    <TextField
-                                        name="description"
-                                        id="outlined-multiline-static"
-                                        label="Description"
-                                        placeholder="Enter Description"
-                                        helperText={errors.description}
-                                        error={errors.description ? 'error' : ''}
-                                        multiline
-                                        rows={4}
-                                        className={classes.margin}
-                                        variant="outlined"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        onChange={onChange}
-                                    />
+                                        <TextField
+                                            name="value"
+                                            id="outlined-helperText"
+                                            label="Value"
+                                            placeholder="Enter Value"
+                                            variant="outlined"
+                                            helperText={errors.value}
+                                            error={errors.value ? 'error' : ''}
+                                            style={{ margin: 8 }}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            onChange={onChange}
+                                        />
+                                        <br />
+                                        <TextField
+                                            name="description"
+                                            id="outlined-multiline-static"
+                                            label="Description"
+                                            placeholder="Enter Description"
+                                            helperText={errors.description}
+                                            error={errors.description ? 'error' : ''}
+                                            multiline
+                                            rows={4}
+                                            className={classes.margin}
+                                            variant="outlined"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            onChange={onChange}
+                                        />
                                     </Card>
                                 </Card>
                             </Paper>
                             <br />
                             <Paper>
-                            <FormControl className={classes.formControl}>
-                                <InputLabel shrink >
-                                    Status
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel shrink >
+                                        Status
                                      </InputLabel>
-                                <FormHelperText>{errors.assetsStatus}</FormHelperText>
-                                <Select
-                                    variant="outlined"
-                                    name="assetsStatus"
-                                    displayEmpty
-                                    label="Status"
-                                    className={classes.selectEmpty}
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    error={errors.assetsStatus ? 'error' : ''}
-                                    onChange={onChange}
-                                >
-                                    <MenuItem value="" disabled>
+                                    <FormHelperText>{errors.assetsStatus}</FormHelperText>
+                                    <Select
+                                        variant="outlined"
+                                        name="assetsStatus"
+                                        displayEmpty
+                                        label="Status"
+                                        className={classes.selectEmpty}
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                        error={errors.assetsStatus ? 'error' : ''}
+                                        onChange={onChange}
+                                    >
+                                        <MenuItem value="" disabled>
 
-                                    </MenuItem>
-                                    {
-                                        assetsStatus.map((eachRow, index) => {
-                                            return (
-                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
-                                            );
-                                        })
-                                    }
-                                </Select>
-                            </FormControl>
+                                        </MenuItem>
+                                        {
+                                            assetsStatus.map((eachRow, index) => {
+                                                return (
+                                                    <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                );
+                                            })
+                                        }
+                                    </Select>
+                                </FormControl>
                             </Paper>
                         </Grid>
                     </Grid>
                     <br />
-                    <Paper variant="outlined" >
+                    <Paper variant="outlined" className={classes.width}  >
                         <div>
                             <Button
                                 type="submit"
@@ -259,35 +273,21 @@ export default function NewAsset(props) {
                                 endIcon={<SendIcon />}
                             >
                                 Save
-                            </Button>
+            </Button>
+                            <ColorButton variant="contained" color="secondary"  type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                                <b>Reset</b>
+                            </ColorButton>
                             {" "}
                             <Button
-                                type="reset"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                startIcon={<RotateLeftIcon />}
-                                onClick={resetError}
+                                onClick={() => history.goBack()}
                             >
-                                Reset
-                        </Button>
+                                Back
+              </Button>
                         </div>
                     </Paper>
-                    <Grid item xs={2}>
-                        <Paper variant="outlined">
-                            <Link to={"view-customer"} >
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.button}
-
-                                >
-                                    <ArrowBackIosIcon fontSize="small" />
-                                        Back
-                                    </Button>
-                            </Link>
-                        </Paper>
-                    </Grid>
                 </form>
             </div>
         </AppTemplate>

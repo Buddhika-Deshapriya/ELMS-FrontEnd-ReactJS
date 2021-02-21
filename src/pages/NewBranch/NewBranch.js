@@ -3,11 +3,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles , withStyles } from '@material-ui/core/styles';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
     FormHelperText, MenuItem, Box,
 } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 
 import SendIcon from '@material-ui/icons/Send';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
@@ -40,6 +41,15 @@ const useStyles = makeStyles((theme) => ({
         width: 300,
     }
 }));
+const ColorButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText(green[500]),
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
+    },
+  }))(Button);
 
 export default function NewBranch(props) {
 
@@ -195,22 +205,22 @@ export default function NewBranch(props) {
                         </Grid>
                         <Grid container spacing={1}>
                             <Grid item xs={6} className={classes.selectEmpty} >
-                            <TextField
-                                name="branchAddress"
-                                id="outlined-multiline-static"
-                                label="Address"
-                                placeholder="Enter Address"
-                                helperText={errors.branchAddress}
-                                error={errors.branchAddress ? 'error' : ''}
-                                multiline
-                                rows={4}
-                                fullWidth
-                                variant="outlined"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                onChange={onChange}
-                            />
+                                <TextField
+                                    name="branchAddress"
+                                    id="outlined-multiline-static"
+                                    label="Address"
+                                    placeholder="Enter Address"
+                                    helperText={errors.branchAddress}
+                                    error={errors.branchAddress ? 'error' : ''}
+                                    multiline
+                                    rows={4}
+                                    fullWidth
+                                    variant="outlined"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
                             </Grid>
                         </Grid>
                         <Grid>
@@ -257,18 +267,19 @@ export default function NewBranch(props) {
                                 endIcon={<SendIcon />}
                             >
                                 Save
-                            </Button>
+            </Button>
+                            <ColorButton variant="contained" color="secondary"  type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                                <b>Reset</b>
+                            </ColorButton>
                             {" "}
                             <Button
-                                type="reset"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                startIcon={<RotateLeftIcon />}
-                                onClick={resetError}
+                                onClick={() => history.goBack()}
                             >
-                                Reset
-                        </Button>
+                                Back
+              </Button>
                         </div>
                     </Paper>
                 </form>

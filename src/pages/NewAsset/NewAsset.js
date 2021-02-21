@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Button, Paper, Grid,  InputLabel, Select, FormControl, TextField,
@@ -41,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NewAsset(props) {
+
+    const history = useHistory();
 
     const classes = useStyles();
     const [assetsStatus, setAssetsStatus] = useState([]);
@@ -138,7 +141,6 @@ export default function NewAsset(props) {
             });
     };
 
-
     //This is same as componentdidmount()
     useEffect(() => {
         fetchAssetStatus();
@@ -178,7 +180,6 @@ export default function NewAsset(props) {
                                                 })
                                             }
                                         </Select>
-
                                     </FormControl>
                                     <Card width="500">
                                     <TextField
@@ -231,7 +232,6 @@ export default function NewAsset(props) {
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     error={errors.assetsStatus ? 'error' : ''}
                                     onChange={onChange}
-                                    
                                 >
                                     <MenuItem value="" disabled>
 
@@ -257,6 +257,7 @@ export default function NewAsset(props) {
                                 color="primary"
                                 className={classes.button}
                                 endIcon={<SendIcon />}
+                                onClick={() => history.goBack()}
                             >
                                 Save
                             </Button>

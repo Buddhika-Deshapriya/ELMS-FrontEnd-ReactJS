@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
     FormHelperText, MenuItem
@@ -39,10 +40,19 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
     },
 }));
+const ColorButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText(green[500]),
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
+    },
+}))(Button);
 
 export default function NewCustomer(props) {
 
-    const history= useHistory();
+    const history = useHistory();
 
     const classes = useStyles();
     const [state, setState] = React.useState({
@@ -133,7 +143,7 @@ export default function NewCustomer(props) {
             .then(response => {
                 // console.log('response', response);
                 setMarriedStatus(response.data);
-            })  
+            })
     };
 
     //Get membership type
@@ -155,13 +165,13 @@ export default function NewCustomer(props) {
     };
 
     //Get Customer Membership generated No
-  const fetchCustomerGenMembershipNo = async () => {
-    axios.get(`${baseUrl}/customergenmembershipno/takememno`)
-      .then(response => {
-        console.log('Generated No', response);
-        setGenMemNo(response.data[0]);
-      })
-  }
+    const fetchCustomerGenMembershipNo = async () => {
+        axios.get(`${baseUrl}/customergenmembershipno/takememno`)
+            .then(response => {
+                console.log('Generated No', response);
+                setGenMemNo(response.data[0]);
+            })
+    }
 
     //Error Handling
     const initErrors = {
@@ -316,7 +326,7 @@ export default function NewCustomer(props) {
                         <div>
                             <FormControl className={classes.formControl} variant="outlined" >
                                 <InputLabel id="demo-simple-select-filled-label">
-                                    Title 
+                                    Title
                                 </InputLabel>
                                 <Select
                                     variant="outlined"
@@ -383,7 +393,7 @@ export default function NewCustomer(props) {
 
                                     </MenuItem>
                                     {
-                                    marriedStatus.map((eachRow, index) => {
+                                        marriedStatus.map((eachRow, index) => {
                                             return (
                                                 <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
                                             );
@@ -682,18 +692,19 @@ export default function NewCustomer(props) {
                                 endIcon={<SendIcon />}
                             >
                                 Save
-                            </Button>
+            </Button>
+                            <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                                <b>Reset</b>
+                            </ColorButton>
                             {" "}
                             <Button
-                                type="reset"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                startIcon={<RotateLeftIcon />}
-                                onClick={resetError}
+                                onClick={() => history.goBack()}
                             >
-                                Reset
-                        </Button>
+                                Back
+              </Button>
                         </div>
                     </Paper>
                 </form>

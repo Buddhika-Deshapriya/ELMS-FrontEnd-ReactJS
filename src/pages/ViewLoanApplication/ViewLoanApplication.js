@@ -151,7 +151,7 @@ export default function ViewLoanApplication(props) {
                         <Card className={classes.root} variant="outlined">
                             <CardActionArea>
                                 <CardContent>
-                                    <Typography gutterBottom className={classes.title} color="textSecondary" gutterBottom>
+                                    <Typography gutterBottom className={classes.title} color="textSecondary">
                                         Status:
                         </Typography>
                                     <Typography variant="h6" component="h6">

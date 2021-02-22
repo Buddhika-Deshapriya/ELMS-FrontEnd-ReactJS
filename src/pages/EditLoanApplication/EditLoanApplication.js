@@ -3,13 +3,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles , withStyles } from '@material-ui/core/styles';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl, MenuItem, Box,
 
 } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 
-import UpdateIcon from '@material-ui/icons/Update';
+import SendIcon from '@material-ui/icons/Send';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -34,6 +35,15 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
     },
 }));
+const ColorButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText(green[500]),
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
+    },
+  }))(Button);
 
 export default function EditLoanApplication(props) {
 
@@ -106,6 +116,9 @@ export default function EditLoanApplication(props) {
                     loanTypeId: response.data.loanTypeId.id,
                     userid: response.data.createdUser.id,
                     branch: response.data.branch.branchCode,
+                    branchId: response.data.branch.id,
+                    customerId: response.data.customers[0],
+
                 });
             })
     };
@@ -134,6 +147,8 @@ export default function EditLoanApplication(props) {
         e.preventDefault();
         const data = {
             id: newApp.id,
+            applicationNo: newApp.applicationNo,
+            calculationNo: newApp.calculationNo,
             loanAmount: newApp.loanAmount,
             description: newApp.description,
             noOfRentals: newApp.noOfRentals,
@@ -149,13 +164,20 @@ export default function EditLoanApplication(props) {
             loanStatus: {
                 id: 1,
             },
-            branch: newApp.branch,
+            branch: {
+                id: newApp.branchId,
+            },
             createdDate: newApp.createdDate,
             membership_no: newApp.membership_no,
             createdDate: dateTime,
             createdUser: {
                 id: userId,
             },
+            customers: [
+                {
+                    id: newApp.customerId.id,
+                }
+            ],
 
         };
         console.log('data', data);
@@ -275,7 +297,7 @@ export default function EditLoanApplication(props) {
                                 />
                             </Grid>
                             <Grid item xs={2}>
-                                <TextField  
+                                <TextField
                                     name="branch"
                                     value={newApp.branch}
                                     id="outlined-helperText"
@@ -340,120 +362,118 @@ export default function EditLoanApplication(props) {
                         <Grid item xs={5}>
                             <Paper variant="outlined" >
                                 <div>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={6}>
-                                    <FormControl className={classes.formControl}>
-                                        <InputLabel shrink htmlFor="age-native-label-placeholder">
-                                            Loan Type
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={6}>
+                                            <FormControl className={classes.formControl}>
+                                                <InputLabel shrink htmlFor="age-native-label-placeholder">
+                                                    Loan Type
                                         </InputLabel>
-                                        <Select
-                                            name="loanTypeId"
-                                            value={newApp.loanTypeId}
-                                            displayEmpty
-                                            className={classes.selectEmpty}
-                                            
-                                            inputProps={{ 'aria-label': 'Without label' }}
-                                            onChange={onChange}
-                                        >
-                                            <MenuItem value="" disabled>
+                                                <Select
+                                                    name="loanTypeId"
+                                                    value={newApp.loanTypeId}
+                                                    displayEmpty
+                                                    className={classes.selectEmpty}
 
-                                            </MenuItem>
-                                            {
-                                                loanTypeId.map((eachRow, index) => {
-                                                    return (
-                                                        <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.loanType}</MenuItem>
-                                                    );
-                                                })
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                    <TextField
-                                        name="effectiveRate"
-                                        value={newApp.effectiveRate}
-                                        id="outlined-helperText"
-                                        label="Effective Rate"
-                                        variant="outlined"
-                                        helperText={errors.effectiveRate}
-                                        error={errors.effectiveRate ? 'error' : ''}
-                                        style={{ margin: 8 }}
-                                        onChange={onChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-                                    <TextField
-                                        name="paymentPeriod"
-                                        value={newApp.paymentPeriod}
-                                        id="outlined-helperText"
-                                        label="Payment Period"
-                                        helperText={errors.paymentPeriod}
-                                        error={errors.paymentPeriod ? 'error' : ''}
-                                        variant="outlined"
-                                        style={{ margin: 8 }}
-                                        onChange={onChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                    <FormControl className={classes.formControl}>
-                                        <InputLabel shrink htmlFor="age-native-label-placeholder">
-                                            Rental Type
+                                                    inputProps={{ 'aria-label': 'Without label' }}
+                                                    onChange={onChange}
+                                                >
+                                                    <MenuItem value="" disabled>
+
+                                                    </MenuItem>
+                                                    {
+                                                        loanTypeId.map((eachRow, index) => {
+                                                            return (
+                                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.loanType}</MenuItem>
+                                                            );
+                                                        })
+                                                    }
+                                                </Select>
+                                            </FormControl>
+                                            <TextField
+                                                name="effectiveRate"
+                                                value={newApp.effectiveRate}
+                                                id="outlined-helperText"
+                                                label="Effective Rate"
+                                                variant="outlined"
+                                                helperText={errors.effectiveRate}
+                                                error={errors.effectiveRate ? 'error' : ''}
+                                                style={{ margin: 8 }}
+                                                onChange={onChange}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                            <TextField
+                                                name="paymentPeriod"
+                                                value={newApp.paymentPeriod}
+                                                id="outlined-helperText"
+                                                label="Payment Period"
+                                                helperText={errors.paymentPeriod}
+                                                error={errors.paymentPeriod ? 'error' : ''}
+                                                variant="outlined"
+                                                style={{ margin: 8 }}
+                                                onChange={onChange}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <FormControl className={classes.formControl}>
+                                                <InputLabel shrink htmlFor="age-native-label-placeholder">
+                                                    Rental Type
                                         </InputLabel>
-                                        <Select
-                                            name="rentalTypeId"
-                                            value={newApp.rentalTypeId}
-                                            displayEmpty
-                                            className={classes.selectEmpty}
-                                            inputProps={{ 'aria-label': 'Without label' }}
-                                            onChange={onChange}
-                                        >
-                                            <MenuItem value="" disabled>
+                                                <Select
+                                                    name="rentalTypeId"
+                                                    value={newApp.rentalTypeId}
+                                                    displayEmpty
+                                                    className={classes.selectEmpty}
+                                                    inputProps={{ 'aria-label': 'Without label' }}
+                                                    onChange={onChange}
+                                                >
+                                                    <MenuItem value="" disabled>
 
-                                            </MenuItem>
-                                            {
-                                                rentalTypeId.map((eachRow, index) => {
-                                                    return (
-                                                        <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
-                                                    );
-                                                })
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                    <TextField
-                                        name="noOfRentals"
-                                        value={newApp.noOfRentals}
-                                        id="outlined-helperText"
-                                        label="No of Rentals"
-                                        helperText={errors.noOfRentals}
-                                        error={errors.noOfRentals ? 'error' : ''}
-                                        variant="outlined"
-                                        style={{ margin: 8 }}
-                                        onChange={onChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-                                    
-                                    <TextField
-                                        name="otherCharges"
-                                        value={newApp.otherCharges}
-                                        id="outlined-helperText"
-                                        label="Other Charges"
-                                        helperText={errors.otherCharges}
-                                        error={errors.otherCharges ? 'error' : ''}
-                                        variant="outlined"
-                                        style={{ margin: 8 }}
-                                        onChange={onChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
+                                                    </MenuItem>
+                                                    {
+                                                        rentalTypeId.map((eachRow, index) => {
+                                                            return (
+                                                                <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                            );
+                                                        })
+                                                    }
+                                                </Select>
+                                            </FormControl>
+                                            <TextField
+                                                name="noOfRentals"
+                                                value={newApp.noOfRentals}
+                                                id="outlined-helperText"
+                                                label="No of Rentals"
+                                                helperText={errors.noOfRentals}
+                                                error={errors.noOfRentals ? 'error' : ''}
+                                                variant="outlined"
+                                                style={{ margin: 8 }}
+                                                onChange={onChange}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+
+                                            <TextField
+                                                name="otherCharges"
+                                                value={newApp.otherCharges}
+                                                id="outlined-helperText"
+                                                label="Other Charges"
+                                                helperText={errors.otherCharges}
+                                                error={errors.otherCharges ? 'error' : ''}
+                                                variant="outlined"
+                                                style={{ margin: 8 }}
+                                                onChange={onChange}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                        </Grid>
                                     </Grid>
-                                    </Grid>
-                                   
-                                   
                                 </div>
                             </Paper>
                         </Grid>
@@ -466,21 +486,22 @@ export default function EditLoanApplication(props) {
                                 variant="contained"
                                 color="primary"
                                 className={classes.button}
-                                endIcon={<UpdateIcon />}
+                                endIcon={<SendIcon />}
                             >
-                                Update
-                            </Button>
+                                Save
+            </Button>
+                            <ColorButton variant="contained" color="secondary" type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                                <b>Reset</b>
+                            </ColorButton>
                             {" "}
                             <Button
-                                type="reset"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                startIcon={<RotateLeftIcon />}
-                                onClick={resetError}
+                                onClick={() => history.goBack()}
                             >
-                                Reset
-                        </Button>
+                                Back
+              </Button>
                         </div>
                     </Paper>
                 </form>

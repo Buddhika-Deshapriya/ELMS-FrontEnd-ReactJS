@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { DataGrid } from '@material-ui/data-grid';
 import {
     Button, ButtonGroup,
     Table, TableBody, TableCell,
@@ -11,7 +12,6 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
-import EditIcon from '@material-ui/icons/Edit';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -112,7 +112,7 @@ export default function PendingLoanList() {
                                 <StyledTableCell align="left">Amount</StyledTableCell>
                                 <StyledTableCell align="left">Date</StyledTableCell>
                                 <StyledTableCell align="left">Status</StyledTableCell>
-                                <StyledTableCell align="left"></StyledTableCell>
+                                <StyledTableCell align="left">  </StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -126,7 +126,16 @@ export default function PendingLoanList() {
                                         <StyledTableCell align="left">{row.calculationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                         <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                        <StyledTableCell align="left" sortDirection={row.loanStatus.type == "pending"? row.loanStatus.type:"pending"}></StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            <DataGrid
+                                             {...pendingLoan}
+                                                filterModel={{
+                                                    items: [
+                                                        { columnField: 'Status', operatorValue: 'contains', value: 'pending' },
+                                                    ],
+                                                }}
+                                            />
+                                        </StyledTableCell>
                                         <StyledTableCell align="left">
                                             <ButtonGroup>
                                                 {/* <Link to={"edit-customer/" + row.id} > */}

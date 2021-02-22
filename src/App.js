@@ -29,7 +29,7 @@ import ViewLoanApplication from "./pages/ViewLoanApplication/ViewLoanApplication
 import Branch from './pages/Branches/Branches';
 import NewBranch from './pages/NewBranch/NewBranch';
 import EditBranch from './pages/EditBranch/EditBranch';
-
+import ApproveLoans from './pages/ApproveLoans/ApproveLoans';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -94,6 +94,7 @@ export default function App (props) {
         <Route path="/branch-list" exact component={Branch} />
         <Route path="/edit-branch/:id" exact component={EditBranch} />
         <Route path="/new-branch" exact component={NewBranch} />
+        <Route path="/pending-loan-list" exact component={ApproveLoans} />
 
         <Route component={ErrorPage} />
       </Switch>

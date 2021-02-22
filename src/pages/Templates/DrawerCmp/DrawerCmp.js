@@ -7,6 +7,8 @@ import {
 } from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { Link } from "react-router-dom";
+
+import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import MoneyIcon from '@material-ui/icons/Money';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -99,6 +101,14 @@ export default function DrawerCmp(props) {
         <Divider />
         <ListSubheader inset>Loan applications</ListSubheader>
         <Divider />
+        <Link to="/pending-loan-list" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <ThumbsUpDownIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Pending loans"} />
+          </ListItem>
+        </Link>
         <Link to="/order" className={classes.link}>
           <ListItem button>
             <ListItemIcon>

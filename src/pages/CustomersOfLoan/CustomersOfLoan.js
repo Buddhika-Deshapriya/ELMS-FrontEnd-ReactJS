@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 450,
     },
     width: {
-        maxWidth: 300,
+        width: 350,
     },
     title: {
         fontSize: 16,
@@ -101,12 +101,12 @@ export default function ViewLoanCustomerData(props) {
 
     const fetchLoanCustomerData = async (CustomerId) => {
 
-        axios.get(`${baseUrl}/loanapplication/list/` + CustomerId)
+        axios.get(`${baseUrl}/loanapplicationresponse/list/` + CustomerId)
             .then(response => {
                 console.log('response', response);
                 ViewCustomerData(response.data.customers);
-                ViewMembershipType(response.data.customers.membershipType);
-                ViewCustomerStatus(response.data.customers.customerStatus);
+                ViewMembershipType(response.data.customers[0].membershipType);
+                ViewCustomerStatus(response.data.customers.customerStatus.type);
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -195,7 +195,7 @@ export default function ViewLoanCustomerData(props) {
                                                 Membership Type:
                                         </Typography>
                                             <Typography variant="h5" component="h2">
-                                                {CustomersData.membershipType}
+                                                {membershipType.type}
                                             </Typography>
                                             <Typography className={classes.title} color="textSecondary" gutterBottom>
                                                 Status:
@@ -204,15 +204,10 @@ export default function ViewLoanCustomerData(props) {
                                                 {CustomersData.customerStatus == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}
                                             </Typography>
                                         </CardContent>
-                                    </Collapse>
-                                </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Card>
-                                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                    
                                     <Typography>
                                         <Link to={"/view-customer/"+ CustomerId}>
-                                        <Button variant="contained" color="primary">
+                                        <Button variant="contained" color="primary" className={classes.width}>
                                             View More
                                         </Button>
                                         </Link>

@@ -125,23 +125,23 @@ export default function PendingLoanList() {
                                         <StyledTableCell align="left">{row.calculationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                         <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                        <StyledTableCell align="left">{}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.loanStatus.type == "pending" ? row.loanStatus.type : null}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             <ButtonGroup>
                                                 <Link to={"new-response"} >
-                                                <Button
-                                                    size="sm"
-                                                    variant="outline-danger"
-                                                >
-                                                    <HtmlTooltip
-                                                        title={
-                                                            <React.Fragment>
-                                                                <Typography color="inherit">To Approve</Typography>
-                                                            </React.Fragment>
-                                                        }>
-                                                        <ThumbUpIcon />
-                                                    </HtmlTooltip>
-                                                </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline-danger"
+                                                    >
+                                                        <HtmlTooltip
+                                                            title={
+                                                                <React.Fragment>
+                                                                    <Typography color="inherit">To Approve</Typography>
+                                                                </React.Fragment>
+                                                            }>
+                                                            <ThumbUpIcon />
+                                                        </HtmlTooltip>
+                                                    </Button>
                                                 </Link>
                                             </ButtonGroup>
                                         </StyledTableCell>

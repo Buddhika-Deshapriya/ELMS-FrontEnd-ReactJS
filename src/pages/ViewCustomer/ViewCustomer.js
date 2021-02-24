@@ -268,7 +268,7 @@ export default function ViewCustomer(props) {
                                         <Card className={classes.width} variant="outlined">
                                             <CardContent>
                                                 <Box>
-                                                    <Typography variant="H6" component="h2" color="secondary">
+                                                <Typography variant="H6" component="h2" color="secondary">
                                                         Membership Details :
                                             </Typography>
                                                     <br />

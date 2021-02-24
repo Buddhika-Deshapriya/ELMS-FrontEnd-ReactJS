@@ -41,10 +41,15 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         marginLeft: theme.spacing(1),
         marginBottom: theme.spacing(1),
-        width: 500,
+        width: 1000,
     },
     width: {
         width: 830,
+    },
+    spacing: {
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        width: 700,
     }
 }));
 const ColorButton = withStyles((theme) => ({
@@ -61,10 +66,39 @@ export default function NewLoanResponse(props) {
 
     const history = useHistory();
 
+    const loanApplicationId = props.match.params.id
+
     const classes = useStyles();
     const [loanStatus, setLoanStatus] = useState([]);
     const [dateTime, setDateTime] = useState(new Date());
     const [userId, setUserID] = useState([]);
+
+    const [loanApplication, ViewLoanApplication] = useState([]);
+    const [membershipNo, ViewMembershipNo] = useState([]);
+    const [loanType, ViewLoanType] = useState([]);
+    const [status, ViewLoanStatus] = useState([]);
+    const [user, ViewUser] = useState([]);
+    const [userRole, ViewUserRole] = useState([]);
+    const [rentalType, ViewRentalType] = useState([]);
+    const [branch, ViewBranch] = useState([]);
+
+    
+
+    const fetchLoanApplicationData = async (loanApplicationId) => {
+        axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
+            .then(response => {
+                console.log('response', response);
+                ViewLoanApplication(response.data);
+                ViewMembershipNo(response.data.customers[0]);
+                ViewLoanType(response.data.loanTypeId);
+                ViewLoanStatus(response.data.loanStatus);
+                ViewBranch(response.data.branch);
+                ViewRentalType(response.data.rentalTypeId);
+                ViewUser(response.data.createdUser);
+                ViewUserRole(response.data.createdUser.roles[0]);
+
+            })
+    };
 
     //Setup initial State
     const initResponse = {
@@ -151,7 +185,6 @@ export default function NewLoanResponse(props) {
                     else {
                         utils.showError(_error)
                     }
-
                 }
             });
     };
@@ -160,11 +193,100 @@ export default function NewLoanResponse(props) {
     useEffect(() => {
         fetchLoanStatus();
         getCurrentUser();
+        fetchLoanApplicationData(loanApplicationId);
     }, []);
 
     return (
         <AppTemplate>
             <div className="new-response">
+                <Grid container spacing={2}>
+                    <Grid item xs={9}>
+                        <Paper>
+                            <Grid container spacing={3} className={classes.spacing}>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="loanAmount"
+                                        value={loanApplication.loanAmount}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Loan Amount"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="effectiveRate"
+                                        value={loanApplication.effectiveRate}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Effective Rate"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="loanType"
+                                        value={loanType.loanType}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Loan Type"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={3} className={classes.spacing}>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="rentalType"
+                                        value={rentalType.type}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Rental Type"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="noOfRentals"
+                                        value={loanApplication.noOfRentals}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="No of Rentals"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        name="paymentPeriod"
+                                        value={loanApplication.paymentPeriod}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Payment Period"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                </Grid>
                 <form autoComplete="off" onSubmit={SubmitNewLoanResponse}>
                     <Grid container spacing={1}>
                         <Grid item xs={8}>
@@ -196,7 +318,7 @@ export default function NewLoanResponse(props) {
                                             error={errors.description ? 'error' : ''}
                                             multiline
                                             rows={4}
-                                            className={classes.margin}
+                                            className={classes.spacing}
                                             variant="outlined"
                                             InputLabelProps={{
                                                 shrink: true,

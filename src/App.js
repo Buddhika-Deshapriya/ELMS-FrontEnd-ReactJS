@@ -96,7 +96,7 @@ export default function App (props) {
         <Route path="/edit-branch/:id" exact component={EditBranch} />
         <Route path="/new-branch" exact component={NewBranch} />
         <Route path="/pending-loan-list" exact component={PendingLoans} />
-        <Route path="/new-response" exact component={LoanResponse} />
+        <Route path="/new-response/:id" exact component={LoanResponse} />
 
         <Route component={ErrorPage} />
       </Switch>

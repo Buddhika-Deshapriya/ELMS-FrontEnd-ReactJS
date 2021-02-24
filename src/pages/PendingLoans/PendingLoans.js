@@ -120,15 +120,16 @@ export default function PendingLoanList() {
                                     <TableCell colSpan="5">No Pending Loans Available</TableCell>
                                 </TableRow> :
                                 pendingLoan.map((row) => (
+                                    row.loanStatus.type == "pending" ?
                                     <StyledTableRow key={row.id}>
                                         <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.calculationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
                                         <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                        <StyledTableCell align="left">{row.loanStatus.type == "pending" ? row.loanStatus.type : null}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             <ButtonGroup>
-                                                <Link to={"new-response"} >
+                                                <Link to={"new-response/"+ row.id} >
                                                     <Button
                                                         size="sm"
                                                         variant="outline-danger"
@@ -146,6 +147,9 @@ export default function PendingLoanList() {
                                             </ButtonGroup>
                                         </StyledTableCell>
                                     </StyledTableRow>
+                                    :
+                                    null
+                                
                                 ))
                             }
                         </TableBody>

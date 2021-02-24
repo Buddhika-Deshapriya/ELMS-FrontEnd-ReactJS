@@ -249,6 +249,7 @@ export default function ViewLoanApplication(props) {
                                     />
                                 </Grid>
                             </Grid>
+                            
                         </Paper>
                     </Grid>
                     <Card className={classes.root} variant="outlined">

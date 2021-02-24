@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
+import { makeStyles, withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { green, purple } from '@material-ui/core/colors';
 
 import {
     Button, Paper, Grid, InputLabel, Select, FormControl, TextField,
@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     spacing: {
         marginLeft: theme.spacing(1),
         marginBottom: theme.spacing(1),
-        width: 700,
     }
 }));
 const ColorButton = withStyles((theme) => ({
@@ -61,6 +60,50 @@ const ColorButton = withStyles((theme) => ({
         },
     },
 }))(Button);
+
+const BootstrapButton = withStyles({
+    root: {
+        boxShadow: 'none',
+        textTransform: 'none',
+        fontSize: 16,
+        padding: '6px 12px',
+        border: '1px solid',
+        lineHeight: 1.5,
+        backgroundColor: '#0063cc',
+        borderColor: '#0063cc',
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+        '&:hover': {
+            backgroundColor: '#0069d9',
+            borderColor: '#0062cc',
+            boxShadow: 'none',
+        },
+        '&:active': {
+            boxShadow: 'none',
+            backgroundColor: '#0062cc',
+            borderColor: '#005cbf',
+        },
+        '&:focus': {
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+        },
+    },
+})(Button);
+
+const theme = createMuiTheme({
+    palette: {
+        primary: green,
+    },
+});
 
 export default function NewLoanResponse(props) {
 
@@ -82,7 +125,7 @@ export default function NewLoanResponse(props) {
     const [rentalType, ViewRentalType] = useState([]);
     const [branch, ViewBranch] = useState([]);
 
-    
+
 
     const fetchLoanApplicationData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
@@ -199,94 +242,140 @@ export default function NewLoanResponse(props) {
     return (
         <AppTemplate>
             <div className="new-response">
-                <Grid container spacing={2}>
-                    <Grid item xs={9}>
-                        <Paper>
-                            <Grid container spacing={3} className={classes.spacing}>
-                                <Grid item xs={4}>
-                                    <TextField
-                                        name="loanAmount"
-                                        value={loanApplication.loanAmount}
-                                        className={classes.textField}
-                                        id="outlined-full-width"
-                                        helperText="Loan Amount"
-                                        size="medium"
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <TextField
-                                        name="effectiveRate"
-                                        value={loanApplication.effectiveRate}
-                                        className={classes.textField}
-                                        id="outlined-full-width"
-                                        helperText="Effective Rate"
-                                        size="medium"
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <TextField
-                                        name="loanType"
-                                        value={loanType.loanType}
-                                        className={classes.textField}
-                                        id="outlined-full-width"
-                                        helperText="Loan Type"
-                                        size="medium"
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid container spacing={3} className={classes.spacing}>
-                                <Grid item xs={4}>
-                                    <TextField
-                                        name="rentalType"
-                                        value={rentalType.type}
-                                        className={classes.textField}
-                                        id="outlined-full-width"
-                                        helperText="Rental Type"
-                                        size="medium"
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <TextField
-                                        name="noOfRentals"
-                                        value={loanApplication.noOfRentals}
-                                        className={classes.textField}
-                                        id="outlined-full-width"
-                                        helperText="No of Rentals"
-                                        size="medium"
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <TextField
-                                        name="paymentPeriod"
-                                        value={loanApplication.paymentPeriod}
-                                        className={classes.textField}
-                                        id="outlined-full-width"
-                                        helperText="Payment Period"
-                                        size="medium"
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                <br />
+                <Paper>
+                    <Grid container spacing={5} className={classes.spacing}>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="applicationNo"
+                                value={loanApplication.applicationNo}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Application No"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="calculationNo"
+                                value={loanApplication.calculationNo}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Calculation No"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="loanStatus"
+                                value={status.type}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Loan Status"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="loanAmount"
+                                value={loanApplication.loanAmount}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Loan Amount"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="effectiveRate"
+                                value={loanApplication.effectiveRate}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Effective Rate"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
                     </Grid>
-                </Grid>
+                    <Grid container spacing={5} className={classes.spacing}>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="loanType"
+                                value={loanType.loanType}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Loan Type"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="rentalType"
+                                value={rentalType.type}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Rental Type"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="noOfRentals"
+                                value={loanApplication.noOfRentals}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="No of Rentals"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                name="paymentPeriod"
+                                value={loanApplication.paymentPeriod}
+                                className={classes.textField}
+                                id="outlined-full-width"
+                                helperText="Payment Period"
+                                size="medium"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} className={classes.spacing}>
+                            <Link to={"/loan-application-customer-data/" + loanApplicationId}>
+                            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.spacing}>
+                                See Customers
+                            </BootstrapButton>
+                            </Link>
+                        </Grid>
+                    </Grid>
+                </Paper>
+                <br />
                 <form autoComplete="off" onSubmit={SubmitNewLoanResponse}>
                     <Grid container spacing={1}>
                         <Grid item xs={8}>

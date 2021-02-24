@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import clsx from 'clsx';
+import { useHistory } from "react-router-dom";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
     Table, TableBody, TableCell,
@@ -84,6 +85,7 @@ const theme = createMuiTheme({
 
 export default function ViewLoanCustomerData(props) {
 
+    const history = useHistory();
 
     const classes = useStyles();
     const [CustomersData, ViewCustomerData] = useState([]);
@@ -101,7 +103,7 @@ export default function ViewLoanCustomerData(props) {
 
     const fetchLoanCustomerData = async (CustomerId) => {
 
-        axios.get(`${baseUrl}/loanapplicationresponse/list/` + CustomerId)
+        axios.get(`${baseUrl}/loanapplication/list/` + CustomerId)
             .then(response => {
                 console.log('response', response);
                 ViewCustomerData(response.data.customers);
@@ -170,7 +172,7 @@ export default function ViewLoanCustomerData(props) {
                                                                     {row.membership_no}
                                                                 </Typography>
                                                             </ThemeProvider>
-                                                            
+
                                                         </Link>
                                                     </StyledTableCell>
                                                     <StyledTableCell align="left">{row.first_name}{" "} {row.middle_name}{" "}{row.last_name}</StyledTableCell>
@@ -181,7 +183,17 @@ export default function ViewLoanCustomerData(props) {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <br />
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            onClick={() => history.goBack()}
+                        >
+                            Back
+                         </Button>
                     </Grid>
+
                     <Grid item xs={7}>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
@@ -204,14 +216,14 @@ export default function ViewLoanCustomerData(props) {
                                                 {CustomersData.customerStatus == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}
                                             </Typography>
                                         </CardContent>
-                                    
-                                    <Typography>
-                                        <Link to={"/view-customer/"+ CustomerId}>
-                                        <Button variant="contained" color="primary" className={classes.width}>
-                                            View More
+
+                                        <Typography>
+                                            <Link to={"/view-customer/" + CustomerId}>
+                                                <Button variant="contained" color="primary" className={classes.width}>
+                                                    View More
                                         </Button>
-                                        </Link>
-                                    </Typography>
+                                            </Link>
+                                        </Typography>
                                     </Collapse>
                                 </Card>
                             </Grid>

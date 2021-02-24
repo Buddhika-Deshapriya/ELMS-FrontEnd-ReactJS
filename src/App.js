@@ -30,7 +30,7 @@ import Branch from './pages/Branches/Branches';
 import NewBranch from './pages/NewBranch/NewBranch';
 import EditBranch from './pages/EditBranch/EditBranch';
 import PendingLoans from './pages/PendingLoans/PendingLoans';
-import LoanResponse from './pages/ApproveLoans/ApproveLoans';
+import LoanResponse from './pages/LoanResponse/LoanResponse';
 
 
 const useStyles = makeStyles((theme) => ({

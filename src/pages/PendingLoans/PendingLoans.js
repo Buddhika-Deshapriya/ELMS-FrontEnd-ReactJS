@@ -91,17 +91,6 @@ export default function PendingLoanList() {
     return (
         <AppTemplate>
             <div className="pending-loan-list">
-                {/* <Link to={"new-customer"} >
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className="new-customer-add-button"
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        New Customer
-                    </Button>
-                </Link> */}
-                <br /><br /><br />
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead>

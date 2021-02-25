@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 import {
-  Button,Paper, Grid, TextField, InputLabel, Select, FormControl,
-  FormHelperText, MenuItem, Box, 
+  Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
+  FormHelperText, MenuItem, Box,
 
 } from '@material-ui/core';
 
-import UpdateIcon from '@material-ui/icons/Update';
+import SendIcon from '@material-ui/icons/Send';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -33,23 +35,33 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(green[500]),
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+}))(Button);
 
 export default function EditAsset(props) {
 
-    
+  const history = useHistory();
+
   const classes = useStyles();
   const [assetsStatus, setStatus] = useState([]);
   const [assetsType, setAssetType] = useState([]);
-  
+
   //Setup initial State
-  const initAsset  = {
+  const initAsset = {
     assetsType: null,
     description: null,
     assetsStatus: null,
     value: null
   }
-  const [newAsset, setNewAsset] = useState(initAsset );
-  const resetData  = () => {
+  const [newAsset, setNewAsset] = useState(initAsset);
+  const resetData = () => {
     setNewAsset(initAsset)
   }
 
@@ -84,32 +96,31 @@ export default function EditAsset(props) {
       .then(response => {
         console.log('response', response);
         setNewAsset({
-            ...newAsset,
-            ...response.data,
-            assetsStatus:response.data.assetsStatus.id,
-            assetsType:response.data.assetsType.id,
-            customerId:response.data.id,
-
+          ...newAsset,
+          ...response.data,
+          assetsStatus: response.data.assetsStatus.id,
+          assetsType: response.data.assetsType.id,
+          customerId: response.data.customers[0].id,
         })
       })
   };
 
   //Error Handling
-  const initErrors  = {
+  const initErrors = {
     assetsType: '',
     description: '',
     assetsStatus: '',
     value: ''
   }
   const [errors, setErrors] = useState(initErrors);
-  const resetError  = () => {
+  const resetError = () => {
     setErrors(initErrors)
   }
-  
+
   const UpdateAsset = (e) => {
     e.preventDefault();
     const data = {
-      id : newAsset.id,
+      id: newAsset.id,
       description: newAsset.description,
       value: newAsset.value,
       assetsType: {
@@ -118,9 +129,9 @@ export default function EditAsset(props) {
       assetsStatus: {
         id: newAsset.assetsStatus,
       },
-      customers:[
+      customers: [
         {
-          id:newAsset.customerId
+          id: newAsset.customerId,
         }
       ]
     };
@@ -136,7 +147,7 @@ export default function EditAsset(props) {
           //console.log('Test');
           const _sErrors = _errors.response.data.errors;
           const _error = _errors.response.data.error;
-          if(_sErrors!==undefined){
+          if (_sErrors !== undefined) {
             let errorsObj = {}
             _sErrors.forEach(error => {
               const { defaultMessage, field } = error
@@ -170,7 +181,7 @@ export default function EditAsset(props) {
             <Grid item xs={5}>
               <Paper variant="outlined" >
                 <Box width="auto" p={1} my={0.5}>
-                <FormControl className={classes.formControl}>
+                  <FormControl className={classes.formControl}>
                     <InputLabel shrink htmlFor="age-native-label-placeholder">
                       Asset Type
                     </InputLabel>
@@ -207,7 +218,7 @@ export default function EditAsset(props) {
                     rows={4}
                     size="small"
                     error={errors.description ? 'error' : ''}
-                    
+
                     margin="normal"
                     InputLabelProps={{
                       shrink: true,
@@ -262,26 +273,29 @@ export default function EditAsset(props) {
           <br />
           <Paper variant="outlined" >
             <div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                endIcon={<UpdateIcon />}
-              >
-                Update
+              <Paper variant="outlined" className={classes.width}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  endIcon={<SendIcon />}
+                >
+                  Save
             </Button>
-              {" "}
-              <Button
-                type="reset"
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                startIcon={<RotateLeftIcon />}
-                onClick={resetError}
-              >
-                Reset
-                        </Button>
+                <ColorButton variant="contained" color="secondary" type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                  <b>Reset</b>
+                </ColorButton>
+                {" "}
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  onClick={() => history.goBack()}
+                >
+                  Back
+              </Button>
+              </Paper>
             </div>
           </Paper>
         </form>

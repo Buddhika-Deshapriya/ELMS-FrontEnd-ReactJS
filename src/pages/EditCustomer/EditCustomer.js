@@ -3,13 +3,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles , withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl, MenuItem,
 
 } from '@material-ui/core';
 
-import UpdateIcon from '@material-ui/icons/Update';
+import SendIcon from '@material-ui/icons/Send';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -49,6 +50,15 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
+const ColorButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText(green[500]),
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
+    },
+  }))(Button);
 
 export default function EditLoanType(props) {
 
@@ -472,7 +482,7 @@ export default function EditLoanType(props) {
                                 />
                                 <TextField
                                     name="total_members"
-                                    value={newCustomer.total_members}
+                                    value={newCustomer.total_members + " Members"}
                                     id="outlined-multiline-static"
                                     label="Total Members"
                                     placeholder="Enter Total Members"
@@ -688,26 +698,27 @@ export default function EditLoanType(props) {
                     <Grid>
                         <br />
                         <Paper variant="outlined" className={classes.width}>
-                            <Button
+                        <Button
                                 type="submit"
                                 variant="contained"
                                 color="primary"
                                 className={classes.button}
-                                endIcon={<UpdateIcon />}
+                                endIcon={<SendIcon />}
                             >
-                                Update
-                            </Button>
+                                Save
+            </Button>
+                            <ColorButton variant="contained" color="secondary" type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                                <b>Reset</b>
+                            </ColorButton>
                             {" "}
                             <Button
-                                type="reset"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                startIcon={<RotateLeftIcon />}
-                                onClick={resetError}
+                                onClick={() => history.goBack()}
                             >
-                                Reset
-                        </Button>
+                                Back
+              </Button>
                         </Paper>
                     </Grid>
                 </form>

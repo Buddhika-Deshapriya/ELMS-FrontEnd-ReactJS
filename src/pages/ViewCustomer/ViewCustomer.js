@@ -121,7 +121,7 @@ export default function ViewCustomer(props) {
 
         axios.get(`${baseUrl}/customer/list/` + customerId)
             .then(response => {
-                // console.log('response', response);
+                console.log('response', response);
                 ViewCustomer(response.data);
                 ViewStatus(response.data.customerStatus);
                 ViewUser(response.data.createdUser);

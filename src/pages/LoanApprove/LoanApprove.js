@@ -190,7 +190,7 @@ export default function NewLoanResponse(props) {
         e.preventDefault();
         const data = {
             description: newResponse.description,
-            loanstatus: {
+            loanStatus: {
                 id: newResponse.loanStatus,
             },
             acceptedAmount: newResponse.acceptedAmount,
@@ -241,7 +241,7 @@ export default function NewLoanResponse(props) {
 
     return (
         <AppTemplate>
-            <div className="new-response">
+            <div className="new-approve">
                 <br />
                 <Paper>
                     <Grid container spacing={5} className={classes.spacing}>
@@ -376,6 +376,7 @@ export default function NewLoanResponse(props) {
                     </Grid>
                 </Paper>
                 <br />
+                
                 <form autoComplete="off" onSubmit={SubmitNewLoanResponse}>
                     <Grid container spacing={1}>
                         <Grid item xs={8}>
@@ -421,8 +422,8 @@ export default function NewLoanResponse(props) {
                                      </InputLabel>
                                         <FormHelperText>{errors.loanStatus}</FormHelperText>
                                         <Select
-                                            variant="outlined"
                                             name="loanStatus"
+                                            variant="outlined"
                                             displayEmpty
                                             className={classes.selectEmpty}
                                             inputProps={{ 'aria-label': 'Without label' }}

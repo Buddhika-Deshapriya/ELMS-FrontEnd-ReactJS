@@ -118,7 +118,7 @@ export default function PendingLoanList() {
                                         <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             <ButtonGroup>
-                                                <Link to={"new-response/"+ row.id} >
+                                                <Link to={"new-approve/"+ row.id} >
                                                     <Button
                                                         size="sm"
                                                         variant="outline-danger"

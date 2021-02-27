@@ -48,14 +48,12 @@ const StyledTableRow = withStyles((theme) => ({
 export default function ApprovedLoanList() {
 
     const [approvedLoan, setApprovedLoan] = useState([]);
-    console.log('Approved Loans', approvedLoan);
 
     const fetchData = async () => {
         axios.get(`${baseUrl}/loanapplicationresponse/list`)
             .then(response => {
                 console.log('response', response);
                 setApprovedLoan(response.data);
-                
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -112,14 +110,14 @@ export default function ApprovedLoanList() {
                                 approvedLoan.map((row) => (
                                     row.loanStatus.type == "approved" ?
                                     <StyledTableRow key={row.id}>
-                                        <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
-                                        <StyledTableCell align="left">{row.calculationNo}</StyledTableCell>
-                                        <StyledTableCell align="left">{row.loanAmount}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.loanApplications[0].applicationNo}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.loanApplications[0].calculationNo}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
                                         <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                        <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.loanApplications[0].loanStatus.type}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             <ButtonGroup>
-                                                <Link to={"cash-release/"+ row.id} >
+                                                <Link to={"director-approve/"+ row.id} >
                                                     <Button
                                                         size="sm"
                                                         variant="outline-danger"

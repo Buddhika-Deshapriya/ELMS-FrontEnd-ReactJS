@@ -109,7 +109,7 @@ export default function DrawerCmp(props) {
             <ListItemText primary={"Pending loans"} />
           </ListItem>
         </Link>
-        <Link to="/order" className={classes.link}>
+        <Link to="/approved-loan-list" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
               <CheckCircleIcon />

@@ -30,8 +30,9 @@ import Branch from './pages/Branches/Branches';
 import NewBranch from './pages/NewBranch/NewBranch';
 import EditBranch from './pages/EditBranch/EditBranch';
 import PendingLoans from './pages/PendingLoans/PendingLoans';
-import LoanResponse from './pages/LoanResponse/LoanResponse';
-
+import LoanApprove from './pages/LoanApprove/LoanApprove';
+import LoanApproval from './pages/ApprovedLoans/ApprovedLoans';
+import DirectorApprove from './pages/DirectorApprove/DirectorApprove';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
   },
   
 }));
-
 
 
 export default function App (props) {
@@ -96,7 +96,9 @@ export default function App (props) {
         <Route path="/edit-branch/:id" exact component={EditBranch} />
         <Route path="/new-branch" exact component={NewBranch} />
         <Route path="/pending-loan-list" exact component={PendingLoans} />
-        <Route path="/new-response/:id" exact component={LoanResponse} />
+        <Route path="/new-approve/:id" exact component={LoanApprove} />
+        <Route path="/approved-loan-list" exact component={LoanApproval} />
+        <Route path="/director-approve/:id" exact component={DirectorApprove} />
 
         <Route component={ErrorPage} />
       </Switch>

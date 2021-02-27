@@ -7,8 +7,8 @@ import { makeStyles, withStyles, createMuiTheme, ThemeProvider } from '@material
 import { green, purple } from '@material-ui/core/colors';
 
 import {
-    Button, Paper, Grid, InputLabel, Select, FormControl, TextField,
-    FormHelperText, MenuItem, Card,
+    Button, Paper, Grid, InputLabel, Select, FormControl, TextField, Typography,
+    FormHelperText, MenuItem, Card, CardContent,
 
 } from '@material-ui/core';
 
@@ -50,7 +50,11 @@ const useStyles = makeStyles((theme) => ({
     spacing: {
         marginLeft: theme.spacing(1),
         marginBottom: theme.spacing(1),
-    }
+    },
+    Typography: {
+        marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(2),
+    },
 }));
 const ColorButton = withStyles((theme) => ({
     root: {
@@ -127,12 +131,18 @@ export default function NewCashRelease(props) {
     const [branch, ViewBranch] = useState([]);
 
     const [applicationResponse, ViewLoanApplicationResponse] = useState([]);
+    const [createdUser, ViewResponsedUserData] = useState([]);
+    const [userRoles, ViewReponsedUserRoles] = useState([]);
+    const [loanStatusApproved, ViewLoanApplicationStatus] = useState([]);
 
     const fetchLoanApplicationResponseData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplicationresponse/list/` + loanApplicationId)
             .then(response => {
                 console.log('response', response);
                 ViewLoanApplicationResponse(response.data);
+                ViewLoanApplicationStatus(response.data.loanStatus);
+                ViewResponsedUserData(response.data.createdUser);
+                ViewReponsedUserRoles(response.data.createdUser.roles[0])
 
             })
     };
@@ -247,14 +257,17 @@ export default function NewCashRelease(props) {
         fetchLoanStatus();
         getCurrentUser();
         fetchLoanApplicationData(loanApplicationId);
-        fetchLoanApplicationData(loanApplicationId);
+        fetchLoanApplicationResponseData(loanApplicationId);
     }, []);
 
     return (
         <AppTemplate>
             <div className="director-approve">
-                <br />
-                <Paper>
+                <Paper variant="outlined">
+                    <Typography variant="H2" component="H2" className={classes.Typography}>
+                        LOAN APPLICATION DETAILS
+                            </Typography>
+                    <br />
                     <Grid container spacing={5} className={classes.spacing}>
                         <Grid item xs={2}>
                             <TextField
@@ -379,15 +392,84 @@ export default function NewCashRelease(props) {
                     <Grid container spacing={1}>
                         <Grid item xs={12} className={classes.spacing}>
                             <Link to={"/loan-application-customer-data/" + loanApplicationId}>
-                            <BootstrapButton variant="contained" color="primary" disableRipple className={classes.spacing}>
-                                See Customers
+                                <BootstrapButton variant="contained" color="primary" disableRipple className={classes.spacing}>
+                                    See Customers
                             </BootstrapButton>
                             </Link>
                         </Grid>
                     </Grid>
                 </Paper>
                 <br />
-                
+                <Paper variant="outlined" >
+                    <Typography variant="H2" component="H2" className={classes.Typography}>
+                        MANAGER RESPONSE DETAILS
+                            </Typography>
+                    <br />
+                    <Grid container spacing={3}>
+                        <Grid width="500" item xs={4}>
+                            <Card width="500">
+                                <TextField
+                                    name="acceptedAmount"
+                                    id="outlined-helperText"
+                                    value={applicationResponse.acceptedAmount}
+                                    helperText="Accepted Amount"
+                                    style={{ margin: 8 }}
+                                    size="small"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                                <br />
+                                <TextField
+                                    name="loanStatus"
+                                    id="outlined-multiline-static"
+                                    value={loanStatusApproved.type}
+                                    helperText="Loan Status"
+                                    error={errors.loanStatus ? 'error' : ''}
+                                    className={classes.spacing}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                            </Card>
+                        </Grid>
+                        <Grid width="500" item xs={4}>
+                            <Card width="500">
+                                <TextField
+                                    name="description"
+                                    id="outlined-multiline-static"
+                                    value={applicationResponse.description}
+                                    helperText="Description"
+                                    multiline
+                                    rows={3}
+                                    className={classes.spacing}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                            </Card>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Card width="500">
+                                    <Typography className={classes.spacing} color="textSecondary" gutterBottom>
+                                        Approved By:
+                                    </Typography>
+                                    <Typography className={classes.button}>
+                                        {createdUser.firstName}{" "}
+                                        {createdUser.middleName}{" "}
+                                        {createdUser.lastName}
+                                    </Typography>
+                                    <Typography className={classes.spacing} color="textSecondary" gutterBottom>
+                                        Roles:
+                                    </Typography>
+                                    <Typography className={classes.button}>
+                                        {userRoles.name}
+                                    </Typography>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </Paper>
+                <br />
                 <form autoComplete="off" onSubmit={SubmitNewDirectorResponse}>
                     <Grid container spacing={1}>
                         <Grid item xs={8}>

@@ -8,8 +8,7 @@ import { green, purple } from '@material-ui/core/colors';
 
 import {
     Button, Paper, Grid, InputLabel, Select, FormControl, TextField,
-    FormHelperText, MenuItem, Card,
-
+    FormHelperText, MenuItem, Card, Typography
 } from '@material-ui/core';
 
 import SendIcon from '@material-ui/icons/Send';
@@ -49,7 +48,11 @@ const useStyles = makeStyles((theme) => ({
     spacing: {
         marginLeft: theme.spacing(1),
         marginBottom: theme.spacing(1),
-    }
+    },
+    Typography: {
+        marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(2),
+    },
 }));
 const ColorButton = withStyles((theme) => ({
     root: {
@@ -243,7 +246,11 @@ export default function NewLoanResponse(props) {
         <AppTemplate>
             <div className="new-approve">
                 <br />
-                <Paper>
+                <Paper variant="outlined">
+                <Typography variant="H2" component="H2" className={classes.Typography}>
+                        LOAN APPLICATION DETAILS
+                            </Typography>
+                    <br />
                     <Grid container spacing={5} className={classes.spacing}>
                         <Grid item xs={2}>
                             <TextField

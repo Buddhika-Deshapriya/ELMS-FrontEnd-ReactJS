@@ -128,8 +128,6 @@ export default function NewLoanResponse(props) {
     const [rentalType, ViewRentalType] = useState([]);
     const [branch, ViewBranch] = useState([]);
 
-
-
     const fetchLoanApplicationData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
             .then(response => {
@@ -142,7 +140,6 @@ export default function NewLoanResponse(props) {
                 ViewRentalType(response.data.rentalTypeId);
                 ViewUser(response.data.createdUser);
                 ViewUserRole(response.data.createdUser.roles[0]);
-
             })
     };
 
@@ -199,7 +196,7 @@ export default function NewLoanResponse(props) {
             acceptedAmount: newResponse.acceptedAmount,
             loanApplication: [
                 {
-                    id: newResponse.id,
+                    id: newResponse. id,
                 }
             ],
             createdDate: dateTime,

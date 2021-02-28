@@ -8,21 +8,50 @@ import { green, purple } from '@material-ui/core/colors';
 
 import {
     Button, Paper, Grid, InputLabel, Select, FormControl, TextField, Typography,
-    FormHelperText, MenuItem, Card, CardContent,
+    FormHelperText, MenuItem, Card, Table, TableBody, TableCell,
+    TableContainer, TableHead, TableRow, ButtonGroup,
 
 } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import SendIcon from '@material-ui/icons/Send';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
 import SystemUser from "../../helper/user";
-import NewLoanResponse from '../LoanApprove/LoanApprove';
 
 const { baseUrl } = appConfig;
+
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
+
+const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+    },
+}))(Tooltip);
+
+const StyledTableRow = withStyles((theme) => ({
+    root: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+}))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,6 +84,12 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(2),
         marginTop: theme.spacing(2),
     },
+    table: {
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        maxWidth: 1200,
+    },
+
 }));
 const ColorButton = withStyles((theme) => ({
     root: {
@@ -110,7 +145,7 @@ const theme = createMuiTheme({
     },
 });
 
-export default function NewCashRelease(props) {
+export default function NewDirectorResponse(props) {
 
     const history = useHistory();
 
@@ -129,23 +164,7 @@ export default function NewCashRelease(props) {
     const [userRole, ViewUserRole] = useState([]);
     const [rentalType, ViewRentalType] = useState([]);
     const [branch, ViewBranch] = useState([]);
-
     const [applicationResponse, ViewLoanApplicationResponse] = useState([]);
-    const [createdUser, ViewResponsedUserData] = useState([]);
-    const [userRoles, ViewReponsedUserRoles] = useState([]);
-    const [loanStatusApproved, ViewLoanApplicationStatus] = useState([]);
-
-    const fetchLoanApplicationResponseData = async (loanApplicationId) => {
-        axios.get(`${baseUrl}/loanapplicationresponse/list/` + loanApplicationId)
-            .then(response => {
-                console.log('response', response);
-                ViewLoanApplicationResponse(response.data);
-                ViewLoanApplicationStatus(response.data.loanStatus);
-                ViewResponsedUserData(response.data.createdUser);
-                ViewReponsedUserRoles(response.data.createdUser.roles[0])
-
-            })
-    };
 
     const fetchLoanApplicationData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
@@ -159,7 +178,7 @@ export default function NewCashRelease(props) {
                 ViewRentalType(response.data.rentalTypeId);
                 ViewUser(response.data.createdUser);
                 ViewUserRole(response.data.createdUser.roles[0]);
-
+                ViewLoanApplicationResponse(response.data.loanApplicationResponses)
             })
     };
 
@@ -214,9 +233,9 @@ export default function NewCashRelease(props) {
                 id: newResponse.loanStatus,
             },
             acceptedAmount: newResponse.acceptedAmount,
-            loanApplication: [
+            loanApplicationsList: [
                 {
-                    id: newResponse.id,
+                    id: loanApplicationId,
                 }
             ],
             createdDate: dateTime,
@@ -257,7 +276,6 @@ export default function NewCashRelease(props) {
         fetchLoanStatus();
         getCurrentUser();
         fetchLoanApplicationData(loanApplicationId);
-        fetchLoanApplicationResponseData(loanApplicationId);
     }, []);
 
     return (
@@ -405,68 +423,60 @@ export default function NewCashRelease(props) {
                         MANAGER RESPONSE DETAILS
                             </Typography>
                     <br />
-                    <Grid container spacing={3}>
-                        <Grid width="500" item xs={4}>
-                            <Card width="500">
-                                <TextField
-                                    name="acceptedAmount"
-                                    id="outlined-helperText"
-                                    value={applicationResponse.acceptedAmount}
-                                    helperText="Accepted Amount"
-                                    style={{ margin: 8 }}
-                                    size="small"
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                                <br />
-                                <TextField
-                                    name="loanStatus"
-                                    id="outlined-multiline-static"
-                                    value={loanStatusApproved.type}
-                                    helperText="Loan Status"
-                                    error={errors.loanStatus ? 'error' : ''}
-                                    className={classes.spacing}
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                            </Card>
-                        </Grid>
-                        <Grid width="500" item xs={4}>
-                            <Card width="500">
-                                <TextField
-                                    name="description"
-                                    id="outlined-multiline-static"
-                                    value={applicationResponse.description}
-                                    helperText="Description"
-                                    multiline
-                                    rows={3}
-                                    className={classes.spacing}
-                                    InputProps={{
-                                        readOnly: true,
-                                    }}
-                                />
-                            </Card>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Card width="500">
-                                    <Typography className={classes.spacing} color="textSecondary" gutterBottom>
-                                        Approved By:
-                                    </Typography>
-                                    <Typography className={classes.button}>
-                                        {createdUser.firstName}{" "}
-                                        {createdUser.middleName}{" "}
-                                        {createdUser.lastName}
-                                    </Typography>
-                                    <Typography className={classes.spacing} color="textSecondary" gutterBottom>
-                                        Roles:
-                                    </Typography>
-                                    <Typography className={classes.button}>
-                                        {userRoles.name}
-                                    </Typography>
-                            </Card>
-                        </Grid>
+                    <Grid>
+                        <TableContainer className={classes.spacing} >
+                            <Table className={classes.table} aria-label="customized table" >
+                                <TableHead>
+                                    <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
+                                        <StyledTableCell>Loan Status</StyledTableCell>
+                                        <StyledTableCell>Accepted Amount</StyledTableCell>
+                                        <StyledTableCell align="left">Description</StyledTableCell>
+                                        <StyledTableCell align="left">Responsed Date</StyledTableCell>
+                                        <StyledTableCell align="left">Manager Name</StyledTableCell>
+                                        {/* <StyledTableCell align="left"></StyledTableCell> */}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {
+                                        applicationResponse.length === 0 ?
+                                            <TableRow align="center">
+                                                <TableCell colSpan="5">No Manager Approvals</TableCell>
+                                            </TableRow> :
+                                            applicationResponse.map((row) => (
+                                                <StyledTableRow key={row.id}>
+                                                    <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
+                                                    <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
+                                                    <StyledTableCell align="left">{row.description}</StyledTableCell>
+                                                    <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
+                                                    <StyledTableCell component="th" scope="row">
+                                                        {row.createdUser.firstName}{" "}{row.createdUser.middleName}{" "}{row.createdUser.lastName}
+                                                    </StyledTableCell>
+                                                    {/* <StyledTableCell align="left">
+                                                            <ButtonGroup>
+                                                                <Link to={"view-approval/" + row.id} >
+                                                                    <Button
+                                                                        size="sm"
+                                                                        variant="outline-danger"
+                                                                    >
+                                                                        <HtmlTooltip
+                                                                            title={
+                                                                                <React.Fragment>
+                                                                                    <Typography color="inherit">View Customer Profile</Typography>
+                                                                                </React.Fragment>
+                                                                            }
+                                                                        >
+                                                                            <FolderOpenIcon />
+                                                                        </HtmlTooltip>
+                                                                    </Button>
+                                                                </Link>
+                                                            </ButtonGroup>
+                                                        </StyledTableCell> */}
+                                                </StyledTableRow>
+                                            ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                 </Paper>
                 <br />

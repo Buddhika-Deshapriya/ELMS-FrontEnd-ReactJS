@@ -538,10 +538,17 @@ export default function NewDirectorResponse(props) {
                                             </MenuItem>
                                             {
                                                 loanStatus.map((eachRow, index) => {
-                                                    return (
-                                                        <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
-                                                    );
+                                                    if (eachRow.id == 1 && eachRow.id == 4 ){ 
+                                                        return (
+                                                            <MenuItem display="none" value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                        );
+                                                    }else{
+                                                        return (
+                                                            <MenuItem display="none" value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                                                        );
+                                                    } 
                                                 })
+                                                
                                             }
                                         </Select>
                                     </FormControl>

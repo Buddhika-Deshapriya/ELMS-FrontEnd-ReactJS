@@ -5,7 +5,7 @@ import tokens from './helper/tokens';
 export const interceptor =  function(excludeUrl, cb) {  
   console.log('interceptor init');
   axios.interceptors.request.use((request) => { 
-    console.log('request',request);
+    // console.log('request',request);
     cb({loaderIsHide:false, redirectTo:''})
       const token = tokens.get('token');
       const authuser = tokens.get('userType'); 

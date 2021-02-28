@@ -108,7 +108,7 @@ export default function ApprovedLoanList() {
                                     <TableCell colSpan="5">No Approved Loans Available</TableCell>
                                 </TableRow> :
                                 approvedLoan.map((row) => (
-                                    row.loanStatus.type == "approved" ?
+                                    row.loanStatus.type == "Approved" ?
                                     <StyledTableRow key={row.id}>
                                         <StyledTableCell align="left">{row.loanApplications[0].applicationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.loanApplications[0].calculationNo}</StyledTableCell>

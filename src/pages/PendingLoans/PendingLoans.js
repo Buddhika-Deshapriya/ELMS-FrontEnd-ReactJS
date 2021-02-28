@@ -109,7 +109,7 @@ export default function PendingLoanList() {
                                     <TableCell colSpan="5">No Pending Loans Available</TableCell>
                                 </TableRow> :
                                 pendingLoan.map((row) => (
-                                    row.loanStatus.type == "pending" ?
+                                    row.loanStatus.type == "Pending" ?
                                     <StyledTableRow key={row.id}>
                                         <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.calculationNo}</StyledTableCell>

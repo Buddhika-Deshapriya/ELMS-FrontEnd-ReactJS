@@ -43,7 +43,6 @@ const HtmlTooltip = withStyles((theme) => ({
   }))(Tooltip);
 
 
-
 const StyledTableRow = withStyles((theme) => ({
     root: {
         '&:nth-of-type(odd)': {
@@ -52,13 +51,10 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-
-
-
 export default function CustomerList() {
 
     const [customers, setCustomers] = useState([]);
-    console.log('customers', customers);
+    // console.log('customers', customers);
 
 
     const fetchData = async () => {
@@ -84,12 +80,10 @@ export default function CustomerList() {
                         })
                         console.log(errorsObj);
                         this.setState({ errors: errorsObj });
-                    }
-
                 }
-            });
 
-
+             }
+         });
 
     };
     useEffect(() => {

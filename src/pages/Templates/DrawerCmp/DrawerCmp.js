@@ -8,6 +8,7 @@ import {
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { Link } from "react-router-dom";
 
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import MoneyIcon from '@material-ui/icons/Money';
 import PeopleIcon from '@material-ui/icons/People';
@@ -115,6 +116,14 @@ export default function DrawerCmp(props) {
               <CheckCircleIcon />
             </ListItemIcon>
             <ListItemText primary={"Approved loans"} />
+          </ListItem>
+        </Link>
+        <Link to="/to-cash-release-list" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <MonetizationOnIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Cash Release"} />
           </ListItem>
         </Link>
         <Divider />

@@ -117,7 +117,7 @@ export default function CashReleaseList() {
                                         <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             <ButtonGroup>
-                                                <Link to={"release-cash/"+ row.id} >
+                                                <Link to={"cash-release/"+ row.id} >
                                                     <Button
                                                         size="sm"
                                                         variant="outline-danger"

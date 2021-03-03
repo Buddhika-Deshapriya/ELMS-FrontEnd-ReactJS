@@ -34,7 +34,7 @@ import LoanApprove from './pages/LoanApprove/LoanApprove';
 import LoanApprovalList from './pages/ApprovedLoans/ApprovedLoans';
 import DirectorApprove from './pages/DirectorApprove/DirectorApprove';
 import ToCashRelease from './pages/ToCashRelease/ToCashRelease';
-
+import CashRelease from './pages/CashRelease/CashRelease';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,6 +102,7 @@ export default function App (props) {
         <Route path="/approved-loan-list" exact component={LoanApprovalList} />
         <Route path="/director-approve/:id" exact component={DirectorApprove} />
         <Route path="/to-cash-release-list" exact component={ToCashRelease} />
+        <Route path="/cash-release/:id" exact component={CashRelease} />
 
         <Route component={ErrorPage} />
       </Switch>

@@ -74,8 +74,10 @@ const useStyles = makeStyles((theme) => ({
         width: 1000,
     },
     width: {
-        width: 830,
-    },
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        width: 700,
+        },
     spacing: {
         marginLeft: theme.spacing(1),
         marginBottom: theme.spacing(1),
@@ -511,7 +513,7 @@ export default function NewDirectorResponse(props) {
                                             error={errors.description ? 'error' : ''}
                                             multiline
                                             rows={4}
-                                            className={classes.spacing}
+                                            className={classes.width}
                                             variant="outlined"
                                             InputLabelProps={{
                                                 shrink: true,

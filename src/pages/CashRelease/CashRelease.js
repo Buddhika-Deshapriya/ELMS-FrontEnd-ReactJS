@@ -74,7 +74,9 @@ const useStyles = makeStyles((theme) => ({
         width: 1000,
     },
     width: {
-        width: 830,
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        width: 700,
     },
     spacing: {
         marginLeft: theme.spacing(1),
@@ -158,13 +160,16 @@ export default function LoanCashRelease(props) {
 
     const [loanApplication, ViewLoanApplication] = useState([]);
     const [applicationResponse, ViewLoanApplicationResponse] = useState([]);
+    const [directorResponse, ViewDirectorResponse] = useState([]);
 
     const fetchLoanApplicationData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
             .then(response => {
                 console.log('response', response);
                 ViewLoanApplication(response.data);
-                ViewLoanApplicationResponse(response.data.loanApplicationResponses)
+                ViewLoanApplicationResponse(response.data.loanApplicationResponses);
+                ViewDirectorResponse(response.data.loanApplicationDirectorResponses);    
+
             })
     };
 
@@ -322,6 +327,48 @@ export default function LoanCashRelease(props) {
                                 </TableHead>
                                 <TableBody>
                                     {
+                                        directorResponse.length === 0 ?
+                                            <TableRow align="center">
+                                                <TableCell colSpan="5">No Manager Approvals</TableCell>
+                                            </TableRow> :
+                                            directorResponse.map((row) => (
+                                                <StyledTableRow key={row.id}>
+                                                    <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
+                                                    <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
+                                                    <StyledTableCell align="left">{row.description}</StyledTableCell>
+                                                    <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
+                                                    <StyledTableCell component="th" scope="row">
+                                                        {row.createdUser.firstName}{" "}{row.createdUser.middleName}{" "}{row.createdUser.lastName}
+                                                    </StyledTableCell>
+                                                </StyledTableRow>
+                                            ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                </Paper>
+                <br />
+                <Paper variant="outlined" >
+                    <Typography variant="H2" component="H2" className={classes.Typography}>
+                        Director RESPONSE DETAILS
+                            </Typography>
+                    <br />
+                    <Grid>
+                        <TableContainer className={classes.spacing} >
+                            <Table className={classes.table} aria-label="customized table" >
+                                <TableHead>
+                                    <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
+                                        <StyledTableCell>Loan Status</StyledTableCell>
+                                        <StyledTableCell>Accepted Amount</StyledTableCell>
+                                        <StyledTableCell align="left">Description</StyledTableCell>
+                                        <StyledTableCell align="left">Responsed Date</StyledTableCell>
+                                        <StyledTableCell align="left">Manager Name</StyledTableCell>
+                                        {/* <StyledTableCell align="left"></StyledTableCell> */}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {
                                         applicationResponse.length === 0 ?
                                             <TableRow align="center">
                                                 <TableCell colSpan="5">No Manager Approvals</TableCell>
@@ -375,7 +422,7 @@ export default function LoanCashRelease(props) {
                                             error={errors.description ? 'error' : ''}
                                             multiline
                                             rows={4}
-                                            className={classes.spacing}
+                                            className={classes.width}
                                             variant="outlined"
                                             InputLabelProps={{
                                                 shrink: true,

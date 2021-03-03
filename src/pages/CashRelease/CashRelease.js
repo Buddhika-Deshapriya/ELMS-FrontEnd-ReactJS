@@ -162,6 +162,8 @@ export default function LoanCashRelease(props) {
     const [applicationResponse, ViewLoanApplicationResponse] = useState([]);
     const [directorResponse, ViewDirectorResponse] = useState([]);
 
+    const [genVoucherNo, setVoucherNo] = useState([]);
+
     const fetchLoanApplicationData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
             .then(response => {
@@ -199,6 +201,15 @@ export default function LoanCashRelease(props) {
         setUserID(SystemUser.get().id);
     };
 
+    //Get Loan cash release voucher generated id
+  const fetchLoanCashReleaseGenVoucherNo = async () => {
+    axios.get(`${baseUrl}/loancashreleasevoucheridgen/takeid`)
+      .then(response => {
+        console.log('Generated No', response);
+        setVoucherNo(response.data[0]);
+      })
+  }
+
     const [cashRelease, setCashRelease] = useState(initCash);
     const resetData = () => {
         setCashRelease(initCash)
@@ -219,11 +230,12 @@ export default function LoanCashRelease(props) {
     const SubmitNewCashRelease = (e) => {
         e.preventDefault();
         const data = {
+            voucherNo: genVoucherNo.voucherNo,
             description: cashRelease.description,
             loanStatus: {
                 id: cashRelease.loanStatus,
             },
-            acceptedAmount: cashRelease.acceptedAmount,
+            releaseAmount: cashRelease.releaseAmount    ,
             loanApplicationsList: [
                 {
                     id: loanApplicationId,
@@ -264,6 +276,7 @@ export default function LoanCashRelease(props) {
 
     //This is same as componentdidmount()
     useEffect(() => {
+        fetchLoanCashReleaseGenVoucherNo();
         fetchLoanStatus();
         getCurrentUser();
         fetchLoanApplicationData(loanApplicationId);
@@ -322,16 +335,15 @@ export default function LoanCashRelease(props) {
                                         <StyledTableCell align="left">Description</StyledTableCell>
                                         <StyledTableCell align="left">Responsed Date</StyledTableCell>
                                         <StyledTableCell align="left">Manager Name</StyledTableCell>
-                                        {/* <StyledTableCell align="left"></StyledTableCell> */}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        directorResponse.length === 0 ?
+                                        applicationResponse.length === 0 ?
                                             <TableRow align="center">
                                                 <TableCell colSpan="5">No Manager Approvals</TableCell>
                                             </TableRow> :
-                                            directorResponse.map((row) => (
+                                            applicationResponse.map((row) => (
                                                 <StyledTableRow key={row.id}>
                                                     <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                                     <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
@@ -363,17 +375,16 @@ export default function LoanCashRelease(props) {
                                         <StyledTableCell>Accepted Amount</StyledTableCell>
                                         <StyledTableCell align="left">Description</StyledTableCell>
                                         <StyledTableCell align="left">Responsed Date</StyledTableCell>
-                                        <StyledTableCell align="left">Manager Name</StyledTableCell>
-                                        {/* <StyledTableCell align="left"></StyledTableCell> */}
+                                        <StyledTableCell align="left">Director Name</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        applicationResponse.length === 0 ?
+                                        directorResponse.length === 0 ?
                                             <TableRow align="center">
-                                                <TableCell colSpan="5">No Manager Approvals</TableCell>
+                                                <TableCell colSpan="5">No Director Approvals</TableCell>
                                             </TableRow> :
-                                            applicationResponse.map((row) => (
+                                            directorResponse.map((row) => (
                                                 <StyledTableRow key={row.id}>
                                                     <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                                     <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
@@ -397,6 +408,21 @@ export default function LoanCashRelease(props) {
                             <Paper variant="outlined" >
                                 <Card width="500">
                                     <Card width="500">
+                                    <TextField
+                                            name="voucherNo"
+                                            id="outlined-helperText"
+                                            label="Voucher No"
+                                            variant="outlined"
+                                            value = {genVoucherNo.voucherNo}
+                                            helperText={errors.voucherNo}
+                                            error={errors.voucherNo ? 'error' : ''}
+                                            style={{ margin: 8 }}
+                                            size="small"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+                                        <br/>
                                         <TextField
                                             name="releaseAmount"
                                             id="outlined-helperText"

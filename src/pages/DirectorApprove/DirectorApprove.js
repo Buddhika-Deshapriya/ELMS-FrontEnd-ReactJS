@@ -169,7 +169,7 @@ export default function NewDirectorResponse(props) {
     const fetchLoanApplicationData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
             .then(response => {
-                console.log('response', response);s
+                console.log('response', response);
                 ViewLoanApplication(response.data);
                 ViewMembershipNo(response.data.customers[0]);
                 ViewLoanType(response.data.loanTypeId);

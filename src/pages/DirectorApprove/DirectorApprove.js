@@ -169,7 +169,7 @@ export default function NewDirectorResponse(props) {
     const fetchLoanApplicationData = async (loanApplicationId) => {
         axios.get(`${baseUrl}/loanapplication/list/` + loanApplicationId)
             .then(response => {
-                console.log('response', response);
+                console.log('response', response);s
                 ViewLoanApplication(response.data);
                 ViewMembershipNo(response.data.customers[0]);
                 ViewLoanType(response.data.loanTypeId);
@@ -247,7 +247,7 @@ export default function NewDirectorResponse(props) {
         console.log('data-set', data);
         axios.post(`${baseUrl}/directorresponse/add`, data)
             .then(function (response) {
-                //console.log(response)
+                console.log(response)
                 utils.showSuccess("New Response Saved Successfully.");
             })
             .catch(_errors => {

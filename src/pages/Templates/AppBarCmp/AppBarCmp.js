@@ -1,5 +1,5 @@
 import React from "react";
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles , withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
 import MenuIcon from '@material-ui/icons/Menu';
+import { FormatAlignRight } from "@material-ui/icons";
+
 
 const drawerWidth = 240;
 
@@ -96,10 +98,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
   },
   KeyboardIcon: {
-    marginLeft: 50
+    marginLeft: 60
   }
 }));
-
 
 export default function AppBarCmp(props) {
   const classes = useStyles();
@@ -156,14 +157,13 @@ export default function AppBarCmp(props) {
           />
         </div>
         <div className={classes.KeyboardIcon}>
-          <Link >
+          <Link to="/new-loan-calculation" className={classes.link} >
           <IconButton
             aria-label="loan calculator"
             aria-controls="menu-appbar"
             aria-haspopup="true"
-            onClick={handleMenu}
             color="inherit"
-          >
+            >
             <KeyboardIcon />
           </IconButton>
           </Link>
@@ -197,7 +197,7 @@ export default function AppBarCmp(props) {
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
-      </Toolbar>
-    </AppBar>
+      </Toolbar >
+    </AppBar >
   );
 }

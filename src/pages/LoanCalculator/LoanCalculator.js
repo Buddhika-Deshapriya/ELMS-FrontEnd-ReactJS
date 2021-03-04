@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles , withStyles} from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
     FormHelperText, MenuItem, Box,
@@ -73,6 +73,12 @@ export default function LoanTrialCalc(props) {
     }
 
     // const branchId = props.match.params.id
+
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2021-03-05'));
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
 
     const onChange = (e) => {
         e.persist();
@@ -144,109 +150,97 @@ export default function LoanTrialCalc(props) {
                     <Paper className={classes.button}>
                         <Grid container spacing={1}>
                             <Grid item xs={3}>
-                            <TextField
-                                id="outlined-helperText"
-                                label="Loan Amount"
-                                name="initialBalance"
-                                variant="outlined"
-                                helperText={errors.initialBalance}
-                                error={errors.initialBalance ? 'error' : ''}
-                                style={{ margin: 8 }}
-                                size="medium"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                onChange={onChange}
-                            />
+                                <TextField
+                                    id="outlined-helperText"
+                                    label="Loan Amount"
+                                    name="initialBalance"
+                                    variant="outlined"
+                                    helperText={errors.initialBalance}
+                                    error={errors.initialBalance ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    size="medium"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
                             </Grid>
                             <Grid item xs={3}>
-                            <TextField
-                                id="outlined-helperText"
-                                label="Interest Rate"
-                                name="interestRate"
-                                variant="outlined"
-                                helperText={errors.interestRate}
-                                error={errors.interestRate ? 'error' : ''}
-                                style={{ margin: 8 }}
-                                size="medium"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                onChange={onChange}
-                            />
+                                <TextField
+                                    id="outlined-helperText"
+                                    label="Interest Rate"
+                                    name="interestRate"
+                                    variant="outlined"
+                                    helperText={errors.interestRate}
+                                    error={errors.interestRate ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    size="medium"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
                             </Grid>
                             <Grid item xs={3}>
-                            <TextField
-                                id="outlined-helperText"
-                                label="Duration In Months"
-                                name="durationInMonths"
-                                variant="outlined"
-                                helperText={errors.durationInMonths}
-                                error={errors.durationInMonths ? 'error' : ''}
-                                style={{ margin: 8 }}
-                                size="medium"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                onChange={onChange}
-                            />
+                                <TextField
+                                    id="outlined-helperText"
+                                    label="Duration In Months"
+                                    name="durationInMonths"
+                                    variant="outlined"
+                                    helperText={errors.durationInMonths}
+                                    error={errors.durationInMonths ? 'error' : ''}
+                                    style={{ margin: 8 }}
+                                    size="medium"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={onChange}
+                                />
                             </Grid>
                             <Grid item xs={3}>
-                            <TextField
-                                id="outlined-helperText"
-                                label="Duration In Months"
-                                name="durationInMonths"
-                                variant="outlined"
-                                helperText={errors.durationInMonths}
-                                error={errors.durationInMonths ? 'error' : ''}
-                                style={{ margin: 8 }}
-                                size="medium"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                onChange={onChange}
-                            />
-                            </Grid>
-                        </Grid>
-                        <Grid>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        margin="normal"
-                                        id="date-picker-dialog"
-                                        label="Date From"
-                                        format="yyyy/dd/mm"
-                                        className = {classes.button}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                    />
+                                <KeyboardDatePicker
+                                    variant="outlined"
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    label="Date From"
+                                    format="yyyy/MM/dd"
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    className={classes.button}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
                             </MuiPickersUtilsProvider>
                             </Grid>
-                            <Paper variant="outlined" >
-                        <div>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                endIcon={<SendIcon />}
-                            >
-                                Calculate
-            </Button>
-                            <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
-                                <b>Reset</b>
-                            </ColorButton>
-                            {" "}
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                className={classes.button}
-                                onClick={() => history.goBack()}
-                            >
-                                Back
-              </Button>
-                        </div>
-                    </Paper>
+                        </Grid>
+                        <br />
+                        <Paper variant="outlined" >
+                            <div>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    endIcon={<SendIcon />}
+                                >
+                                    Calculate
+                                </Button>
+                                <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                                    <b>Reset</b>
+                                </ColorButton>
+                                {" "}
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    className={classes.button}
+                                    onClick={() => history.goBack()}
+                                >
+                                    Back
+                                </Button>
+                            </div>
+                        </Paper>
                     </Paper>
                 </form>
             </div>

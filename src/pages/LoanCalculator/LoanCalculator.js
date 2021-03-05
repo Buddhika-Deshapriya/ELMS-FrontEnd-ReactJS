@@ -3,26 +3,23 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import clsx from 'clsx';
 import { useHistory } from "react-router-dom";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
-    Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
-    FormHelperText, MenuItem, Box,
+    Button, Paper, Grid, TextField, TableBody, Table, TableRow,
+    TableContainer, TableCell, TableHead, Card, Collapse
 } from '@material-ui/core';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
+
 import { green } from '@material-ui/core/colors';
 
-import DateFnsUtils from '@date-io/date-fns';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SendIcon from '@material-ui/icons/Send';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
-import SystemUser from "../../helper/user"; const { baseUrl } = appConfig;
+const { baseUrl } = appConfig;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,9 +37,36 @@ const useStyles = makeStyles((theme) => ({
         width: 200
     },
     selectEmpty: {
-        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+    },
+    Table: {
+        width: 1200,
+        margin: theme.spacing(1, 1, 1, 1),
+    },
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
     },
 }));
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
+const StyledTableRow = withStyles((theme) => ({
+    root: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+}))(TableRow);
 const ColorButton = withStyles((theme) => ({
     root: {
         color: theme.palette.getContrastText(green[500]),
@@ -54,9 +78,17 @@ const ColorButton = withStyles((theme) => ({
 }))(Button);
 export default function LoanTrialCalc(props) {
 
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
+
     const history = useHistory();
 
     const classes = useStyles();
+
+    const [paymentList, setPaymentList] = useState([]);
 
     //Setup initial State
     const initCalc = {
@@ -65,7 +97,7 @@ export default function LoanTrialCalc(props) {
         interestRate: null,
         durationInMonths: null,
         futureValue: null,
-        paymentType: null
+        paymentType: null,
     }
     const [newCalc, setNewCalculation] = useState(initCalc);
     const resetData = () => {
@@ -73,12 +105,6 @@ export default function LoanTrialCalc(props) {
     }
 
     // const branchId = props.match.params.id
-
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2021-03-05'));
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
 
     const onChange = (e) => {
         e.persist();
@@ -92,13 +118,12 @@ export default function LoanTrialCalc(props) {
         interestRate: '',
         durationInMonths: '',
         futureValue: '',
-        paymentType: ''
+        paymentType: '',
     }
     const [errors, setErrors] = useState(initErrors);
     const resetError = () => {
         setErrors(initErrors)
     }
-
 
     const SubmitNewCalculation = (e) => {
         e.preventDefault();
@@ -113,13 +138,14 @@ export default function LoanTrialCalc(props) {
         console.log('data', data);
         axios.post(`${baseUrl}/loancalc/show`, data)
             .then(function (response) {
-                //console.log(response)
+                console.log(response)
                 utils.showSuccess("Calculated Successfully.");
+                setPaymentList(response.data.paymentList)
             })
             .catch(_errors => {
-                //console.log('_errors',_errors);
+                console.log('_errors', _errors);
                 if (_errors.response) {
-                    //console.log('Test');
+                    console.log('Test');
                     const _sErrors = _errors.response.data.errors;
                     const _error = _errors.response.data.error;
                     if (_sErrors !== undefined) {
@@ -198,35 +224,41 @@ export default function LoanTrialCalc(props) {
                                 />
                             </Grid>
                             <Grid item xs={3}>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                    variant="outlined"
-                                    margin="normal"
-                                    id="date-picker-dialog"
+                                <TextField
+                                    id="date"
+                                    name="startDate"
+                                    helperText={errors.startDate}
+                                    error={errors.startDate ? 'error' : ''}
                                     label="Date From"
-                                    format="yyyy/MM/dd"
-                                    value={selectedDate}
-                                    onChange={handleDateChange}
+                                    type="date"
+                                    placeholder="2021-03-05"
                                     className={classes.button}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
+                                    InputLabelProps={{
+                                        shrink: true,
                                     }}
+                                    onChange={onChange}
                                 />
-                            </MuiPickersUtilsProvider>
                             </Grid>
                         </Grid>
                         <br />
-                        <Paper variant="outlined" >
-                            <div>
+                        <div>
+                            <Grid className={classes.button}>
                                 <Button
                                     type="submit"
                                     variant="contained"
                                     color="primary"
-                                    className={classes.button}
+                                    className={classes.selectEmpty}
                                     endIcon={<SendIcon />}
+                                    className={clsx(classes.expand, {
+                                        [classes.expandOpen]: expanded,
+                                    })}
+                                    onClick={handleExpandClick}
+                                    aria-expanded={expanded}
+                                    aria-label="show more"
                                 >
                                     Calculate
                                 </Button>
+                                {" "}
                                 <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
                                     <b>Reset</b>
                                 </ColorButton>
@@ -239,8 +271,41 @@ export default function LoanTrialCalc(props) {
                                 >
                                     Back
                                 </Button>
-                            </div>
-                        </Paper>
+                            </Grid>
+                        </div>
+                    </Paper>
+                    <br />
+                    <Paper className={classes.button}>
+                        <Card>
+                            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                <TableContainer component={Paper}>
+                                    <Table className={classes.Table} aria-label="customized table">
+                                        <TableHead>
+                                            <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
+                                                <StyledTableCell align="left">Payment No</StyledTableCell>
+                                                <StyledTableCell align="left">Principal Paid</StyledTableCell>
+                                                <StyledTableCell align="left">Interest Paid</StyledTableCell>
+                                                <StyledTableCell align="left">Payment Date</StyledTableCell>
+                                                <StyledTableCell align="left">Balance</StyledTableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {
+                                                paymentList.map((row) => (
+                                                    <StyledTableRow key={row.id}>
+                                                        <StyledTableCell align="left">{row.paymentNumber}</StyledTableCell>
+                                                        <StyledTableCell align="left">{row.principalPaid}</StyledTableCell>
+                                                        <StyledTableCell align="left">{row.interestPaid}</StyledTableCell>
+                                                        <StyledTableCell align="left">{row.paymentDate}</StyledTableCell>
+                                                        <StyledTableCell align="left">{row.balance}</StyledTableCell>
+                                                    </StyledTableRow>
+                                                ))
+                                            }
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Collapse>
+                        </Card>
                     </Paper>
                 </form>
             </div>

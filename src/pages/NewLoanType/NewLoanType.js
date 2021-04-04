@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles , withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import {
   Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
@@ -33,14 +33,17 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     width: 200,
   },
+  width: {
+    width:400,
+  }
 }));
 const ColorButton = withStyles((theme) => ({
   root: {
-      color: theme.palette.getContrastText(green[500]),
-      backgroundColor: green[500],
-      '&:hover': {
-          backgroundColor: green[700],
-      },
+    color: theme.palette.getContrastText(green[500]),
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
   },
 }))(Button);
 
@@ -52,8 +55,8 @@ export default function NewLoanType(props) {
   const [dateTime, setDateTime] = useState(new Date());
   const [userId, setUserID] = useState([]);
 
-   //Setup initial State
-   const initLoan  = {
+  //Setup initial State
+  const initLoan = {
     loanType: null,
     description: null,
     status: null,
@@ -84,15 +87,15 @@ export default function NewLoanType(props) {
       })
   };
 
- 
-  const [newLoan, setNewLoan] = useState(initLoan );
-  const resetData  = () => {
+
+  const [newLoan, setNewLoan] = useState(initLoan);
+  const resetData = () => {
     setNewLoan(initLoan)
   }
 
 
   //Error Handling
-  const initErrors  = {
+  const initErrors = {
     loanType: '',
     description: '',
     status: '',
@@ -104,12 +107,12 @@ export default function NewLoanType(props) {
     minTimePeriod: '',
   }
   const [errors, setErrors] = useState(initErrors);
-  const resetError  = () => {
+  const resetError = () => {
     setErrors(initErrors)
   }
-  
 
- 
+
+
   const SubmitNewLoanType = (e) => {
     e.preventDefault();
     const data = {
@@ -143,7 +146,7 @@ export default function NewLoanType(props) {
           //console.log('Test');
           const _sErrors = _errors.response.data.errors;
           const _error = _errors.response.data.error;
-          if(_sErrors!==undefined){
+          if (_sErrors !== undefined) {
             let errorsObj = {}
             _sErrors.forEach(error => {
               const { defaultMessage, field } = error
@@ -183,7 +186,7 @@ export default function NewLoanType(props) {
                     fullWidth
                     size="small"
                     error={errors.loanType ? 'error' : ''}
-                    
+
                     margin="normal"
                     InputLabelProps={{
                       shrink: true,
@@ -214,7 +217,7 @@ export default function NewLoanType(props) {
                     </InputLabel>
                     <FormHelperText>{errors.status}</FormHelperText>
                     <Select
-                     variant="outlined"
+                      variant="outlined"
                       name="status"
                       displayEmpty
                       className={classes.selectEmpty}
@@ -223,7 +226,7 @@ export default function NewLoanType(props) {
                       onChange={onChange}
                     >
                       <MenuItem value="" disabled>
-                      
+
                       </MenuItem>
                       {
                         status.map((eachRow, index) => {
@@ -233,7 +236,7 @@ export default function NewLoanType(props) {
                         })
                       }
                     </Select>
-                    
+
                   </FormControl>
                 </Box>
               </Paper>
@@ -337,7 +340,7 @@ export default function NewLoanType(props) {
             </Grid>
           </Grid>
           <br />
-          <Paper variant="outlined" >
+          <Paper variant="outlined" className={classes.width} >
             <div>
               <Button
                 type="submit"
@@ -348,7 +351,7 @@ export default function NewLoanType(props) {
               >
                 Save
             </Button>
-            <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+              <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
                 <b>Reset</b>
               </ColorButton>
               {" "}
@@ -360,7 +363,6 @@ export default function NewLoanType(props) {
               >
                 Back
               </Button>
-              
             </div>
           </Paper>
         </form>

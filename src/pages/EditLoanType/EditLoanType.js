@@ -3,13 +3,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles , withStyles } from '@material-ui/core/styles';
 import {
   Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
-   MenuItem, Box,
+  MenuItem, Box,
 } from '@material-ui/core';
-
-import UpdateIcon from '@material-ui/icons/Update';
+import { green } from '@material-ui/core/colors';
+import SendIcon from '@material-ui/icons/Send';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -33,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(green[500]),
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+}))(Button);
 
 export default function EditLoanType(props) {
 
@@ -131,9 +140,9 @@ export default function EditLoanType(props) {
       minTimePeriod: newLoan.minTimePeriod,
       createdDate: newLoan.createdDate,
       createdDate: dateTime,
-            createdUser: {
-                id: userId,
-            },
+      createdUser: {
+        id: userId,
+      },
 
     };
     console.log('data', data);
@@ -356,21 +365,22 @@ export default function EditLoanType(props) {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                endIcon={<UpdateIcon />}
+                endIcon={<SendIcon />}
               >
-                Update
+                Save
             </Button>
+              <ColorButton variant="contained" color="secondary" type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                <b>Reset</b>
+              </ColorButton>
               {" "}
               <Button
-                type="reset"
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                startIcon={<RotateLeftIcon />}
-                onClick={resetError}
+                onClick={() => history.goBack()}
               >
-                Reset
-                        </Button>
+                Back
+              </Button>
             </div>
           </Paper>
         </form>

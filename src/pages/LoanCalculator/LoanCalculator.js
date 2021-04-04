@@ -181,6 +181,7 @@ export default function LoanTrialCalc(props) {
                                     label="Loan Amount"
                                     name="initialBalance"
                                     variant="outlined"
+                                    placeholder="Enter Amount"
                                     helperText={errors.initialBalance}
                                     error={errors.initialBalance ? 'error' : ''}
                                     style={{ margin: 8 }}
@@ -197,6 +198,7 @@ export default function LoanTrialCalc(props) {
                                     label="Interest Rate"
                                     name="interestRate"
                                     variant="outlined"
+                                    placeholder="Enter Interest"
                                     helperText={errors.interestRate}
                                     error={errors.interestRate ? 'error' : ''}
                                     style={{ margin: 8 }}
@@ -213,6 +215,7 @@ export default function LoanTrialCalc(props) {
                                     label="Duration In Months"
                                     name="durationInMonths"
                                     variant="outlined"
+                                    placeholder="Enter Duration"
                                     helperText={errors.durationInMonths}
                                     error={errors.durationInMonths ? 'error' : ''}
                                     style={{ margin: 8 }}
@@ -240,7 +243,6 @@ export default function LoanTrialCalc(props) {
                                 />
                             </Grid>
                         </Grid>
-                        <br />
                         <div>
                             <Grid className={classes.button}>
                                 <Button

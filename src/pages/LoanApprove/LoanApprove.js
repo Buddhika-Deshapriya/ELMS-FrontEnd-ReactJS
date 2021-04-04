@@ -196,9 +196,9 @@ export default function NewLoanResponse(props) {
                 id: newResponse.loanStatus,
             },
             acceptedAmount: newResponse.acceptedAmount,
-            loanApplication: [
+            loanApplications: [
                 {
-                    id: newResponse. id,
+                    id: loanApplicationId,
                 }
             ],
             createdDate: dateTime,

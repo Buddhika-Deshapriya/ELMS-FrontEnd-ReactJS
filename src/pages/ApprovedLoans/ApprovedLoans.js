@@ -114,7 +114,7 @@ export default function ApprovedLoanList() {
                                         <StyledTableCell align="left">{row.loanApplications[0].calculationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
                                         <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
-                                        <StyledTableCell align="left">{row.loanApplications[0].loanStatus.type}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             <ButtonGroup>
                                                 <Link to={"director-approve/"+ row.id} >

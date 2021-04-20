@@ -230,6 +230,7 @@ export default function NewDirectorResponse(props) {
     const SubmitNewDirectorResponse = (e) => {
         e.preventDefault();
         const data = {
+            id:loanApplicationId,
             description: newResponse.description,
             loanStatus: {
                 id: newResponse.loanStatus,
@@ -453,26 +454,6 @@ export default function NewDirectorResponse(props) {
                                                     <StyledTableCell component="th" scope="row">
                                                         {row.createdUser.firstName}{" "}{row.createdUser.middleName}{" "}{row.createdUser.lastName}
                                                     </StyledTableCell>
-                                                    {/* <StyledTableCell align="left">
-                                                            <ButtonGroup>
-                                                                <Link to={"view-approval/" + row.id} >
-                                                                    <Button
-                                                                        size="sm"
-                                                                        variant="outline-danger"
-                                                                    >
-                                                                        <HtmlTooltip
-                                                                            title={
-                                                                                <React.Fragment>
-                                                                                    <Typography color="inherit">View Customer Profile</Typography>
-                                                                                </React.Fragment>
-                                                                            }
-                                                                        >
-                                                                            <FolderOpenIcon />
-                                                                        </HtmlTooltip>
-                                                                    </Button>
-                                                                </Link>
-                                                            </ButtonGroup>
-                                                        </StyledTableCell> */}
                                                 </StyledTableRow>
                                             ))
                                     }

@@ -230,13 +230,14 @@ export default function LoanCashRelease(props) {
     const SubmitNewCashRelease = (e) => {
         e.preventDefault();
         const data = {
+            id: loanApplicationId,
             voucherNo: genVoucherNo.voucherNo,
             description: cashRelease.description,
             loanStatus: {
                 id: cashRelease.loanStatus,
             },
             releaseAmount: cashRelease.releaseAmount    ,
-            loanApplicationsList: [
+            loanApps: [
                 {
                     id: loanApplicationId,
                 }
@@ -385,7 +386,7 @@ export default function LoanCashRelease(props) {
                                                 <TableCell colSpan="5">No Director Approvals</TableCell>
                                             </TableRow> :
                                             directorResponse.map((row) => (
-                                                row.loanStatus.type == "Released" ?
+                                                row.loanStatus.type == "Approved" ?
                                                 <StyledTableRow key={row.id}>
                                                     <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                                     <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>

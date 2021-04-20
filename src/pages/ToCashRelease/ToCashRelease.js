@@ -108,7 +108,7 @@ export default function CashReleaseList() {
                                     <TableCell colSpan="5">No Approved Loans Available</TableCell>
                                 </TableRow> :
                                 cashRelease.map((row) => (
-                                    row.loanStatus.type == "Approved" ?
+                                    row.loanStatus.type == "Approved" && row.loanApplicationsList[0].loanStatus.type == "Approved" ?
                                     <StyledTableRow key={row.id}>
                                         <StyledTableCell align="left">{row.loanApplicationsList[0].applicationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.loanApplicationsList[0].calculationNo}</StyledTableCell>

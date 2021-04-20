@@ -48,12 +48,14 @@ const StyledTableRow = withStyles((theme) => ({
 export default function ApprovedLoanList() {
 
     const [approvedLoan, setApprovedLoan] = useState([]);
+    const [loanApplications, setLoanApplications] = useState([]);
 
     const fetchData = async () => {
         axios.get(`${baseUrl}/loanapplicationresponse/list`)
             .then(response => {
                 console.log('response', response);
-                setApprovedLoan(response.data);
+                setApprovedLoan(response.data)
+                setLoanApplications(response.data.loanApplications[0].loanApplicationDirectorResponses)
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -102,13 +104,13 @@ export default function ApprovedLoanList() {
                                 <StyledTableCell align="left">  </StyledTableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        <TableBody>  
                             {approvedLoan.length === 0 ?
                                 <TableRow align="center">
                                     <TableCell colSpan="5">No Approved Loans Available</TableCell>
                                 </TableRow> :
                                 approvedLoan.map((row) => (
-                                    row.loanStatus.type == "Approved" ?
+                                    row.loanApplications[0].loanStatus.type == "Approved" && row.loanApplications[0].loanApplicationDirectorResponses.length === 0 ?
                                     <StyledTableRow key={row.id}>
                                         <StyledTableCell align="left">{row.loanApplications[0].applicationNo}</StyledTableCell>
                                         <StyledTableCell align="left">{row.loanApplications[0].calculationNo}</StyledTableCell>

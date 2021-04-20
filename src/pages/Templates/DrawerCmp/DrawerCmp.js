@@ -127,7 +127,7 @@ export default function DrawerCmp(props) {
             <ListItemText primary={"Cash Release"} />
           </ListItem>
         </Link>
-        <Link to="/cash-released-list" className={classes.link}>
+        <Link to="/all-loans-list" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
               <LocalAtmIcon />

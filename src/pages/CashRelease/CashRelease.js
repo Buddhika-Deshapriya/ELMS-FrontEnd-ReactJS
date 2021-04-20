@@ -385,6 +385,7 @@ export default function LoanCashRelease(props) {
                                                 <TableCell colSpan="5">No Director Approvals</TableCell>
                                             </TableRow> :
                                             directorResponse.map((row) => (
+                                                row.loanStatus.type == "Released" ?
                                                 <StyledTableRow key={row.id}>
                                                     <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                                     <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
@@ -394,6 +395,8 @@ export default function LoanCashRelease(props) {
                                                         {row.createdUser.firstName}{" "}{row.createdUser.middleName}{" "}{row.createdUser.lastName}
                                                     </StyledTableCell>
                                                 </StyledTableRow>
+                                                :
+                                                null
                                             ))
                                     }
                                 </TableBody>

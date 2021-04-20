@@ -191,6 +191,7 @@ export default function NewLoanResponse(props) {
     const SubmitNewLoanResponse = (e) => {
         e.preventDefault();
         const data = {
+            id:loanApplicationId,
             description: newResponse.description,
             loanStatus: {
                 id: newResponse.loanStatus,

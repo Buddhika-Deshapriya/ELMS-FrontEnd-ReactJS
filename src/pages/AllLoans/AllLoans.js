@@ -47,17 +47,17 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 700,
     },
     title: {
         fontSize: 16,
     },
-});
+}));
 
 export default function AllLoans() {
-
+    
     const [LoanApps, setLoanApplications] = useState([]);
     // const [loanStatus, setLoanStatus] = useState([]);
     // const LoanStatus = useState({
@@ -150,7 +150,7 @@ export default function AllLoans() {
                                             <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
                                             <StyledTableCell align="left">
                                                 <ButtonGroup>
-                                                    <Link to={"view-loan-details/" + row.id} >
+                                                    <Link to={"all-data/" + row.id} >
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"

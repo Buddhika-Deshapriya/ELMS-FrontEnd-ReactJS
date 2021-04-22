@@ -23,6 +23,7 @@ import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
 import { Pageview } from '@material-ui/icons';
+import Branch from '../Branches/Branches';
 const { baseUrl } = appConfig;
 
 const StyledTableCell = withStyles((theme) => ({
@@ -62,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
+    textField: {
+        margin: theme.spacing(1, 1, 1, 1),
+    },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
@@ -75,6 +79,9 @@ export default function ViewLoanApplication(props) {
     const classes = useStyles();
     const [LoanApps, ViewLoanApplication] = useState([]);
     const [rentalType, ViewRentalType] = useState([]);
+    const [loanType, ViewLoanType] = useState([]);
+    const [loanStatus, viewLoanStatus] = useState([]);
+    const [branch, viewBranchName] = useState([]);
 
     const loanApplicationId = props.match.params.id;
 
@@ -85,6 +92,9 @@ export default function ViewLoanApplication(props) {
                 console.log('response', response);
                 ViewLoanApplication(response.data);
                 ViewRentalType(response.data.rentalTypeId);
+                ViewLoanType(response.data.loanTypeId);
+                viewLoanStatus(response.data.loanStatus);
+                viewBranchName(response.data.branch)
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -115,7 +125,7 @@ export default function ViewLoanApplication(props) {
     return (
         <AppTemplate>
             <div className="loan-application-view">
-            <Accordion>
+                <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -125,21 +135,62 @@ export default function ViewLoanApplication(props) {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Grid>
-                            <Grid container spacing={3}>
-                                <Grid item xs={4}>
+                            <Grid container spacing={4}>
+                                <Grid item xs={3}>
                                     <TextField
-                                        name="loanAmount"
-                                        value={LoanApps.loanAmount}
+                                        name="applicationNo"
+                                        value={LoanApps.applicationNo}
                                         className={classes.textField}
                                         id="outlined-full-width"
-                                        helperText="Loan Amount"
+                                        helperText="Application No"
                                         size="medium"
                                         InputProps={{
                                             readOnly: true,
                                         }}
                                     />
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        name="calculationNo"
+                                        value={LoanApps.calculationNo}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Calculation No"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        name="branch"
+                                        value={branch.branchName}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Loan Status"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={4}>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        name="loanAmount"
+                                        value={LoanApps.loanAmount}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Branch Name"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
                                     <TextField
                                         name="effectiveRate"
                                         value={LoanApps.effectiveRate}
@@ -152,10 +203,10 @@ export default function ViewLoanApplication(props) {
                                         }}
                                     />
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <TextField
                                         name="loanType"
-                                        value={LoanApps.loanType}
+                                        value={loanType.loanType}
                                         className={classes.textField}
                                         id="outlined-full-width"
                                         helperText="Loan Type"
@@ -165,9 +216,7 @@ export default function ViewLoanApplication(props) {
                                         }}
                                     />
                                 </Grid>
-                            </Grid>
-                            <Grid container spacing={3}>
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <TextField
                                         name="rentalType"
                                         value={rentalType.type}
@@ -180,7 +229,9 @@ export default function ViewLoanApplication(props) {
                                         }}
                                     />
                                 </Grid>
-                                <Grid item xs={4}>
+                            </Grid>
+                            <Grid container spacing={4}>
+                                <Grid item xs={3}>
                                     <TextField
                                         name="noOfRentals"
                                         value={LoanApps.noOfRentals}
@@ -193,13 +244,26 @@ export default function ViewLoanApplication(props) {
                                         }}
                                     />
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <TextField
                                         name="paymentPeriod"
-                                        value={LoanApps.paymentPeriod}
+                                        value={LoanApps.paymentPeriod + " Year"}
                                         className={classes.textField}
                                         id="outlined-full-width"
                                         helperText="Payment Period"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        name="loanStatus"
+                                        value={loanStatus.type}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Loan Status"
                                         size="medium"
                                         InputProps={{
                                             readOnly: true,
@@ -210,21 +274,51 @@ export default function ViewLoanApplication(props) {
                         </Grid>
                     </AccordionDetails>
                 </Accordion>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                >
-                    <Typography className={classes.heading}>Accordion 2</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="panel2a-header"
+                    >
+                        <Typography className={classes.heading}>Accordion 2</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                            sit amet blandit leo lobortis eget.
           </Typography>
-                </AccordionDetails>
-            </Accordion>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="panel2a-header"
+                    >
+                        <Typography className={classes.heading}>Accordion 2</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                            sit amet blandit leo lobortis eget.
+          </Typography>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="panel2a-header"
+                    >
+                        <Typography className={classes.heading}>Accordion 2</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                            sit amet blandit leo lobortis eget.
+          </Typography>
+                    </AccordionDetails>
+                </Accordion>
             </div>
 
         </AppTemplate>

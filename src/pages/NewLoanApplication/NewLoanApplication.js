@@ -3,11 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from "react-router-dom";
-import { makeStyles , withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import {
   Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
-   MenuItem,
+  MenuItem,
 } from '@material-ui/core';
 
 import SendIcon from '@material-ui/icons/Send';
@@ -45,11 +45,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ColorButton = withStyles((theme) => ({
   root: {
-      color: theme.palette.getContrastText(green[500]),
-      backgroundColor: green[500],
-      '&:hover': {
-          backgroundColor: green[700],
-      },
+    color: theme.palette.getContrastText(green[500]),
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
   },
 }))(Button);
 export default function NewLoanApplication(props) {
@@ -64,12 +64,19 @@ export default function NewLoanApplication(props) {
   const [branch, setBranch] = useState([]);
   const [genApplicationNo, setGenApplicationNo] = useState([]);
   const [genCalculationNo, setGenCalculationNo] = useState([]);
+  const [customers, setCustomer] = useState([]);
+
+  var membershipNo1;
+  var membershipNo2;
+  var custId1;
+  var custId2;
 
   //Setup initial State
   const initApplication = {
+    membershipNo1: null,
+    membershipNo2: null,
     applicationNo: null,
     calculationNo: null,
-    membershipNo: null,
     loanAmount: null,
     loanTypeId: null,
     effectiveRate: null,
@@ -92,6 +99,14 @@ export default function NewLoanApplication(props) {
       .then(response => {
         console.log('branch', response);
         setBranch(response.data);
+      })
+  }
+  //Get customer details
+  const fetchCustomerData = async () => {
+    axios.get(`${baseUrl}/customer/list`)
+      .then(response => {
+        console.log('customer', response);
+        setCustomer(response.data);
       })
   }
   //Get Loan application generated id
@@ -134,9 +149,10 @@ export default function NewLoanApplication(props) {
 
   //Error Handling
   const initErrors = {
+    membershipNo1: '',
+    membershipNo2: '',
     applicationNo: '',
     calculationNo: '',
-    membershipNo: '',
     loanAmount: '',
     loanTypeId: '',
     effectiveRate: '',
@@ -153,13 +169,11 @@ export default function NewLoanApplication(props) {
   }
 
 
-
   const SubmitNewLoanApplication = (e) => {
     e.preventDefault();
     const data = {
       applicationNo: genApplicationNo.applicationNo,
       calculationNo: genCalculationNo.calculationNo,
-      membershipNo: NewApplication.membershipNo,
       loanTypeId: {
         id: NewApplication.loanTypeId,
       },
@@ -182,7 +196,14 @@ export default function NewLoanApplication(props) {
       createdUser: {
         id: userId,
       },
-
+      customers: [
+        {
+          id: custId2,
+        },
+        {
+          id: custId2,
+        }
+      ],
     };
     console.log('data', data);
     axios.post(`${baseUrl}/loanapplication/add`, data)
@@ -212,13 +233,13 @@ export default function NewLoanApplication(props) {
       });
   };
 
-
   //This is same as componentdidmount()
   useEffect(() => {
     fetchBranchData();
     fetchLoanTypeData();
     fetchRentalTypeData();
     fetchLoanApplicationGenId();
+    fetchCustomerData();
     getCurrentUser();
   }, []);
 
@@ -227,62 +248,80 @@ export default function NewLoanApplication(props) {
       <div className="new-loan-application">
         <form autoComplete="off" onSubmit={SubmitNewLoanApplication}>
           <Grid container spacing={1}>
-            <Grid item xs={8}>
-            <Paper>
-              <TextField
-                name="applicationNo"
-                id="outlined-full-width"
-                label="Application No"
-                value={genApplicationNo.applicationNo}
-                helperText={errors.applicationNo}
-                size="small"
-                error={errors.applicationNo ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  readOnly: true,
-              }}
-                variant="outlined"
-                onChange={onChange}
-              />
-              <TextField
-                name="calculationNo"
-                id="outlined-full-width"
-                label="Calculation No"
-                value={genCalculationNo.calculationNo}
-                helperText={errors.calculationNo}
-                size="small"
-                error={errors.calculationNo ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  readOnly: true,
-              }}
-                variant="outlined"
-                onChange={onChange}
-              />
-              <TextField
-                name="membershipNo"
-                id="outlined-full-width"
-                label="Membership No"
-                helperText={errors.membershipNo}
-                size="small"
-                error={errors.membershipNo ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                onChange={onChange}
-              />
-            </Paper>
+            <Grid item xs={10}>
+              <Paper>
+                <TextField
+                  name="applicationNo"
+                  id="outlined-full-width"
+                  label="Application No"
+                  value={genApplicationNo.applicationNo}
+                  helperText={errors.applicationNo}
+                  size="small"
+                  error={errors.applicationNo ? 'error' : ''}
+                  className={classes.textFields}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+                <TextField
+                  name="calculationNo"
+                  id="outlined-full-width"
+                  label="Calculation No"
+                  value={genCalculationNo.calculationNo}
+                  helperText={errors.calculationNo}
+                  size="small"
+                  error={errors.calculationNo ? 'error' : ''}
+                  className={classes.textFields}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+                <TextField
+                  name="membershipNo1"
+                  id="outlined-full-width"
+                  label="Membership No 01"
+                  placeholder="CO-MEM-"
+                  size="small"
+                  className={classes.textFields}
+                  margin="normal"
+                  helperText={errors.membershipNo1}
+                  error={errors.customer1 ? 'error' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+
+                />
+                <TextField
+                  name="membershipNo2"
+                  id="outlined-full-width"
+                  label="Membership No 02"
+                  placeholder="CO-MEM-"
+                  size="small"
+                  className={classes.textFields}
+                  margin="normal"
+                  helperText={errors.membershipNo2}
+                  error={errors.customer2 ? 'error' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+              </Paper>
             </Grid>
           </Grid>
           <br />
@@ -300,6 +339,9 @@ export default function NewLoanApplication(props) {
                     label="Branch Code"
                     error={errors.branch ? 'error' : ''}
                     onChange={onChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   >
                     <MenuItem value="" disabled>
 
@@ -321,9 +363,12 @@ export default function NewLoanApplication(props) {
                     name="loanTypeId"
                     displayEmpty
                     inputProps={{ 'aria-label': 'Without label' }}
-                    label="Gender"
+                    label="Loan Type"
                     error={errors.loanTypeId ? 'error' : ''}
                     onChange={onChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   >
                     <MenuItem value="" disabled>
 
@@ -344,9 +389,12 @@ export default function NewLoanApplication(props) {
                     name="rentalTypeId"
                     displayEmpty
                     inputProps={{ 'aria-label': 'Without label' }}
-                    label="Gender"
+                    label="Rental Type"
                     error={errors.rentalTypeId ? 'error' : ''}
                     onChange={onChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   >
                     <MenuItem value="" disabled>
 
@@ -367,127 +415,145 @@ export default function NewLoanApplication(props) {
           <Grid container spacing={2}>
             <Grid item xs={5}>
               <Paper>
-              
-              <TextField
-                name="loanAmount"
-                id="outlined-full-width"
-                label="Loan Amount"
-                helperText={errors.loanAmount}
-                size="medium"
-                error={errors.loanAmount ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                onChange={onChange}
-              />
-              <TextField
-                name="description"
-                id="outlined-full-width"
-                label="Description"
-                helperText={errors.description}
-                size="medium"
-                error={errors.description ? 'error' : ''}
-                className={classes.descriptions}
-                margin="normal"
-                rows={4}
-                multiline
-                fullwidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                onChange={onChange}
-              />
+
+                <TextField
+                  name="loanAmount"
+                  id="outlined-full-width"
+                  label="Loan Amount"
+                  placeholder="Enter Amount"
+                  helperText={errors.loanAmount}
+                  size="medium"
+                  error={errors.loanAmount ? 'error' : ''}
+                  className={classes.textFields}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+                <TextField
+                  name="description"
+                  id="outlined-full-width"
+                  label="Description"
+                  placeholder="Enter Description"
+                  helperText={errors.description}
+                  size="medium"
+                  error={errors.description ? 'error' : ''}
+                  className={classes.descriptions}
+                  margin="normal"
+                  rows={4}
+                  multiline
+                  fullwidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
               </Paper>
             </Grid>
             <Grid item xs={5}>
-            <Paper>
-              <TextField
-                name="effectiveRate"
-                id="outlined-full-width"
-                label="Effective Rate"
-                helperText={errors.effectiveRate}
-                size="medium"
-                error={errors.effectiveRate ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                onChange={onChange}
-              />
-              <TextField
-                name="noOfRentals"
-                id="outlined-full-width"
-                label="No of Rentals"
-                helperText={errors.noOfRentals}
-                size="medium"
-                error={errors.noOfRentals ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                onChange={onChange}
-              />
-              <TextField
-                name="paymentPeriod"
-                id="outlined-full-width"
-                label="Payment Prediod"
-                helperText={errors.paymentPeriod}
-                size="medium"
-                error={errors.paymentPeriod ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                onChange={onChange}
-              />
-              <TextField
-                name="otherCharges"
-                id="outlined-full-width"
-                label="Other Charges"
-                helperText={errors.otherCharges}
-                size="medium"
-                error={errors.otherCharges ? 'error' : ''}
-                className={classes.textFields}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                onChange={onChange}
-              />
-              <div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                endIcon={<SendIcon />}
-              >
-                Save
+              <Paper>
+                <TextField
+                  name="effectiveRate"
+                  id="outlined-full-width"
+                  label="Effective Rate"
+                  placeholder="Enter Rate"
+                  helperText={errors.effectiveRate}
+                  size="medium"
+                  error={errors.effectiveRate ? 'error' : ''}
+                  className={classes.textFields}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+                <TextField
+                  name="noOfRentals"
+                  id="outlined-full-width"
+                  label="No of Rentals"
+                  placeholder="Enter Rentals"
+                  helperText={errors.noOfRentals}
+                  size="medium"
+                  error={errors.noOfRentals ? 'error' : ''}
+                  className={classes.textFields}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+                <TextField
+                  name="paymentPeriod"
+                  id="outlined-full-width"
+                  label="Payment Prediod"
+                  placeholder="Enter Period"
+                  helperText={errors.paymentPeriod}
+                  size="medium"
+                  error={errors.paymentPeriod ? 'error' : ''}
+                  className={classes.textFields}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+                <TextField
+                  name="otherCharges"
+                  id="outlined-full-width"
+                  label="Other Charges"
+                  placeholder="Enter Charges"
+                  helperText={errors.otherCharges}
+                  size="medium"
+                  error={errors.otherCharges ? 'error' : ''}
+                  className={classes.textFields}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={onChange}
+                />
+                <div>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    endIcon={<SendIcon />}
+
+                    // custId1={customers.map((customer) => (
+                    //   membershipNo1 == customer.membership_no ?
+                    //     custId1 = customer.id
+                    //     : null
+                    // ))}
+
+                    // custId2={customers.map((customer) => (
+                    //   membershipNo2 == customer.membership_no ?
+                    //     custId2 = customer.id
+                    //     : null
+                    // ))}
+                  >
+                    Save
             </Button>
-            <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
-                <b>Reset</b>
-              </ColorButton>
-              {" "}
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                onClick={() => history.goBack()}
-              >
-                Back
+                  <ColorButton variant="contained" color="secondary" className={classes.margin} type="reset" startIcon={<RotateLeftIcon />} onClick={resetError}>
+                    <b>Reset</b>
+                  </ColorButton>
+                  {" "}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={() => history.goBack()}
+                  >
+                    Back
               </Button>
-              </div>
+                </div>
               </Paper>
             </Grid>
           </Grid>

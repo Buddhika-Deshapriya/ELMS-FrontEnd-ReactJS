@@ -21,6 +21,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Axios from 'axios';
 
 const drawerWidth = 240;
@@ -130,7 +131,7 @@ export default function DrawerCmp(props) {
         <Link to="/all-loans-list" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
-              <LocalAtmIcon />
+              <FileCopyIcon />
             </ListItemIcon>
             <ListItemText primary={"All Loans"} />
           </ListItem>

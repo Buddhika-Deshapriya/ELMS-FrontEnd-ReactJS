@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import clsx from 'clsx';
 import { useHistory } from "react-router-dom";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
@@ -10,17 +9,10 @@ import {
     TableContainer, TableHead, TableRow, Tooltip, Button,
 } from '@material-ui/core';
 import { Grid, Paper } from '@material-ui/core';
-import Collapse from '@material-ui/core/Collapse';
-import CardContent from '@material-ui/core/CardContent';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import { createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import { ThemeProvider } from '@material-ui/styles';
-
-
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
@@ -89,16 +81,6 @@ export default function ViewLoanCustomerData(props) {
 
     const classes = useStyles();
     const [CustomersData, ViewCustomerData] = useState([]);
-    const [membershipType, ViewMembershipType] = useState([]);
-    const [customerStatus, ViewCustomerStatus] = useState([]);
-
-
-    const [expanded, setExpanded] = React.useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
     const CustomerId = props.match.params.id;
 
     const fetchLoanCustomerData = async (CustomerId) => {
@@ -107,8 +89,6 @@ export default function ViewLoanCustomerData(props) {
             .then(response => {
                 console.log('response', response);
                 ViewCustomerData(response.data.customers);
-                ViewMembershipType(response.data.customers[0].membershipType);
-                ViewCustomerStatus(response.data.customers.customerStatus.type);
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -159,14 +139,8 @@ export default function ViewLoanCustomerData(props) {
 
                                             CustomersData.map((row) => (
                                                 <StyledTableRow key={row.id}>
-                                                    <StyledTableCell
-                                                        className={clsx(classes.expand, {
-                                                            [classes.expandOpen]: expanded,
-                                                        })}
-                                                        onClick={handleExpandClick}
-                                                        aria-expanded={expanded}
-                                                        aria-label="show more" align="left">
-                                                        <Link>
+                                                    <StyledTableCell>
+                                                        <Link to={"/view-customer/" + row.id}>
                                                             <ThemeProvider theme={theme}>
                                                                 <Typography color="primary">
                                                                     {row.membership_no}
@@ -192,42 +166,6 @@ export default function ViewLoanCustomerData(props) {
                         >
                             Back
                          </Button>
-                    </Grid>
-
-                    <Grid item xs={7}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                                <Card>
-                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography variant="H6" component="h2" color="secondary">
-                                                Membership Details :
-                                        </Typography>
-                                            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                                Membership Type:
-                                        </Typography>
-                                            <Typography variant="h5" component="h2">
-                                                {membershipType.type}
-                                            </Typography>
-                                            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                                Status:
-                                        </Typography>
-                                            <Typography variant="body1" component="p">
-                                                {CustomersData.customerStatus == "ACTIVE" ? <ThumbUpIcon color="primary" /> : <ThumbDownIcon color="secondary" />}
-                                            </Typography>
-                                        </CardContent>
-
-                                        <Typography>
-                                            <Link to={"/view-customer/" + CustomerId}>
-                                                <Button variant="contained" color="primary" className={classes.width}>
-                                                    View More
-                                        </Button>
-                                            </Link>
-                                        </Typography>
-                                    </Collapse>
-                                </Card>
-                            </Grid>
-                        </Grid>
                     </Grid>
                 </Grid>
             </div>

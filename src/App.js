@@ -38,6 +38,7 @@ import CashRelease from './pages/CashRelease/CashRelease';
 import NewCalculation from './pages/LoanCalculator/LoanCalculator';
 import AllLoans from './pages/AllLoans/AllLoans';
 import AllData from './pages/AllData/AllData';
+import Payment from './pages/Payment/Payment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -109,6 +110,7 @@ export default function App (props) {
         <Route path="/new-loan-calculation" exact component={NewCalculation} />
         <Route path="/all-loans-list" exact component={AllLoans} />
         <Route path="/all-data/:id" exact component={AllData} />
+        <Route path="/new-payment" exact component={Payment} />
 
         <Route component={ErrorPage} />
       </Switch>

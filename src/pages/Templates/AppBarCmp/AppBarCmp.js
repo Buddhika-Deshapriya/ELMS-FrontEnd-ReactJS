@@ -13,7 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
 import MenuIcon from '@material-ui/icons/Menu';
-import { FormatAlignRight } from "@material-ui/icons";
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 
 
 const drawerWidth = 240;
@@ -98,8 +98,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
   },
   KeyboardIcon: {
-    marginLeft: 60
-  }
+    marginLeft: 660,
+  },
 }));
 
 export default function AppBarCmp(props) {
@@ -165,6 +165,18 @@ export default function AppBarCmp(props) {
             color="inherit"
             >
             <KeyboardIcon />
+          </IconButton>
+          </Link>
+        </div>
+        <div>
+          <Link to="/new-payment" className={classes.link} >
+          <IconButton
+            aria-label="Payments"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            color="inherit"
+            >
+            <LocalAtmIcon /> 
           </IconButton>
           </Link>
         </div>

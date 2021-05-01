@@ -11,7 +11,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import PaymentIcon from '@material-ui/icons/Payment';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
@@ -128,7 +128,7 @@ export default function CashReleaseList() {
                                                                     <Typography color="inherit">To Cash Release</Typography>
                                                                 </React.Fragment>
                                                             }>
-                                                            <ThumbUpIcon />
+                                                            <PaymentIcon />
                                                         </HtmlTooltip>
                                                     </Button>
                                                 </Link>

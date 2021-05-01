@@ -3,27 +3,26 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import {
-    Button, ButtonGroup, Grid, TextField,
+    Grid, TextField,
     Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow, Paper,
+    TableContainer, TableHead, TableRow, Paper, Button,
 } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
+import { createMuiTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+import blue from '@material-ui/core/colors/blue';
+import { ThemeProvider } from '@material-ui/styles';
 import { useHistory } from "react-router-dom";
 
-import PageviewIcon from '@material-ui/icons/Pageview';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
-import { Pageview } from '@material-ui/icons';
-import Branch from '../Branches/Branches';
 const { baseUrl } = appConfig;
 
 const StyledTableCell = withStyles((theme) => ({
@@ -70,7 +69,19 @@ const useStyles = makeStyles((theme) => ({
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
+    expand: {
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
 }));
+
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+    },
+});
 
 export default function ViewLoanApplication(props) {
 
@@ -80,10 +91,23 @@ export default function ViewLoanApplication(props) {
     const [LoanApps, ViewLoanApplication] = useState([]);
     const [rentalType, ViewRentalType] = useState([]);
     const [loanType, ViewLoanType] = useState([]);
-    const [loanStatus, viewLoanStatus] = useState([]);
-    const [branch, viewBranchName] = useState([]);
+    const [loanStatus, ViewLoanStatus] = useState([]);
+    const [branch, ViewBranchName] = useState([]);
+    const [customers, ViewCustomer] = useState([]);
+    const [applications, SetLoanApplications] = useState([]);
+    const [responses, ViewLoanResponses] = useState([]);
+    const [directorResponses, ViewLoanDirectorResponses] = useState([]);
+
 
     const loanApplicationId = props.match.params.id;
+
+    const fetchLoanApplicationList = async () => {
+        axios.get(`${baseUrl}/loanapplication/list`)
+            .then(response => {
+                console.log('loan applications', response);
+                SetLoanApplications(response.data);
+            })
+    }
 
     const fetchLoanApplicationData = async (loanApplicationId) => {
 
@@ -93,8 +117,11 @@ export default function ViewLoanApplication(props) {
                 ViewLoanApplication(response.data);
                 ViewRentalType(response.data.rentalTypeId);
                 ViewLoanType(response.data.loanTypeId);
-                viewLoanStatus(response.data.loanStatus);
-                viewBranchName(response.data.branch)
+                ViewLoanStatus(response.data.loanStatus);
+                ViewBranchName(response.data.branch);
+                ViewCustomer(response.data.customers);
+                ViewLoanResponses(response.data.loanApplicationResponses);
+                ViewLoanDirectorResponses(response.data.loanApplicationDirectorResponses);
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -113,13 +140,13 @@ export default function ViewLoanApplication(props) {
                         console.log(errorsObj);
                         this.setState({ errors: errorsObj });
                     }
-
                 }
             });
     };
 
     useEffect(() => {
         fetchLoanApplicationData(loanApplicationId);
+        fetchLoanApplicationList();
     }, []);
 
     return (
@@ -168,7 +195,20 @@ export default function ViewLoanApplication(props) {
                                         value={branch.branchName}
                                         className={classes.textField}
                                         id="outlined-full-width"
-                                        helperText="Loan Status"
+                                        helperText="Branch Name"
+                                        size="medium"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        name="createdDate"
+                                        value={LoanApps.createdDate}
+                                        className={classes.textField}
+                                        id="outlined-full-width"
+                                        helperText="Applied Date"
                                         size="medium"
                                         InputProps={{
                                             readOnly: true,
@@ -183,7 +223,7 @@ export default function ViewLoanApplication(props) {
                                         value={LoanApps.loanAmount}
                                         className={classes.textField}
                                         id="outlined-full-width"
-                                        helperText="Branch Name"
+                                        helperText="Loan Amount"
                                         size="medium"
                                         InputProps={{
                                             readOnly: true,
@@ -280,13 +320,45 @@ export default function ViewLoanApplication(props) {
                         aria-controls="panel2a-content"
                         id="panel2a-header"
                     >
-                        <Typography className={classes.heading}>Accordion 2</Typography>
+                        <Typography className={classes.heading}> <b>Customer Details: </b> </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
-          </Typography>
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="customized table">
+                                <TableHead>
+                                    <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
+                                        <StyledTableCell align="left">Membership No</StyledTableCell>
+                                        <StyledTableCell>Customer Name</StyledTableCell>
+                                        <StyledTableCell align="left">NIC</StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {
+                                        customers.length === 0 ?
+                                            <TableRow align="center">
+                                                <TableCell colSpan="5">No Customers Available</TableCell>
+                                            </TableRow> :
+                                            customers.map((row) => (
+                                                <StyledTableRow key={row.id}>
+                                                    <StyledTableCell align="left">
+                                                        <Link to={"/view-customer/" + row.id}>
+                                                            <ThemeProvider theme={theme}>
+                                                                <Typography color="primary">
+                                                                    {row.membership_no}
+                                                                </Typography>
+                                                            </ThemeProvider>
+                                                        </Link>
+                                                    </StyledTableCell>
+                                                    <StyledTableCell component="th" scope="row">
+                                                        {row.first_name}{" "}{row.middle_name}{" "}{row.last_name}
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{row.nic}</StyledTableCell>
+                                                </StyledTableRow>
+                                            ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion>
@@ -295,13 +367,52 @@ export default function ViewLoanApplication(props) {
                         aria-controls="panel2a-content"
                         id="panel2a-header"
                     >
-                        <Typography className={classes.heading}>Accordion 2</Typography>
+                        <Typography className={classes.heading}><b>Previous Loans Details: </b></Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
-          </Typography>
+                            <TableContainer component={Paper}>
+                                <Table className={classes.table} aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
+                                            <StyledTableCell align="left">Application No</StyledTableCell>
+                                            <StyledTableCell>Date</StyledTableCell>
+                                            <StyledTableCell align="left">Loan Amount</StyledTableCell>
+                                            <StyledTableCell align="left">Status</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            applications.length === 0 ?
+                                                <TableRow align="center">
+                                                    <TableCell colSpan="5">No Previous Loans Available</TableCell>
+                                                </TableRow> :
+                                                // applications.membership_no === customers.membership_no ?
+                                                applications.map((application) => (
+                                                    application.customers.map((customer) => (
+                                                        customers.map((thisCustomer) => (
+                                                            application.applicationNo != LoanApps.applicationNo ?
+                                                                thisCustomer.membership_no === customer.membership_no ?
+                                                                    <StyledTableRow key={application.id}>
+                                                                        <StyledTableCell align="left">
+                                                                            {application.applicationNo}
+                                                                        </StyledTableCell>
+                                                                        <StyledTableCell component="th" scope="row">
+                                                                            {application.createdDate}
+                                                                        </StyledTableCell>
+                                                                        <StyledTableCell align="left">{application.loanAmount}</StyledTableCell>
+                                                                        <StyledTableCell align="left">{application.loanStatus.type}</StyledTableCell>
+                                                                    </StyledTableRow>
+                                                                    : null
+                                                                : null
+                                                        ))
+                                                    ))
+                                                ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Typography>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion>
@@ -310,15 +421,81 @@ export default function ViewLoanApplication(props) {
                         aria-controls="panel2a-content"
                         id="panel2a-header"
                     >
-                        <Typography className={classes.heading}>Accordion 2</Typography>
+                        <Typography className={classes.heading}> <b>Manager Approvals for Loan: </b> </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
-          </Typography>
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="customized table">
+                                <TableHead>
+                                    <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
+                                        <StyledTableCell align="left">Amount</StyledTableCell>
+                                        <StyledTableCell align="left">Date</StyledTableCell>
+                                        <StyledTableCell align="left">Status</StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {directorResponses.length === 0 ?
+                                        <TableRow align="center">
+                                            <TableCell colSpan="5">No Manager Approvals</TableCell>
+                                        </TableRow> :
+                                        directorResponses.map((row) => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
+                                            </StyledTableRow>
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </AccordionDetails>
                 </Accordion>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="panel2a-header"
+                    >
+                        <Typography className={classes.heading}> <b>Director Approvals for Loan: </b> </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="customized table">
+                                <TableHead>
+                                    <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
+                                        <StyledTableCell align="left">Amount</StyledTableCell>
+                                        <StyledTableCell align="left">Date</StyledTableCell>
+                                        <StyledTableCell align="left">Status</StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {responses.length === 0 ?
+                                        <TableRow align="center">
+                                            <TableCell colSpan="5">No Director Approvals</TableCell>
+                                        </TableRow> :
+                                        responses.map((row) => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell align="left">{row.acceptedAmount}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.loanStatus.type}</StyledTableCell>
+                                            </StyledTableRow>
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </AccordionDetails>
+                </Accordion>
+                <br/>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={() => history.goBack()}
+                >
+                    Back
+                </Button>
             </div>
 
         </AppTemplate>

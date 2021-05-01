@@ -82,6 +82,7 @@ export default function App (props) {
     <Router history={history}>
       <Switch> 
         <Route exact path="/signin" component={SignIn} />
+        <Route path="/profile" exact component={Profile} />
         <Route path="/" exact component={HomePage} />
         <Route path="/customer-list" exact component={CustomerList} />
         <Route path="/new-customer" exact component={NewCustomer} />

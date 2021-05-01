@@ -38,7 +38,9 @@ export default class OrderView extends Component {
     if (SystemUser.get() != null) {
       this.setState({
         id: SystemUser.get().id,
-        name: SystemUser.get().name,
+        firstName: SystemUser.get().firstName,
+        middleName: SystemUser.get().middleName,
+        lastName: SystemUser.get().lastName,
         email: SystemUser.get().email,
         username: SystemUser.get().username,
 
@@ -50,7 +52,7 @@ export default class OrderView extends Component {
   };
 
   render() {
-    const { name, email, username} = this.state;
+    const { firstName, middleName, lastName, email, username} = this.state;
     return (
       <AppTemplate >
         <Container maxWidth="sm" style={{float:"left"}}>
@@ -63,7 +65,7 @@ export default class OrderView extends Component {
                       <AccountCircleIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={name} secondary="Full Name" />
+                  <ListItemText primary={firstName+ " " + middleName+ " " + lastName} secondary="Full Name" />
                 </ListItem>
                 <ListItem>
                   <ListItemAvatar>

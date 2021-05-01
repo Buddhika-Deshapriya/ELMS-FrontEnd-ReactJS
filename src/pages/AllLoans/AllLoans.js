@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AllLoans() {
-    
+
     const [LoanApps, setLoanApplications] = useState([]);
     // const [loanStatus, setLoanStatus] = useState([]);
     // const LoanStatus = useState({
@@ -114,14 +114,6 @@ export default function AllLoans() {
     return (
         <AppTemplate>
             <div className="all-loans-list">
-                {/* <DataGrid
-                    {...LoanStatus}
-                    filterModel={{
-                        items: [
-                            { columnField: 'Status', operatorValue: 'contains', value: 'Approved' },
-                        ],
-                    }}
-                /> */}
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead>
@@ -140,7 +132,6 @@ export default function AllLoans() {
                                     <TableRow align="center">
                                         <TableCell colSpan="5">No Loan Applications Available</TableCell>
                                     </TableRow> :
-
                                     LoanApps.map((row) => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell align="left">{row.applicationNo}</StyledTableCell>

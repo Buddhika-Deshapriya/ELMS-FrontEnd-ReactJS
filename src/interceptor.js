@@ -29,7 +29,7 @@ export const interceptor =  function(excludeUrl, cb) {
         if(error.response.data.path.indexOf("api/auth/signin") < 0){ 
           redirectTo = '/signin';
         }
-        cb({loaderIsHide:true, redirectTo})
+        ({loaderIsHide:true, redirectTo})
         return new Promise((resolve, reject) => {
           reject(error);
         });

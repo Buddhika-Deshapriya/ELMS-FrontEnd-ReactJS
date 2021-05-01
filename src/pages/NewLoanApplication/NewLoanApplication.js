@@ -65,11 +65,8 @@ export default function NewLoanApplication(props) {
   const [genApplicationNo, setGenApplicationNo] = useState([]);
   const [genCalculationNo, setGenCalculationNo] = useState([]);
   const [customers, setCustomer] = useState([]);
-
-  var membershipNo1;
-  var membershipNo2;
-  var custId1;
-  var custId2;
+  const [cusMem01, setCusMem01] = useState([]);
+  const [cusMem02, setCusMem02] = useState([]);
 
   //Setup initial State
   const initApplication = {
@@ -140,12 +137,10 @@ export default function NewLoanApplication(props) {
     setUserID(SystemUser.get().id);
   };
 
-
   const [NewApplication, setNewLoanApplication] = useState(initApplication);
   const resetData = () => {
     setNewLoanApplication(initApplication)
   }
-
 
   //Error Handling
   const initErrors = {
@@ -166,6 +161,47 @@ export default function NewLoanApplication(props) {
   const [errors, setErrors] = useState(initErrors);
   const resetError = () => {
     setErrors(initErrors)
+    setDefault();
+  }
+
+  //Clear useState data
+  function setDefault() {
+    setCusMem01("");
+    setCusMem02("");
+  }
+
+  // validate membership ID
+  const validateID1 = (e) => {
+    const memID1 = e.target.value;
+
+    if (memID1.trim() !== "") {
+
+      let element = new Object();
+      for (let index = 0; index < customers.length; index++) {
+        element = customers[index];
+        if (element.membership_no === memID1) {
+          return setCusMem01(element.id);
+        }
+
+      }
+      return false;
+    }
+  }
+  const validateID2 = (e) => {
+    const memID2 = e.target.value;
+
+    if (memID2.trim() !== "") {
+
+      let element = new Object();
+      for (let index = 0; index < customers.length; index++) {
+        element = customers[index];
+        if (element.membership_no === memID2) {
+          return setCusMem02(element.id);
+        }
+
+      }
+      return false;
+    }
   }
 
 
@@ -198,10 +234,10 @@ export default function NewLoanApplication(props) {
       },
       customers: [
         {
-          id: custId2,
+          id: cusMem01,
         },
         {
-          id: custId2,
+          id: cusMem02,
         }
       ],
     };
@@ -295,6 +331,7 @@ export default function NewLoanApplication(props) {
                   placeholder="CO-MEM-"
                   size="small"
                   className={classes.textFields}
+                  onBlur={validateID1}
                   margin="normal"
                   helperText={errors.membershipNo1}
                   error={errors.customer1 ? 'error' : ''}
@@ -312,9 +349,10 @@ export default function NewLoanApplication(props) {
                   placeholder="CO-MEM-"
                   size="small"
                   className={classes.textFields}
+                  onBlur={validateID2}
                   margin="normal"
                   helperText={errors.membershipNo2}
-                  error={errors.customer2 ? 'error' : ''}
+                  error={errors.membershipNo2 ? 'error' : ''}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -526,18 +564,6 @@ export default function NewLoanApplication(props) {
                     color="primary"
                     className={classes.button}
                     endIcon={<SendIcon />}
-
-                    // custId1={customers.map((customer) => (
-                    //   membershipNo1 == customer.membership_no ?
-                    //     custId1 = customer.id
-                    //     : null
-                    // ))}
-
-                    // custId2={customers.map((customer) => (
-                    //   membershipNo2 == customer.membership_no ?
-                    //     custId2 = customer.id
-                    //     : null
-                    // ))}
                   >
                     Save
             </Button>

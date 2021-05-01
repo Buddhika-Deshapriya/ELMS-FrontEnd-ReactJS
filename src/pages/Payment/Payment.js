@@ -85,6 +85,8 @@ export default function Payment(props) {
     const [accountType, setAccountType] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState([]);
     const [genVoucher, setGenVoucherNo] = useState([]);
+    const [customers, setCustomer] = useState([]);
+    const [cusMem, setCusMem] = useState([]);
 
     //Setup initial State
     const initPayment = {
@@ -101,6 +103,14 @@ export default function Payment(props) {
         setNewPayment({ ...NewPayment, [e.target.name]: e.target.value });
     }
 
+    //Get customer details
+    const fetchCustomerData = async () => {
+        axios.get(`${baseUrl}/customer/list`)
+            .then(response => {
+                console.log('customer', response);
+                setCustomer(response.data);
+            })
+    }
     //Get Account Type details
     const fetchAccountTypeData = async () => {
         axios.get(`${baseUrl}/accounttype/list`)
@@ -122,7 +132,7 @@ export default function Payment(props) {
         axios.get(`${baseUrl}/paymentvoucherid/takeid`)
             .then(response => {
                 console.log('Generated No', response);
-                setGenVoucherNo(response.data);
+                setGenVoucherNo(response.data[0]);
             })
     }
     //Get Transaction type details
@@ -140,6 +150,28 @@ export default function Payment(props) {
         setUserID(SystemUser.get().id);
     };
 
+    //Clear useState data
+    function setDefault() {
+        setCusMem("");
+    }
+
+    const validateID = (e) => {
+        const memID = e.target.value;
+
+        if (memID.trim() !== "") {
+
+            let element = new Object();
+            for (let index = 0; index < customers.length; index++) {
+                element = customers[index];
+                if (element.membership_no === memID) {
+                    return setCusMem(element.id);
+                }
+
+            }
+            return false;
+        }
+    }
+
     const [NewPayment, setNewPayment] = useState(initPayment);
     const resetData = () => {
         setNewPayment(initPayment)
@@ -156,7 +188,8 @@ export default function Payment(props) {
     }
     const [errors, setErrors] = useState(initErrors);
     const resetError = () => {
-        setErrors(initErrors)
+        setErrors(initErrors);
+        setDefault();
     }
 
     const SubmitNewPayment = (e) => {
@@ -165,7 +198,6 @@ export default function Payment(props) {
             voucherNo: genVoucher.voucherNo,
             description: NewPayment.description,
             amount: NewPayment.amount,
-            membershipNo: NewPayment.membershipNo,
             paymentMethod: {
                 id: NewPayment.paymentMethod,
             },
@@ -179,11 +211,11 @@ export default function Payment(props) {
             createdUser: {
                 id: userId,
             },
-            //   customers: [
-            //     {
-            //       id: custId2,
-            //     },
-            //   ],
+            customers: [
+                {
+                    id: cusMem,
+                },
+            ],
         };
         console.log('data', data);
         axios.post(`${baseUrl}/payments/add`, data)
@@ -220,6 +252,7 @@ export default function Payment(props) {
         fetchTransactionTypeData();
         getCurrentUser();
         fetchPaymentVoucherGenId();
+        fetchCustomerData();
     }, []);
 
     return (
@@ -349,6 +382,7 @@ export default function Payment(props) {
                                                         label="Membership No"
                                                         helperText={errors.membershipNo}
                                                         size="small"
+                                                        onBlur={validateID}
                                                         error={errors.membershipNo ? 'error' : ''}
                                                         className={classes.textFields}
                                                         margin="normal"

@@ -160,7 +160,7 @@ export default function SystemUserList() {
                                                 </ButtonGroup>
                                                 {"|"}
                                                 <ButtonGroup>
-                                                <Link to={"view-user/" + row.id} >
+                                                <Link to={"view-system-user/" + row.id} >
                                                         <Button
                                                             size="sm"
                                                             variant="outline-danger"

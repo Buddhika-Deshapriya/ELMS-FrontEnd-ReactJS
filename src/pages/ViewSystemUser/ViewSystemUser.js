@@ -3,12 +3,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import {
-    TextField, Card, CardContent, Typography, CardActionArea, Paper, Grid, ListItem, ListItemAvatar, Avatar, ListItemText
+    TableHead, TableRow, TableCell, TableContainer, Table, TableBody, Card, CardContent, Typography, CardActionArea, Paper, Grid, ListItem, ListItemAvatar, Avatar, ListItemText
 } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import blue from '@material-ui/core/colors/blue';
+import { createMuiTheme } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -25,10 +28,36 @@ import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
 const { baseUrl } = appConfig;
 
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: '#8bc34a',
+        color: theme.palette.common.black,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
+const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+    },
+}))(Tooltip);
+
+const StyledTableRow = withStyles((theme) => ({
+    root: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+}))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 300,
+        width: 500,
     },
     width: {
         '& > *': {
@@ -36,16 +65,22 @@ const useStyles = makeStyles((theme) => ({
             maxWidth: 300,
         },
     },
+    button: {
+        margin: theme.spacing(1, 1, 1, 1),
+    },
     title: {
         fontSize: 16,
     },
-    textField: {
-        margin: theme.spacing(1, 1, 1, 1),
-    },
     card: {
-        width: 800  ,
+        width: 800,
     },
 }));
+
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+    },
+});
 
 export default function ViewSystemUser(props) {
 
@@ -53,6 +88,7 @@ export default function ViewSystemUser(props) {
 
     const classes = useStyles();
     const [user, ViewUser] = useState([]);
+    const [roles, ViewUserRoles] = useState([]);
 
     const systemUserId = props.match.params.id;
 
@@ -62,6 +98,7 @@ export default function ViewSystemUser(props) {
             .then(response => {
                 console.log('response', response);
                 ViewUser(response.data);
+                ViewUserRoles(response.data.roles)
             })
             .catch(_errors => {
                 if (_errors.response) {
@@ -160,37 +197,65 @@ export default function ViewSystemUser(props) {
                         </Grid>
                     </Grid>
                 </Card>
+                <br />
                 <Grid>
-                    
+                    <TableContainer component={Paper} className={classes.root}>
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow style={{ backgroundColor: 'green', color: 'black' }} variant="head">
+                                    <StyledTableCell align="left">Role No</StyledTableCell>
+                                    <StyledTableCell align="left">Role</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {roles.length === 0 ?
+                                    <TableRow align="center">
+                                        <TableCell colSpan="5">No Roles Available</TableCell>
+                                    </TableRow> :
+                                    roles.map((row) => (
+                                        <StyledTableRow key={row.id}>
+                                            <StyledTableCell align="left">{row.id}</StyledTableCell>
+                                            <StyledTableCell align="left">{row.name}</StyledTableCell>
+                                        </StyledTableRow>
+                                    ))
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </Grid>
-                <Paper className={classes.card}>
-                    <ButtonGroup disableFocusRipple>
-                        <Link to={"/edit-user/" + systemUserId.id} >
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                            >
-                                <EditIcon fontSize="small" />
+                <br />
+                <Grid>
+                    <Paper className={classes.root}>
+                        <div>
+                            <ButtonGroup disableFocusRipple className={classes.button}>
+                                <Link to={"/edit-user/" + systemUserId.id} >
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                    >
+                                        <EditIcon fontSize="small" />
                             Edit
                             </Button>
-                        </Link>
-                    </ButtonGroup>
-                    {" "}
-                    <ButtonGroup>
-                        <Link >
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                className={classes.button}
-                                onClick={() => history.goBack()}
-                            >
-                                <ArrowBackIosIcon fontSize="small" />
+                                </Link>
+                            </ButtonGroup>
+                            {" "}
+                            <ButtonGroup>
+                                <Link >
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        className={classes.button}
+                                        onClick={() => history.goBack()}
+                                    >
+                                        <ArrowBackIosIcon fontSize="small" />
                                         Back
                                     </Button>
-                        </Link>
-                    </ButtonGroup>
-                </Paper>
+                                </Link>
+                            </ButtonGroup>
+                        </div>
+                    </Paper>
+                </Grid>
             </div>
 
         </AppTemplate>

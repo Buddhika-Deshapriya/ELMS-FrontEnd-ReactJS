@@ -11,6 +11,7 @@ import HomePage from './pages/HomePage/HomePage';
 import ErrorPage from './pages/ErrorPage/ErrorPage'; 
 import SignIn from './pages/SignIn/SignIn';
 import Profile from './pages/Profile/Profile';
+import UserList from './pages/SystemUsers/SystemUserList';
 import CustomerList from './pages/CustomerList/CustomerList';
 import NewCustomer from './pages/NewCustomer/NewCustomer';
 import LoanType from './pages/LoanType/LoanType';
@@ -84,6 +85,7 @@ export default function App (props) {
         <Route exact path="/signin" component={SignIn} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/" exact component={HomePage} />
+        <Route path="/user-list" exact component={UserList} />
         <Route path="/customer-list" exact component={CustomerList} />
         <Route path="/new-customer" exact component={NewCustomer} />
         <Route path="/loantype-list" exact component={LoanType} />

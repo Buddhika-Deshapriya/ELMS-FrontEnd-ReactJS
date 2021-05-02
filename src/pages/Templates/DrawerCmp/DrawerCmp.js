@@ -146,7 +146,7 @@ export default function DrawerCmp(props) {
             <ListItemText primary={"Branches"} />
           </ListItem>
         </Link>
-        <Link to="/order" className={classes.link}>
+        <Link to="/user-list" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
               <SettingsIcon />

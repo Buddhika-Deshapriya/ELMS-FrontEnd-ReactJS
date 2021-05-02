@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Card, CardActions, CardContent,Container
+  Card, CardActions, CardContent, Container
 
 } from '@material-ui/core';
 
@@ -52,10 +52,10 @@ export default class OrderView extends Component {
   };
 
   render() {
-    const { firstName, middleName, lastName, email, username} = this.state;
+    const { firstName, middleName, lastName, email, username } = this.state;
     return (
       <AppTemplate >
-        <Container maxWidth="sm" style={{float:"left"}}>
+        <Container maxWidth="sm" style={{ float: "left" }}>
           <Card variant="outlined">
             <CardContent>
               <List >
@@ -65,7 +65,7 @@ export default class OrderView extends Component {
                       <AccountCircleIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={firstName+ " " + middleName+ " " + lastName} secondary="Full Name" />
+                  <ListItemText primary={firstName + " " + middleName + " " + lastName} secondary="Full Name" />
                 </ListItem>
                 <ListItem>
                   <ListItemAvatar>
@@ -86,11 +86,11 @@ export default class OrderView extends Component {
               </List>
             </CardContent>
             <CardActions>
-              
+
             </CardActions>
           </Card>
         </Container>
-       
+
       </AppTemplate>
     )
   }

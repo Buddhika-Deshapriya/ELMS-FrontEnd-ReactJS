@@ -97,7 +97,7 @@ export default function SystemUserList() {
     return (
         <AppTemplate>
             <div className="user-list">
-                <Link to={"new-user"} >
+                <Link to={"new-system-user"} >
                     <Button
                         variant="contained"
                         color="secondary"

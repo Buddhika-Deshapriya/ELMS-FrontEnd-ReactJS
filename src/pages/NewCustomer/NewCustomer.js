@@ -67,6 +67,14 @@ export default function NewCustomer(props) {
     const [dateTime, setDateTime] = useState(new Date());
     const [userId, setUserID] = useState([]);
     const [genMemNo, setGenMemNo] = useState([]);
+    const [dirty, setDirty] = useState({
+        nic:"Invalid NIC",
+        telephone:"Invalid Telephone No"
+    });
+    const [error, setError] = useState({
+        nic:false,
+        telephone:false
+    });
 
     //Setup initial State
     const initCustomer = {
@@ -103,6 +111,30 @@ export default function NewCustomer(props) {
         e.persist();
         setNewCustomer({ ...newCustomer, [e.target.name]: e.target.value });
     };
+
+    const validateNic = () => {
+        if(newCustomer.nic.trim() === "" || null ){
+
+        } else if (/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/.test(newCustomer.nic)) {
+            setError({ ...error, nic: false });
+        }else{
+            setError({ ...error, nic: true });
+        }
+        console.log(error.nic);
+
+    }
+
+    const validateTelephone = () => {
+        if(newCustomer.telephone.trim() === "" || null ){
+            
+        } else if (/^([0])+[1-9]\d{8}$/.test(newCustomer.telephone)) {
+            setError({ ...error, telephone: false });
+        }else{
+            setError({ ...error, telephone: true });
+        }
+        console.log(error.telephone);
+
+    }
 
     //Get Common Status
     const fetchCustomerStatus = async () => {
@@ -309,9 +341,10 @@ export default function NewCustomer(props) {
                                     name="nic"
                                     label="NIC Number"
                                     variant="outlined"
-                                    helperText={errors.nic}
+                                    onBlur={validateNic}
+                                    helperText={errors.nic || error.nic ? dirty.nic : ''}
                                     placeholder="Enter NIC Number"
-                                    error={errors.nic ? 'error' : ''}
+                                    error={errors.nic || error.nic}
                                     style={{ margin: 8 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -560,8 +593,9 @@ export default function NewCustomer(props) {
                                     label="Telephone No"
                                     placeholder="Enter Telephone No"
                                     variant="outlined"
-                                    helperText={errors.telephone}
-                                    error={errors.telephone ? 'error' : ''}
+                                    onBlur={validateTelephone}
+                                    helperText={errors.telephone || error.telephone ? dirty.telephone:""}
+                                    error={errors.telephone || error.telephone }
                                     style={{ margin: 8 }}
                                     InputLabelProps={{
                                         shrink: true,

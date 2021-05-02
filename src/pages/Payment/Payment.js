@@ -87,6 +87,8 @@ export default function Payment(props) {
     const [genVoucher, setGenVoucherNo] = useState([]);
     const [customers, setCustomer] = useState([]);
     const [cusMem, setCusMem] = useState([]);
+    const [actypIsDisable, setActypDisable] = useState(false);
+    const [actType, setActType] = useState(2);
 
     //Setup initial State
     const initPayment = {
@@ -101,6 +103,8 @@ export default function Payment(props) {
     const onChange = (e) => {
         e.persist();
         setNewPayment({ ...NewPayment, [e.target.name]: e.target.value });
+        console.log("Value--->",e.target.value);
+        console.log("Name--->",e.target.name);
     }
 
     //Get customer details
@@ -192,6 +196,23 @@ export default function Payment(props) {
         setErrors(initErrors);
         setDefault();
     }
+
+    //Validate transcation type
+    useEffect(() => {
+        console.log(NewPayment.transactionType);
+        console.log(NewPayment.transactionType);
+        if (NewPayment.transactionType === 1) {
+            console.log("Done");
+            setActType(2)
+            setActypDisable(true)
+            console.log("setActType -->",actType);
+        } else {
+            setActypDisable(false)
+        }
+
+
+    }, [NewPayment.transactionType])
+
 
     const SubmitNewPayment = (e) => {
         e.preventDefault();
@@ -327,6 +348,7 @@ export default function Payment(props) {
                                                             variant="outlined"
                                                             name="transactionType"
                                                             displayEmpty
+                                                            
                                                             inputProps={{ 'aria-label': 'Without label' }}
                                                             label="Transaction Type"
                                                             error={errors.transactionType ? 'error' : ''}
@@ -404,7 +426,9 @@ export default function Payment(props) {
                                                         <Select
                                                             variant="outlined"
                                                             name="accountType"
+                                                            defaultValue={actType}
                                                             displayEmpty
+                                                            disabled={actypIsDisable}
                                                             inputProps={{ 'aria-label': 'Without label' }}
                                                             label="Account Type"
                                                             error={errors.accountType ? 'error' : ''}

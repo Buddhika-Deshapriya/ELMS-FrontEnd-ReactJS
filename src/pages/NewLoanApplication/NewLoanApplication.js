@@ -66,7 +66,7 @@ export default function NewLoanApplication(props) {
   const [genCalculationNo, setGenCalculationNo] = useState([]);
   const [customers, setCustomer] = useState([]);
   const [cusMem01, setCusMem01] = useState([]);
-  const [cusMem02, setCusMem02] = useState([]);
+  // const [cusMem02, setCusMem02] = useState([]);
 
   //Setup initial State
   const initApplication = {
@@ -167,7 +167,7 @@ export default function NewLoanApplication(props) {
   //Clear useState data
   function setDefault() {
     setCusMem01("");
-    setCusMem02("");
+    // setCusMem02("");
   }
 
   // validate membership ID
@@ -184,25 +184,25 @@ export default function NewLoanApplication(props) {
         }
 
       }
-      return false;
+      return utils.showError("Please Enter Membership No");
     }
   }
-  const validateID2 = (e) => {
-    const memID2 = e.target.value;
+  // const validateID2 = (e) => {
+  //   const memID2 = e.target.value;
 
-    if (memID2.trim() !== "") {
+  //   if (memID2.trim() !== "") {
 
-      let element = new Object();
-      for (let index = 0; index < customers.length; index++) {
-        element = customers[index];
-        if (element.membership_no === memID2) {
-          return setCusMem02(element.id);
-        }
+  //     let element = new Object();
+  //     for (let index = 0; index < customers.length; index++) {
+  //       element = customers[index];
+  //       if (element.membership_no === memID2) {
+  //         return setCusMem02(element.id);
+  //       }
 
-      }
-      return false;
-    }
-  }
+  //     }
+  //     return 0;
+  //   }
+  // }
 
 
   const SubmitNewLoanApplication = (e) => {
@@ -235,10 +235,10 @@ export default function NewLoanApplication(props) {
       customers: [
         {
           id: cusMem01,
-        },
-        {
-          id: cusMem02,
         }
+        // {
+        //   id: cusMem02,
+        // }
       ],
     };
     console.log('data', data);
@@ -342,7 +342,7 @@ export default function NewLoanApplication(props) {
                   onChange={onChange}
 
                 />
-                <TextField
+                {/* <TextField
                   name="membershipNo2"
                   id="outlined-full-width"
                   label="Membership No 02"
@@ -358,7 +358,7 @@ export default function NewLoanApplication(props) {
                   }}
                   variant="outlined"
                   onChange={onChange}
-                />
+                /> */}
               </Paper>
             </Grid>
           </Grid>

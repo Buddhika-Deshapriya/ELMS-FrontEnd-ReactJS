@@ -6,12 +6,20 @@ import { useHistory } from "react-router-dom";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
     Button, Paper, Grid, TextField, InputLabel, Select, FormControl,
-    FormHelperText, MenuItem, Box,
+    FormHelperText, MenuItem, Box, TableRow, Tab, TableCell, ListItem, ListItemAvatar, Avatar, ListItemText,
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 
 import SendIcon from '@material-ui/icons/Send';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import LockIcon from '@material-ui/icons/Lock';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import EmailIcon from '@material-ui/icons/Email';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import PersonIcon from '@material-ui/icons/Person';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
@@ -87,7 +95,6 @@ export default function NewSystemUser(props) {
             })
     };
 
-
     //Get Logged in user id
     const getCurrentUser = async () => {
         //console.log(SystemUser.get())
@@ -98,7 +105,6 @@ export default function NewSystemUser(props) {
     const resetData = () => {
         setNewUser(initUser)
     }
-
 
     //Error Handling
     const initErrors = {
@@ -119,8 +125,6 @@ export default function NewSystemUser(props) {
         setErrors(initErrors)
     }
 
-
-
     const SubmitNewUser = (e) => {
         e.preventDefault();
         const data = {
@@ -136,12 +140,9 @@ export default function NewSystemUser(props) {
             password: newUser.password,
             roles: [
                 {
-                  id: newUser.role1,
-                },
-                {
-                  id: newUser.role2,
+                    id: newUser.role,
                 }
-              ],
+            ],
             createdDate: dateTime,
             createdUser: {
                 id: userId,
@@ -177,13 +178,323 @@ export default function NewSystemUser(props) {
     //This is same as componentdidmount()
     useEffect(() => {
         getCurrentUser();
+        fetchUserRoles();
     }, []);
 
     return (
         <AppTemplate>
             <div className="new-system-user">
                 <form autoComplete="off" onSubmit={SubmitNewUser}>
-                    
+                    <Paper variant="outlined">
+                        <Grid container spacing={2}>
+                            <Grid item xs={5}>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <AccountCircleIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="First Name" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="firstName"
+                                            id="outlined-full-width"
+                                            label="First Name"
+                                            helperText={errors.firstName}
+                                            error={errors.firstName ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter Name"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <AccountCircleIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="Middle Name" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="middleName"
+                                            id="outlined-full-width"
+                                            label="Middle Name"
+                                            helperText={errors.middleName}
+                                            error={errors.middleName ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter Name"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <AccountCircleIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="Last Name" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="lastName"
+                                            id="outlined-full-width"
+                                            label="Last Name"
+                                            helperText={errors.lastName}
+                                            error={errors.lastName ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter Name"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <LocationOnIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="Address" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="address"
+                                            id="outlined-full-width"
+                                            label="Address"
+                                            helperText={errors.address}
+                                            error={errors.address ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter Address"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <PermIdentityIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="NIC" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="nic"
+                                            id="outlined-full-width"
+                                            label="NIC No"
+                                            helperText={errors.nic}
+                                            error={errors.nic ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter NIC"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                            </Grid>
+                            <Grid item xs={5}>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <CalendarTodayIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="Date of Birth" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="dob"
+                                            id="outlined-full-width"
+                                            label="Date of Birth"
+                                            helperText={errors.dob}
+                                            error={errors.dob ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter Birthday"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <EmailIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="Email Address" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="email"
+                                            id="outlined-full-width"
+                                            label="Email Address"
+                                            helperText={errors.email}
+                                            error={errors.email ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter Email"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <PersonIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="User Name" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="username"
+                                            id="outlined-full-width"
+                                            label="User Name"
+                                            helperText={errors.username}
+                                            error={errors.username ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter User Name"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <LockIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="Password" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="password"
+                                            id="outlined-full-width"
+                                            label="Password"
+                                            helperText={errors.password}
+                                            error={errors.password ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter Password"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <SupervisedUserCircleIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Set"} secondary="User Roles" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <FormControl className={classes.formControl} variant="outlined" >
+                                            <InputLabel id="demo-simple-select-filled-label">--Please Select--</InputLabel>
+                                            <Select
+                                                variant="outlined"
+                                                name="role"
+                                                displayEmpty
+                                                inputProps={{ 'aria-label': 'Without label' }}
+                                                label="User roles"
+                                                error={errors.roles ? 'error' : ''}
+                                                onChange={onChange}
+                                                className={classes.width}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            >
+                                                <MenuItem value="" disabled>
+
+                                                </MenuItem>
+                                                {
+                                                    roles.map((eachRow, index) => {
+                                                        return (
+                                                            <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.name}</MenuItem>
+                                                        );
+                                                    })
+                                                }
+                                            </Select>
+                                        </FormControl>
+                                    </TableCell>
+                                </TableRow>
+                            </Grid>
+                        </Grid>
+                    </Paper>
                     <br />
                     <Paper variant="outlined" >
                         <div>
@@ -212,6 +523,6 @@ export default function NewSystemUser(props) {
                     </Paper>
                 </form>
             </div>
-        </AppTemplate>
+        </AppTemplate >
     )
 }

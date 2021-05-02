@@ -166,9 +166,10 @@ export default function Payment(props) {
                 if (element.membership_no === memID) {
                     return setCusMem(element.id);
                 }
-
+                else
+                    return utils.showError("Wrong Membership No")
             }
-            return false;
+            return utils.showError("Please Enter Membership No");
         }
     }
 

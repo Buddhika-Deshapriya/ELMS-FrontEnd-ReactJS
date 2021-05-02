@@ -88,7 +88,7 @@ export default function NewBranch(props) {
             })
     };
 
-    //Get Customer Membership generated No
+    //Get branch code generated No
     const fetchGenBranchCode = async () => {
         axios.get(`${baseUrl}/branchcodegenerate/takecode`)
             .then(response => {

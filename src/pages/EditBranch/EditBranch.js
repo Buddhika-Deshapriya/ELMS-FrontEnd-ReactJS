@@ -95,9 +95,6 @@ export default function EditBranch(props) {
             })
     };
 
-
-
-
     //Error Handling
     const initErrors = {
         branchCode: '',
@@ -109,9 +106,7 @@ export default function EditBranch(props) {
     const resetError = () => {
         setErrors(initErrors)
     }
-
-
-
+    
     const UpdateBranch = (e) => {
         e.preventDefault();
         const data = {

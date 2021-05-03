@@ -104,8 +104,6 @@ export default function LoanTrialCalc(props) {
         setNewCalculation(initCalc)
     }
 
-    // const branchId = props.match.params.id
-
     const onChange = (e) => {
         e.persist();
         setNewCalculation({ ...newCalc, [e.target.name]: e.target.value });

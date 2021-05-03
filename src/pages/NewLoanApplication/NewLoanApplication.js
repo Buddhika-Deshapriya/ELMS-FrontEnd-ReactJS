@@ -334,7 +334,7 @@ export default function NewLoanApplication(props) {
                   onBlur={validateID1}
                   margin="normal"
                   helperText={errors.membershipNo1}
-                  error={errors.customer1 ? 'error' : ''}
+                  error={errors.membershipNo1 ? 'error' : ''}
                   InputLabelProps={{
                     shrink: true,
                   }}

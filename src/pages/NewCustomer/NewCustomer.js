@@ -493,7 +493,6 @@ export default function NewCustomer(props) {
                             <Paper variant="outlined" >
                                 <TextField
                                     name="first_name"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="First Name"
                                     placeholder="Enter First Name"
@@ -508,7 +507,6 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     name="middle_name"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Middle Name"
                                     placeholder="Enter Middle Name"
@@ -523,7 +521,6 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     name="last_name"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Last Name"
                                     placeholder="Enter Last Name"
@@ -536,15 +533,14 @@ export default function NewCustomer(props) {
                                     onChange={onChange}
                                 />
                                 <TextField
+                                    id="date"
                                     name="dob"
-                                    //value={newLoan.maxAmount}
-                                    id="outlined-helperText"
-                                    label="Date of Birth"
-                                    placeholder="Enter Birthday"
-                                    variant="outlined"
                                     helperText={errors.dob}
                                     error={errors.dob ? 'error' : ''}
-                                    style={{ margin: 8 }}
+                                    label="Birthday"
+                                    type="date"
+                                    placeholder="2021-03-05"
+                                    className={classes.button}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -552,7 +548,6 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     name="email"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Email Address"
                                     placeholder="Enter Email"
@@ -566,7 +561,6 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     name="address"
-                                    //value={newLoan.description}
                                     id="outlined-multiline-static"
                                     label="Address"
                                     placeholder="Enter Address"
@@ -588,7 +582,6 @@ export default function NewCustomer(props) {
                             <Paper variant="outlined" >
                                 <TextField
                                     name="telephone"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Telephone No"
                                     placeholder="Enter Telephone No"
@@ -604,7 +597,6 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     name="mobile"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Mobile No"
                                     placeholder="Enter Mobile No"
@@ -620,7 +612,6 @@ export default function NewCustomer(props) {
 
                                 <TextField
                                     name="passport"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Passport No"
                                     placeholder="Enter Passport No"
@@ -642,7 +633,6 @@ export default function NewCustomer(props) {
                             <Paper variant="outlined" >
                                 <TextField
                                     name="income"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Applicant Income"
                                     placeholder="Enter Income"
@@ -657,7 +647,6 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     name="familyIncome"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Family Income"
                                     placeholder="Enter Family Income"
@@ -672,7 +661,6 @@ export default function NewCustomer(props) {
                                 />
                                 <TextField
                                     name="total_members"
-                                    //value={newLoan.maxAmount}
                                     id="outlined-helperText"
                                     label="Total Members"
                                     placeholder="Enter Total Members"

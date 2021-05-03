@@ -441,7 +441,7 @@ export default function ViewCustomer(props) {
                     </Grid>
                 </Grid>
                 <br />
-                <Link to={"/new-asset"} >
+                <Link to={"/new-asset/"+ customerId} >
                     <Button variant="contained" color="primary" className={classes.margin}>
                         Add New Asset
                 </Button>

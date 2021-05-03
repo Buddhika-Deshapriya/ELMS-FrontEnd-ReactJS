@@ -112,7 +112,6 @@ export default function AppBarCmp(props) {
     props.toggleDrawerHandler(true);
   };
 
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -147,14 +146,16 @@ export default function AppBarCmp(props) {
           <div className={classes.searchIcon}>
             <SearchIcon />
           </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
+          <form action="view-customer/1" method="get">
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+        </form>
         </div>
         <div className={classes.KeyboardIcon}>
           <Link to="/new-loan-calculation" className={classes.link} >

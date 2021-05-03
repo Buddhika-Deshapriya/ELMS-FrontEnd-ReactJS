@@ -20,6 +20,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import PersonIcon from '@material-ui/icons/Person';
+import AddIcCallIcon from '@material-ui/icons/AddIcCall';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
@@ -140,7 +141,7 @@ export default function NewSystemUser(props) {
             password: newUser.password,
             roles: [
                 {
-                    id: newUser.role,
+                    name: newUser.role,
                 }
             ],
             createdDate: dateTime,
@@ -333,6 +334,35 @@ export default function NewSystemUser(props) {
                                         />
                                     </TableCell>
                                 </TableRow>
+                                <TableRow>
+                                    <TableCell align="left">
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <AddIcCallIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={"Enter"} secondary="Mobile No" />
+                                        </ListItem>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            name="mobile"
+                                            id="outlined-full-width"
+                                            label="Mobile No"
+                                            helperText={errors.mobile}
+                                            error={errors.mobile ? 'error' : ''}
+                                            className={classes.textFields}
+                                            placeholder="Enter No"
+                                            margin="normal"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                            onChange={onChange}
+                                        />
+                                    </TableCell>
+                                </TableRow>
                             </Grid>
                             <Grid item xs={5}>
                                 <TableRow>
@@ -484,7 +514,7 @@ export default function NewSystemUser(props) {
                                                 {
                                                     roles.map((eachRow, index) => {
                                                         return (
-                                                            <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.name}</MenuItem>
+                                                            <MenuItem value={eachRow.name} key={eachRow.id}>{eachRow.name}</MenuItem>
                                                         );
                                                     })
                                                 }

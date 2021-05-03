@@ -95,7 +95,7 @@ export default function App (props) {
         <Route path="/edit-loan-type/:id" exact component={EditLoanType} />
         <Route path="/view-loan-type/:id" exact component={ViewLoanType} />
         <Route path="/view-customer/:id" exact component={ViewCustomer} />
-        <Route path="/new-asset" exact component={NewAsset} />
+        <Route path="/new-asset/:id" exact component={NewAsset} />
         <Route path="/edit-asset/:id" exact component={EditAsset} />
         <Route path="/edit-customer/:id" exact component={EditCustomer} />
         <Route path="/loan-application-list" exact component={LoanApplicationList} />

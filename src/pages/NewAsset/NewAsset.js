@@ -63,6 +63,8 @@ export default function NewAsset(props) {
     const [assetsStatus, setAssetsStatus] = useState([]);
     const [assetsType, setAssetsType] = useState([]);
 
+    const customerId = props.match.params.id
+
     //Setup initial State
     const initAsset = {
         assetsType: null,
@@ -71,8 +73,8 @@ export default function NewAsset(props) {
         value: null
     }
     const onChange = (e) => {
-        //  e.persist();
-        setNewAsset({ ...NewAsset, [e.target.name]: e.target.value });
+         e.persist();
+        setNewAsset({ ...newAsset, [e.target.name]: e.target.value });
     }
 
     //Get Common Status
@@ -122,7 +124,7 @@ export default function NewAsset(props) {
             value: newAsset.value,
             customers: [
                 {
-                    id: newAsset.id,
+                    id: customerId,
                 }
             ],
         };
